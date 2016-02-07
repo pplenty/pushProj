@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.pushman.dao.MSG_LOG_Dao">
+  
+  <resultMap type="MSG_LOG_Vo" id="MSG_LOG_VoMap">
+    <id     column="userdata"         property="user_data" />
+    <result column="msg_seq"      	  property="msg_seq" />
+    <result column="cur_state"   	  property="cur_state" />
+    <result column="sent_date"        property="sent_date" />
+    <result column="rslt_date"        property="rslt_date" />
+    <result column="report_date"      property="report_date" />
+    <result column="req_date"  	 	  property="req_date" />
+    <result column="rslt_code" 	 	  property="rslt_code" />
+    <result column="rslt_code2" 	  property="rslt_code2" />
+    <result column="rslt_net" 		  property="rslt_net" />
+    <result column="call_to" 		  property="call_to" />
+    <result column="call_from" 		  property="call_from" />
+    <result column="sms_txt" 		  property="sms_txt" />
+    <result column="msg_type" 		  property="msg_type" />
+    <result column="cont_seq" 		  property="cont_seq" />
+    <result column="msg_etc1" 		  property="msg_etc1" />
+    <result column="msg_etc2" 		  property="msg_etc2" />
+    <result column="msg_etc3" 		  property="msg_etc3" />
+    <result column="msg_etc4" 		  property="msg_etc4" />
+    <result column="msg_etc5" 		  property="msg_etc5" />
+  </resultMap>
+  
+  
+<!--   <select id="selectListAll" parameterType="map" resultMap="MSG_LOG_VoMap">
+      SELECT USERDATA, MSG_SEQ, CUR_STATE, SENT_DATE, RSLT_DATE, REPORT_DATE, 
+      		 REQ_DATE, RSLT_CODE, RSLT_CODE2, RSLT_NET, CALL_TO, CALL_FROM, 
+      		 SMS_TXT, MSG_TYPE, CONT_SEQ, MSG_ETC1, MSG_ETC2, MSG_ETC3
+      FROM MSG_LOG_201601
+  </select> -->
+  
+    <select id="selectListAll" parameterType="map" resultMap="MSG_LOG_VoMap">
+      SELECT MSG_SEQ, USERDATA, CUR_STATE, SENT_DATE, RSLT_CODE2
+      FROM MSG_LOG_201601
+  </select>
+  
+  
+</mapper>
+
+
+
+
+
+
+
+
+

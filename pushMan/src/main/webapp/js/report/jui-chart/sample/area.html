@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="charset=utf-8;"/>
+    <script src="../lib/core.js"></script>
+    <script src="../dist/chart.js"></script>
+</head>
+<body >
+
+<div id="chart"></div>
+
+<script id="script_code">
+    jui.ready([ "chart.builder" ], function(chart) {
+
+        c = chart("#chart", {
+            theme: "pattern",
+            icon: {
+                path: "../../img/icon-list"
+            },
+            width: 400,
+            height : 400,
+            axis : [{
+                x : {
+                    domain : [ "week1", "week2", "week3", "week4" ],
+                    line : 'solid gradient',
+                    orient : 'top'
+                },
+                y : {
+                    type : 'range',
+                    domain : function(data) {
+                        return Math.max(data.name, data.value, data.test);
+                    },
+                    step : 10,
+                    line : 'gradient dashed'
+
+                }
+            }]
+        });
+	})
+</script>
+
+
+</body>
+</html>

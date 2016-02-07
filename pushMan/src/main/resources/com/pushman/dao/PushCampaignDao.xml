@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pushman.dao.PushCampaignDao">
+
+	<resultMap type="PushCampaignVo" id="PushCampaignVoMap">
+		<id column="camp_id" 			property="camp_id" />
+		<result column="reg_date"  		property="reg_date" />
+		<result column="push_total" 	property="push_total" />
+		<result column="push_succ" 	  	property="push_succ" />
+		<result column="push_fail"   	property="push_fail" />
+		<result column="push_open" 	  	property="push_open" />
+		<result column="push_click" 	property="push_click" />
+		<result column="camp_reqUid" 	property="camp_reqUid" />
+	</resultMap>
+
+	<select id="selectList" parameterType="map" resultMap="PushCampaignVoMap">
+		SELECT CAMP_ID, reg_date, push_total, push_succ, push_fail, push_open, push_click, camp_reqUid
+		FROM PUSH_CAMPAIGN_DETAIL
+	</select>
+
+	<insert id="insert" parameterType="PushCampaignVo" keyColumn="camp_id"
+		keyProperty="camp_id" useGeneratedKeys="true">
+		INSERT INTO CAMPAIGN_DETAIL (RCV_NAME, RCV_MOB, 
+		SEND_ERROR, SEND_TIME, CAMP_NO)
+		VALUES (#{rcv_name},#{rcv_mob}, '9', SYSDATE(), #{camp_no})
+	</insert>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pushman.dao.PushCampaignDetailDao">
+
+	<resultMap type="PushCampaignDetailVo" id="PushCampaignDetailVoMap">
+		<id 	column="cd_no" 		  property="cd_no" />
+		<result column="reg_date"  	  property="reg_date" />
+		<result column="reqUid" 	  property="reqUid" />
+		<result column="rtn_type" 	  property="rtn_type" />
+		<result column="res_cd"   	  property="res_cd" />
+		<result column="cust_id" 	  property="cust_id" />
+		<result column="camp_id" 	  property="camp_id" />
+	</resultMap>
+
+	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
+		SELECT CD_NO, LOG_MSG_SEQ, RCV_NAME, RCV_MOB, SEND_ERROR, SEND_TIME,
+		CAMP_NO
+		FROM CAMPAIGN_DETAIL
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

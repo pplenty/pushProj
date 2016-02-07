@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.pushman.dao.TB_SEND_QUE_LOG_Dao">
+  
+  <resultMap type="TB_SEND_QUE_LOG_Vo"	id="TB_SEND_QUE_LOG_VoMap">
+    <id      column="id"        		property="send_que_id" />
+    <result  column="biz_id"      	  	property="biz_id" />
+    <result  column="req_uid" 		  	property="req_uid" />
+    <result  column="cust_id" 		  	property="cust_id" />
+    <result  column="rtn_type" 		  	property="rtn_type" />
+    <result  column="res_cd" 		  	property="res_cd" />
+    <result  column="data" 		  		property="data" />
+    <result  column="res_date" 		  	property="res_date" />
+    <result  column="check_flag" 		property="check_flag" />
+    <result  column="reg_date" 		  	property="reg_date" />
+    <result  column="app_user_id" 		property="app_user_id" />
+  </resultMap>
+  
+  
+<!--   <select id="selectListAll" parameterType="map" resultMap="MSG_LOG_VoMap">
+      SELECT USERDATA, MSG_SEQ, CUR_STATE, SENT_DATE, RSLT_DATE, REPORT_DATE, 
+      		 REQ_DATE, RSLT_CODE, RSLT_CODE2, RSLT_NET, CALL_TO, CALL_FROM, 
+      		 SMS_TXT, MSG_TYPE, CONT_SEQ, MSG_ETC1, MSG_ETC2, MSG_ETC3
+      FROM MSG_LOG_201601
+  </select> -->
+  
+    <select id="selectListAll" parameterType="map" resultMap="TB_SEND_QUE_LOG_VoMap">
+      SELECT ID, BIZ_ID, REQ_UID, CUST_ID, RTN_TYPE, RES_CD, DATA, 
+      			 DATE_FORMAT(RES_DATE, '%Y-%m-%d %H:%m:%s') RES_DATE, CHECK_FLAG, 
+      			 DATE_FORMAT(REG_DATE, '%Y-%m-%d %H:%m:%s') REG_DATE, APP_USER_ID
+      FROM TB_SEND_QUE_LOG
+      WHERE biz_id='06d388bd180a42018ba0da946d099d09' 
+      		OR biz_id='f91e805198204094b753262839e3e551'
+  </select>
+  
+  
+</mapper>

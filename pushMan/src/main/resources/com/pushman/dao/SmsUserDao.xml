@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.pushman.dao.SmsUserDao">
+  
+  <resultMap type="SmsUserVo" id="SmsUserVoMap">
+    <id     column="user_no"        property="no" />
+    <result column="user_name"      property="name" />
+    <result column="user_mobile"    property="mobile" />
+    <result column="user_email"     property="email" />
+    <result column="user_pwd"       property="password" />
+    <result column="user_reg_date"  property="reg_date" />
+  </resultMap>
+  
+  <select id="selectOne" parameterType="map" resultMap="SmsUserVoMap">
+      SELECT user_no, user_name, user_mobile, user_email, user_pwd, user_reg_date
+      FROM SMS_USER 
+      WHERE user_email=#{email} and user_pwd=#{password}
+  </select>
+  
+  <select id="selectOneforEmail" parameterType="map" resultMap="SmsUserVoMap">
+      SELECT user_no, user_name, user_mobile, user_email, user_pwd, user_reg_date
+      FROM SMS_USER 
+      WHERE user_email=#{email}
+  </select>
+  
+  
+  <insert id="insert" parameterType="SmsUserVo"
+        keyColumn="user_no" keyProperty="no" useGeneratedKeys="true">
+      INSERT INTO SMS_USER (user_email, user_name, user_mobile, user_pwd, user_reg_date)
+      VALUES (#{email},#{name}, #{mobile}, #{password}, SYSDATE())
+  </insert>
+
+
+  
+</mapper>
+
+
+
+
+
+
+
+
+

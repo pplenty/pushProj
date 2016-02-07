@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.pushman.dao.AuthNumberDao">
+  
+  <resultMap type="AuthNumberVo"	id="AuthNumberVoMap">
+    <id     column="auth_no"          property="auth_no" />
+    <result column="auth_number"      property="authNumber" />
+    <result column="cre_time"   	  property="mobile" />
+    <result column="user_no"     	  property="email" />
+  </resultMap>
+  
+  <select id="selectOne" parameterType="AuthNumberVo" resultMap="AuthNumberVoMap">
+      SELECT auth_no, auth_number, cre_time, user_no
+      FROM AUTH_NUMBER 
+      WHERE auth_number=#{authNumber}
+  </select>
+  
+ 
+  <insert id="insert" parameterType="AuthNumberVo"
+        keyColumn="auth_no" keyProperty="auth_no" useGeneratedKeys="true">
+      INSERT INTO AUTH_NUMBER (auth_number, cre_time)
+      VALUES (#{authNumber}, now())
+  </insert>
+  
+  <delete id="delete" parameterType="AuthNumberVo">
+      DELETE FROM AUTH_NUMBER WHERE auth_number=#{authNumber}
+  </delete>
+
+
+  
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pushman.dao.CampaignDao">
+
+	<resultMap type="CampaignVo" id="CampaignVoMap">
+		<id column="camp_no" property="camp_no" />
+		<result column="camp_title" property="camp_title" />
+		<result column="camp_content" property="camp_content" />
+		<result column="send_total" property="send_total" />
+		<result column="send_date" property="send_date" />
+		<result column="num_error" property="num_error" />
+		<result column="sender_mob" property="sender_mob" />
+		<result column="send_date" property="send_date" />
+		<result column="attr_sms" property="attr_sms" />
+		<result column="camp_reg_date" property="camp_reg_date" />
+		<result column="user_no" property="user_no" />
+	</resultMap>
+
+
+	<select id="selectList" parameterType="map" resultMap="CampaignVoMap">
+		SELECT CAMP_NO, CAMP_TITLE, CAMP_CONTENT, SEND_TOTAL, NUM_ERROR,
+		SENDER_MOB, SEND_DATE, ATTR_SMS, CAMP_REG_DATE, USER_NO
+		FROM CAMPAIGN
+		<if test="word != null and word != ''">
+			WHERE CAMP_TITLE like CONCAT('%', #{word}, '%') OR
+			CAMP_CONTENT like CONCAT('%', #{word}, '%')
+		</if>
+		<choose>
+			<when test="order == 'title'">ORDER BY CAMP_TITLE ASC</when>
+			<when test="order == 'createDate'">ORDER BY CAMP_REG_DATE ASC</when>
+			<otherwise>ORDER BY SEND_DATE DESC</otherwise>
+		</choose>
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+	
+	
+	<select id="countAll" parameterType="map" resultType="int">
+		SELECT
+		count(CAMP_NO)
+		FROM CAMPAIGN
+		<if test="word != null and word != ''">
+			WHERE CAMP_TITLE like CONCAT('%', #{word}, '%')
+		</if>
+	</select>
+
+
+	<select id="selectListByUser" parameterType="map" resultMap="CampaignVoMap">
+		SELECT CAMP_NO, CAMP_TITLE, CAMP_CONTENT, SEND_TOTAL, NUM_ERROR,
+		SENDER_MOB, SEND_DATE, ATTR_SMS, CAMP_REG_DATE, USER_NO
+		FROM CAMPAIGN
+		WHERE USER_NO = #{user_no}
+		<if test="word != null and word != ''">
+			AND (CAMP_TITLE like CONCAT('%', #{word}, '%') OR
+				 CAMP_CONTENT like CONCAT('%', #{word}, '%') )
+		</if>
+		ORDER BY SEND_DATE DESC
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+
+
+	<select id="countByUser" parameterType="map" resultType="int">
+		SELECT
+		count(CAMP_NO)
+		FROM CAMPAIGN
+		WHERE USER_NO = #{user_no}
+		<if test="word != null and word != ''">
+			AND CAMP_TITLE like CONCAT('%', #{word}, '%')
+		</if>
+	</select>
+
+
+	<select id="getRecentKey" resultType="int">
+		SELECT MAX(CAMP_NO) FROM CAMPAIGN;
+	</select>
+
+
+	<insert id="insert" parameterType="CampaignVo" keyColumn="camp_no"
+		keyProperty="camp_no" useGeneratedKeys="true">
+		INSERT INTO CAMPAIGN (camp_title, camp_content, send_total, num_error,
+		sender_mob, send_date, attr_sms, camp_reg_date, user_no)
+		VALUES (#{camp_title},#{camp_content}, #{send_total}, #{num_error},
+		#{sender_mob}, SYSDATE(), #{attr_sms}, SYSDATE(), #{user_no})
+	</insert>
+
+	<select id="countTotalDaily" resultType="map">
+		SELECT DATE_FORMAT(SEND_DATE, '%Y-%m-%d') DAY, SUM(SEND_TOTAL) TOTAL 
+		FROM CAMPAIGN 
+		GROUP BY DATE_FORMAT(SEND_DATE, '%Y-%m-%d')
+	</select>
+	<!--  #{word} >>> '2016-01-18'  -->
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+

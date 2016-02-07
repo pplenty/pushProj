@@ -1,0 +1,27 @@
+.simpleBtn {
+	color: #000!important;
+    border: 1px solid #dfac23;
+/*     text-shadow: 0 1px 0 #fcda7c; */
+    border-bottom: 1px solid #c06f01;
+    /*border-radius: 1em/5em; 모서리 둥글게 */
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.10);
+/*     background: #f5a802;
+    background: linear-gradient(to bottom, #fcd054 0%, #f5a802 100%); */
+    /* rgb(74, 179, 198) */
+    
+    padding: 8px 5px;
+    cursor: pointer;
+}
+
+.simpleBtn:HOVER {
+    background: linear-gradient(to bottom, #EAD390 0%, #FCDA7C 100%);
+}
+.simpleBtn:ACTIVE {
+    background: linear-gradient(to bottom, #c06f01 0%, #FCDA7C 100%);
+}
+
+
+
+#duplOk, #loginStatus, #passValid {
+	font-size: x-small;
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pushman.dao.CampaignDetailDao">
+
+	<resultMap type="CampaignDetailVo" id="CampaignDetailVoMap">
+		<id column="cd_no" property="cd_no" />
+		<result column="log_msg_seq"  property="log_msg_seq" />
+		<result column="rcv_name" 	  property="rcv_name" />
+		<result column="rcv_mob" 	  property="rcv_mob" />
+		<result column="send_error"   property="send_error" />
+		<result column="send_time" 	  property="send_time" />
+		<result column="camp_no" 	  property="camp_no" />
+	</resultMap>
+
+	<select id="selectList" parameterType="map" resultMap="CampaignDetailVoMap">
+		SELECT CD_NO, LOG_MSG_SEQ, RCV_NAME, RCV_MOB, SEND_ERROR, SEND_TIME,
+		CAMP_NO
+		FROM CAMPAIGN_DETAIL
+		<if test="word != null and word != ''">
+			WHERE RCV_NAME like CONCAT('%', #{word}, '%') OR
+				  RCV_MOB like CONCAT('%', #{word}, '%')
+		</if>
+		<choose>
+			<when test="order == 'error'">ORDER BY SEND_ERROR ASC</when>
+			<when test="order == 'rcv_mob'">ORDER BY RCV_MOB ASC</when>
+			<otherwise>ORDER BY SEND_TIME DESC</otherwise>
+		</choose>
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+
+
+	<select id="countAll" parameterType="map" resultType="int">
+		SELECT
+		count(CD_NO)
+		FROM CAMPAIGN_DETAIL
+		<if test="word != null and word != ''">
+		WHERE RCV_NAME like CONCAT('%', #{word}, '%') OR
+			  RCV_MOB like CONCAT('%', #{word}, '%')
+		</if>
+	</select>
+
+
+	<select id="selectListByCamp" parameterType="map"
+		resultMap="CampaignDetailVoMap">
+		SELECT CD_NO, LOG_MSG_SEQ, RCV_NAME, RCV_MOB, SEND_ERROR, SEND_TIME,
+		CAMP_NO
+		FROM CAMPAIGN_DETAIL
+		WHERE CAMP_NO = #{camp_no}
+		<if test="word != null and word != ''">
+			AND (RCV_NAME like CONCAT('%', #{word}, '%') OR
+				 RCV_MOB like CONCAT('%', #{word}, '%') )
+		</if>
+		<choose>
+			<when test="order == 'error'">ORDER BY SEND_ERROR DESC</when>
+			<otherwise>ORDER BY SEND_TIME DESC</otherwise>
+		</choose>
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+
+
+	<select id="countByCamp" parameterType="map" resultType="int">
+		SELECT
+		count(CD_NO)
+		FROM CAMPAIGN_DETAIL
+		WHERE CAMP_NO = #{camp_no}
+		<if test="word != null and word != ''">
+			AND (RCV_NAME like CONCAT('%', #{word}, '%') OR
+				 RCV_MOB like CONCAT('%', #{word}, '%') )
+		</if>
+		<choose>
+			<when test="order == 'error'">ORDER BY SEND_ERROR DESC</when>
+			<otherwise>ORDER BY SEND_TIME DESC</otherwise>
+		</choose>
+	</select>
+
+
+	<insert id="insert" parameterType="CampaignDetailVo" keyColumn="cd_no"
+		keyProperty="cd_no" useGeneratedKeys="true">
+		INSERT INTO CAMPAIGN_DETAIL (RCV_NAME, RCV_MOB, 
+		SEND_ERROR, SEND_TIME, CAMP_NO)
+		VALUES (#{rcv_name},#{rcv_mob}, '9', SYSDATE(), #{camp_no})
+	</insert>
+
+	<select id="getMaxKey" resultType="int">
+		SELECT MAX(CD_NO) MaxKey
+		FROM CAMPAIGN_DETAIL
+	</select>
+	
+	
+	<select id="cntRsltByCamp" parameterType="map" resultType="int">
+		SELECT count(CD_NO)
+		FROM CAMPAIGN_DETAIL
+		WHERE CAMP_NO=#{camp_no} AND SEND_ERROR=#{error_type}
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

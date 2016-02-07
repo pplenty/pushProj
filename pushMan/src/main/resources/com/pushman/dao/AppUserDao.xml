@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.pushman.dao.AppUserDao">
+  
+  <resultMap type="AppUserVo" id="AppUserVoMap">
+    <id     column="user_id"        	property="user_id" />
+    <result column="mobile"      		property="mobile" />
+    <result column="cust_id"    		property="cust_id" />
+    <result column="reg_date"     		property="reg_date" />
+    <result column="last_login_date"    property="last_login_date" />
+    <result column="user_etc1"  		property="user_etc1" />
+    <result column="user_etc2"  		property="user_etc2" />
+    <result column="user_etc3"  		property="user_etc3" />
+  </resultMap>
+  
+  
+  <insert id="insert" parameterType="AppUserVo"
+        keyColumn="user_id" keyProperty="user_id" useGeneratedKeys="true">
+      INSERT INTO SMS_USER (user_email, user_name, user_mobile, user_pwd, user_reg_date)
+      VALUES (#{cust_id},#{mobile}, #{mobile}, #{password}, SYSDATE())
+  </insert>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
