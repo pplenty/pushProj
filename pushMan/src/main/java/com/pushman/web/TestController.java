@@ -33,9 +33,7 @@ public class TestController {
 	public Object authNo(
 			String mobile, HttpServletRequest request, 
 			HttpServletResponse response, HttpSession session) {
-	    
 		
-
 		URL url = null;
 		URLConnection urlConnection = null;
 		String body = null;
