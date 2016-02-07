@@ -29,9 +29,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
-
 <script src="//code.jquery.com/jquery-1.12.0.min.js">
+<script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
+
 <script src="./js/sideBar.js"></script>
 <script src="./js/pushPage.js"></script>
 </head>
