@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <sql:query var="rs" dataSource="jdbc/test2016">
 select MSG_SEQ, MSG_ETC1 from MSG_LOG_201601
 </sql:query>
@@ -21,4 +21,4 @@ select MSG_SEQ, MSG_ETC1 from MSG_LOG_201601
 </c:forEach>
 
   </body>
-</html>
+</html> --%>
