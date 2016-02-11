@@ -92,13 +92,13 @@
 					<!-- 리치 푸시 내용 -->
 					<div id="richPushContent" style="display: none;">
 						<label for="pushPopupContent">내 용</label><br>
-						<textarea class="ckeditor" cols="1" id="pushPopupContentEditor"
-							name="pushPopupContentEditor" rows="15">
+						<textarea class="ckeditor" cols="1" id="richPushPopupContentEditor"
+							name="richPushPopupContentEditor" rows="15">
 					</textarea>
 						<span id="byteInfo">0</span>/90Byte <br> <label
 							for="innerContent">앱 내 메시지 내용</label><br>
-						<textarea class="ckeditor" cols="1" id="innerContentEditor"
-							name="innerContentEditor" rows="15">
+						<textarea class="ckeditor" cols="1" id="richInnerContentEditor"
+							name="richInnerContentEditor" rows="15">
 					</textarea>
 						<span id="byteInfo">0</span>/90Byte <br>
 					<input type="button" id="richPushBtn" class="btn btn-success btn-lg"

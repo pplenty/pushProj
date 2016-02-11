@@ -32,8 +32,8 @@ $(document).ready(function() {
 			data : {
 				pushCampTitle	 : $('#pushCampTitle').val(),
 				pushPopupTitle 	 : $('#pushPopupTitle').val(),
-				pushPopupContent : $('#pushPopupContent').val(),
-				innerContent 	 : $('#innerContent').val()
+				pushPopupContent : CKEDITOR.instances.richPushPopupContentEditor.getData(),
+				innerContent 	 : CKEDITOR.instances.richInnerContentEditor.getData()
 			},
 			success : function(result) {
 				console.log(result);
