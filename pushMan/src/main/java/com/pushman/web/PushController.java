@@ -71,6 +71,7 @@ public class PushController {
 		
 		PushCampaignVo pushCampaignVo = new PushCampaignVo();
 		
+		// ajax 요청 파라미터
 		String pushCampTitle = request.getParameter("pushCampTitle");	
 		String pushPopupTitle = request.getParameter("pushPopupTitle");	
 		String pushPopupContent = request.getParameter("pushPopupContent");	
@@ -80,31 +81,33 @@ public class PushController {
 		URLConnection urlConnection = null;
 		String body = null;
 
-		// 요청 URL 주소
+		// 요청 URL 주소(고정 값)
 		String sUrl = "http://dev-api.pushpia.com/msg/send/realtime";
 
-		// 파라미터 이름
+		// 파라미터 이름(고정 값)
 		String paramName = "d";
 
 		// 파라미터 이름에 대한 값
 		String paramValue = null;
 		
 		// 응답 JSON
-		String responseJSON;
+		String responseJSON = null;
 
 		JsonObject jo = new JsonObject();
 		jo.addProperty("bizId", "06d388bd180a42018ba0da946d099d09");
 		jo.addProperty("msgType", "T");
-		jo.addProperty("pushTime", 1800);
+		jo.addProperty("pushTime", 1800);// 고정 값(발송 유효 시간)
 		jo.addProperty("pushTitle", pushPopupTitle);
 		jo.addProperty("pushMsg", pushPopupContent);
 		jo.addProperty("inappContent", innerContent);
-		jo.addProperty("pushKey", "1");
+		jo.addProperty("pushKey", "1");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		jo.addProperty("pushValue", "http://www.pushpia.com");
 		jo.addProperty("reserveTime", "20150417101702");
 //		jo.addProperty("reqUid", "pushpia_20150417101702");
 //		jo.addProperty("custId", "436149");
 
+		
+		// 동보발송(사용자 list 추가)
 		JsonArray jarr = new JsonArray();
 		JsonObject jo1 = new JsonObject();
 		JsonObject jo2 = new JsonObject();
@@ -122,19 +125,14 @@ public class PushController {
 		try {
 			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
 
-			// Get방식으로 전송 하기
-			// url = new URL(sUrl + "?" + paramName + "=" + paramValue);
-			// urlConnection = url.openConnection();
-			// printByInputStream(urlConnection.getInputStream());
-
-			// Post방식으로 전송 하기
+			// Post방식으로 전송 하기(푸시 요청)
 			url = new URL(sUrl);
 			urlConnection = url.openConnection();
 			urlConnection.setDoOutput(true);
 
 			printByOutputStream(urlConnection.getOutputStream(), paramName
 					+ "=" + paramValue);
-			printByInputStream(urlConnection.getInputStream());
+			responseJSON = printByInputStream(urlConnection.getInputStream());
 			// body = IOUtils.toString(urlConnection.getInputStream());
 
 		} catch (Exception e) {
@@ -143,7 +141,7 @@ public class PushController {
 
 		HashMap<String, String> responseData = new HashMap<String, String>();
 		
-		responseData.put("body", body);
+		responseData.put("resJSON", responseJSON);
 		responseData.put("jo", jo.toString());
 		return responseData;
 	}
