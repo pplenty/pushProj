@@ -8,7 +8,7 @@ public class test {
 	public static void main(String[] args) {
 
 		JsonObject jo = new JsonObject();
-		jo.addProperty("bizId", "06d388bd180a42018ba0da946d099d09");
+		jo.addProperty("bizId", "06d388bd180a42018ba0da946d099d09");//text push biz-key
 		jo.addProperty("msgType", "T");
 		jo.addProperty("pushTime", 1800);
 		jo.addProperty("pushTitle", "pushPopupTitle");
