@@ -16,20 +16,11 @@
     <result column="user_etc3"  		property="user_etc3" />
   </resultMap>
   
-  
   <insert id="insert" parameterType="AppUserVo"
         keyColumn="user_id" keyProperty="user_id" useGeneratedKeys="true">
       INSERT INTO SMS_USER (user_email, user_name, user_mobile, user_pwd, user_reg_date)
       VALUES (#{cust_id},#{mobile}, #{mobile}, #{password}, SYSDATE())
   </insert>
-  
-  
-	<select id="selectListAll" parameterType="map" resultMap="CampaignVoMap">
-		SELECT USER_ID, MOBILE, CUST_ID, REG_DATE, LAST_LOGIN_DATE,
-			   CNT_LOGIN, USER_ETC1, USER_ETC2, USER_ETC3
-		FROM APP_USER
-	</select>
-	
 	
 	<select id="countAll" parameterType="map" resultType="int">
 		SELECT
@@ -37,6 +28,12 @@
 		FROM APP_USER
 	</select>
   
+	<select id="selectListAll" parameterType="map" resultMap="AppUserVoMap">
+		SELECT USER_ID, MOBILE, CUST_ID, REG_DATE, LAST_LOGIN_DATE,
+			   CNT_LOGIN, USER_ETC1, USER_ETC2, USER_ETC3
+		FROM APP_USER
+	</select>
+	
 </mapper>
 
 

@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.pushman.dao.AppUserDao;
 import com.pushman.dao.AuthNumberDao;
+import com.pushman.domain.AppUserVo;
 import com.pushman.domain.PushCampaignVo;
 import com.pushman.domain.SmsUserVo;
 
@@ -28,7 +31,7 @@ import com.pushman.domain.SmsUserVo;
 public class PushController {
 
 	@Autowired
-	AuthNumberDao authNumberDao;
+	AppUserDao appUserDao;
 
 	@RequestMapping("/pushPage")
 	public String pushPage(
@@ -104,17 +107,18 @@ public class PushController {
 		jo.addProperty("pushValue", "http://www.pushpia.com");
 		jo.addProperty("reserveTime", "20150417101702");
 
-		
+
 		// 동보발송(사용자 list 추가)
 		JsonArray jarr = new JsonArray();
-		JsonObject jo1 = new JsonObject();
-		JsonObject jo2 = new JsonObject();
-		jo1.addProperty("reqUid", "pushpia_20150417101702");
-		jo1.addProperty("custId", "436149");
-		jo2.addProperty("reqUid", "pushpia_20150417101712");
-		jo2.addProperty("custId", "293659");
-		jarr.add(jo1);
-		jarr.add(jo2);
+		JsonObject targetJSON = null;
+		List<AppUserVo> appUserVoList = appUserDao.selectListAll(null);
+		
+		for (AppUserVo appUserVo : appUserVoList) {
+			targetJSON = new JsonObject();
+			targetJSON.addProperty("reqUid", "pushpia_20150417101702");
+			targetJSON.addProperty("custId", appUserVo.getCust_id());
+			jarr.add(targetJSON);
+		}
 		
 		jo.add("list", jarr);
 		
