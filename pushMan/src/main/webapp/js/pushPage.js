@@ -27,8 +27,9 @@ $(document).ready(function() {
 	$('#richPushBtn').click(function(e) {
 
 		$.ajax({
-			url : './push.do',
+			url : './richPush.do',
 			method : 'POST',
+            dataType: "text",
 			data : {
 				pushCampTitle	 : $('#pushCampTitle').val(),
 				pushPopupTitle 	 : $('#pushPopupTitle').val(),

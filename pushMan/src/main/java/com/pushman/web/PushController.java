@@ -106,7 +106,7 @@ public class PushController {
 		jo.addProperty("pushKey", "1");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		jo.addProperty("pushValue", "http://www.pushpia.com");
 		jo.addProperty("reserveTime", "20150417101702");
-
+		System.out.println(jo);
 
 		// 동보발송(사용자 list 추가)
 		JsonArray jarr = new JsonArray();
@@ -135,7 +135,88 @@ public class PushController {
 			printByOutputStream(urlConnection.getOutputStream(), paramName
 					+ "=" + paramValue);
 			responseJSON = printByInputStream(urlConnection.getInputStream());
-			// body = IOUtils.toString(urlConnection.getInputStream());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		HashMap<String, String> responseData = new HashMap<String, String>();
+		
+		responseData.put("resJSON", responseJSON);
+		responseData.put("jo", jo.toString());
+		return responseData;
+	}
+	
+
+	@RequestMapping("/richPush")
+	@ResponseBody
+	public Object richPush(HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+
+		
+		PushCampaignVo pushCampaignVo = new PushCampaignVo();
+		
+		// ajax 요청 파라미터
+		String pushCampTitle = request.getParameter("pushCampTitle");	
+		String pushPopupTitle = request.getParameter("pushPopupTitle");	
+		String pushPopupContent = request.getParameter("pushPopupContent");	
+		String innerContent = request.getParameter("innerContent");	
+		
+		URL url = null;
+		URLConnection urlConnection = null;
+		String body = null;
+
+		// 요청 URL 주소(고정 값)
+		String sUrl = "http://dev-api.pushpia.com/msg/send/realtime";
+
+		// 파라미터 이름(고정 값)
+		String paramName = "d";
+
+		// 파라미터 이름에 대한 값
+		String paramValue = null;
+		
+		// 응답 JSON
+		String responseJSON = null;
+
+		JsonObject jo = new JsonObject();
+		jo.addProperty("bizId", "f91e805198204094b753262839e3e551");
+		jo.addProperty("msgType", "H");
+		jo.addProperty("pushTime", 1800);// 고정 값(발송 유효 시간)
+		jo.addProperty("pushTitle", pushPopupTitle);
+		jo.addProperty("pushMsg", pushPopupContent);
+		jo.addProperty("inappContent", innerContent);
+		jo.addProperty("pushKey", "1");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
+		jo.addProperty("pushValue", "http://www.pushpia.com");
+		jo.addProperty("reserveTime", "20150417101702");
+		System.out.println(jo);
+
+		// 동보발송(사용자 list 추가)
+		JsonArray jarr = new JsonArray();
+		JsonObject targetJSON = null;
+		List<AppUserVo> appUserVoList = appUserDao.selectListAll(null);
+		
+		for (AppUserVo appUserVo : appUserVoList) {
+			targetJSON = new JsonObject();
+			targetJSON.addProperty("reqUid", "pushpia_20150417101702");
+			targetJSON.addProperty("custId", appUserVo.getCust_id());
+			jarr.add(targetJSON);
+		}
+		
+		jo.add("list", jarr);
+		
+		
+		
+		try {
+			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
+
+			// Post방식으로 전송 하기(푸시 요청)
+			url = new URL(sUrl);
+			urlConnection = url.openConnection();
+			urlConnection.setDoOutput(true);
+
+			printByOutputStream(urlConnection.getOutputStream(), paramName
+					+ "=" + paramValue);
+			responseJSON = printByInputStream(urlConnection.getInputStream());
 
 		} catch (Exception e) {
 			e.printStackTrace();
