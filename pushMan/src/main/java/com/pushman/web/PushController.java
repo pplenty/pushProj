@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.pushman.dao.AppUserDao;
-import com.pushman.dao.AuthNumberDao;
 import com.pushman.domain.AppUserVo;
 import com.pushman.domain.PushCampaignVo;
 import com.pushman.domain.SmsUserVo;
@@ -103,7 +102,7 @@ public class PushController {
 		jo.addProperty("pushTitle", pushPopupTitle);
 		jo.addProperty("pushMsg", pushPopupContent);
 		jo.addProperty("inappContent", innerContent);
-		jo.addProperty("pushKey", "1");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
+		jo.addProperty("pushKey", "l");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		jo.addProperty("pushValue", "http://www.pushpia.com");
 		jo.addProperty("reserveTime", "20150417101702");
 		System.out.println(jo);
@@ -185,11 +184,11 @@ public class PushController {
 		jo.addProperty("pushTitle", pushPopupTitle);
 		jo.addProperty("pushMsg", pushPopupContent);
 		jo.addProperty("inappContent", innerContent);
-		jo.addProperty("pushKey", "1");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
+		jo.addProperty("pushKey", "l");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		jo.addProperty("pushValue", "http://www.pushpia.com");
 		jo.addProperty("reserveTime", "20150417101702");
-		System.out.println(jo);
 
+		System.out.println("인앱: " + innerContent);
 		// 동보발송(사용자 list 추가)
 		JsonArray jarr = new JsonArray();
 		JsonObject targetJSON = null;
@@ -203,12 +202,13 @@ public class PushController {
 		}
 		
 		jo.add("list", jarr);
+		System.out.println(jo);
 		
 		
 		
 		try {
 			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
-
+			System.out.println("url인코딩: " + paramValue);
 			// Post방식으로 전송 하기(푸시 요청)
 			url = new URL(sUrl);
 			urlConnection = url.openConnection();

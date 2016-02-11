@@ -29,7 +29,7 @@ $(document).ready(function() {
 		$.ajax({
 			url : './richPush.do',
 			method : 'POST',
-            dataType: "text",
+            dataType: 'html',
 			data : {
 				pushCampTitle	 : $('#pushCampTitle').val(),
 				pushPopupTitle 	 : $('#pushPopupTitle').val(),
