@@ -31,8 +31,9 @@ public class PushController {
 	AuthNumberDao authNumberDao;
 
 	@RequestMapping("/pushPage")
-	public String pushPage(String mobile, HttpServletRequest request,
-			HttpServletResponse response, HttpSession session, Model model) {
+	public String pushPage(
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session, Model model) {
 
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
 		if (smsUser == null) return "index";// 세션 없을 시 메인으로
@@ -107,7 +108,7 @@ public class PushController {
 		jo1.addProperty("reqUid", "pushpia_20150417101702");
 		jo1.addProperty("custId", "436149");
 		jo2.addProperty("reqUid", "pushpia_20150417101712");
-		jo2.addProperty("custId", "kohyusik");
+		jo2.addProperty("custId", "293659");
 		jarr.add(jo1);
 		jarr.add(jo2);
 		
@@ -146,10 +147,14 @@ public class PushController {
 	public void printByInputStream(InputStream is) {
 		byte[] buf = new byte[1024];
 		int len = -1;
+		StringBuffer returnMsg = new StringBuffer();
 		try {
 			while ((len = is.read(buf, 0, buf.length)) != -1) {
-				System.out.write(buf, 0, len);
+//				System.out.write(buf, 0, len);
+				returnMsg.append(new String(buf, 0, len));
 			}
+			
+			System.out.println("결과: " + returnMsg);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
