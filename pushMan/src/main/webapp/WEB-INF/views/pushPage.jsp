@@ -33,11 +33,10 @@
 	<script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js">
 </script>
 
-<script src="./js/sideBar.js"></script>
 <script src="./js/pushPage.js"></script>
 
 <script src="./editor/ckeditor.js"></script>
-<link rel="stylesheet" href="./editor/samples/sample.css">
+<link rel="stylesheet" href="./editor/samples/samples.css">
 </head>
 
 <body>
@@ -102,9 +101,9 @@
 							name="innerContentEditor" rows="15">
 					</textarea>
 						<span id="byteInfo">0</span>/90Byte <br>
-					</div>
 					<input type="button" id="richPushBtn" class="btn btn-success btn-lg"
 					value="PUSH!!" />
+					</div>
 				</div>
 
 				

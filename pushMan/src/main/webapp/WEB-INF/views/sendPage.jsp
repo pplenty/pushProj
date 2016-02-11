@@ -32,7 +32,6 @@
 
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js">
-    <script src="./js/sideBar.js"></script>
 <script src="./js/sendPage.js"></script>
 </head>
 
