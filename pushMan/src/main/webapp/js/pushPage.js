@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
-	//문자 전송 버튼
-	$('#pushBtn').click(function(e) {
+	//텍스트 푸시 전송 버튼
+	$('#textPushBtn').click(function(e) {
 
 		$.ajax({
 			url : './push.do',
@@ -22,6 +22,32 @@ $(document).ready(function() {
 		});
 
 	});
+	
+	//리치 푸시 전송 버튼
+	$('#textPushBtn').click(function(e) {
+
+		$.ajax({
+			url : './push.do',
+			method : 'POST',
+			data : {
+				pushCampTitle	 : $('#pushCampTitle').val(),
+				pushPopupTitle 	 : $('#pushPopupTitle').val(),
+				pushPopupContent : $('#pushPopupContent').val(),
+				innerContent 	 : $('#innerContent').val()
+			},
+			success : function(result) {
+				console.log(result);
+//				window.location.replace("list.do");
+			},
+			error : function(e) {
+				console.error('ajax 에러: ' + e.status);
+			}
+		});
+
+	});
+	
+	
+	
 
 });
 
@@ -59,3 +85,17 @@ function fnChkByte(obj, maxByte) {
 	}
 }
 
+$(document).ready(function(){
+    $("#textPush").click(function(){
+        $("#richPushContent").hide();
+        $("#textPushContent").show();
+        $("#textPush").addClass("active");
+        $("#richPush").removeClass("active");
+    });
+    $("#richPush").click(function(){
+    	$("#richPushContent").show();
+        $("#textPushContent").hide();
+        $("#richPush").addClass("active");
+        $("#textPush").removeClass("active");
+    });
+});

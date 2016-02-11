@@ -30,10 +30,14 @@
     <![endif]-->
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js">
-<script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
+	<script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js">
+</script>
 
 <script src="./js/sideBar.js"></script>
 <script src="./js/pushPage.js"></script>
+
+<script src="./editor/ckeditor.js"></script>
+<link rel="stylesheet" href="./editor/samples/sample.css">
 </head>
 
 <body>
@@ -54,29 +58,56 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 				<h2 class="sub-header">PUSH 보내기</h2>
+				<ul class="nav nav-tabs">
+					<li role="presentation" id="textPush" class="active"><a
+						href="#">텍스트 푸시</a></li>
+					<li role="presentation" id="richPush"><a href="#">리치 푸시</a></li>
+				</ul>
 				<div class="form-group">
 					<label for="pushCampTitle">관리용 제목</label> <input type="text"
 						class="form-control" id="pushCampTitle" maxlength="30"
 						placeholder="관리용 제목" style="width: 60%">
 				</div>
 				<div class="form-group">
+					<!-- 푸시 작성 공통 내용 -->
 					<label for="pushPopupTitle">팝업 제목</label> <input type="text"
 						class="form-control" id="pushPopupTitle" maxlength="30"
-						placeholder="팝업 제목" style="width: 60%"> <label
-						for="pushPopupContent">내 용</label><br>
-					<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
-						onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
-						placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
-					<span id="byteInfo">0</span>/90Byte <br>
-					<br> <label for="innerContent">앱 내 메시지 내용</label><br>
-					<textarea id="innerContent" rows="15" cols="30" maxlength="90"
-						onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
-						placeholder="앱 내 내용을 입력해 주세요"></textarea>
-					<span id="byteInfo">0</span>/90Byte
+						placeholder="팝업 제목" style="width: 60%">
+
+					<!-- 텍스트 푸시 내용 -->
+					<div id="textPushContent">
+						<label for="pushPopupContent">내 용</label><br>
+						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
+							onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
+							placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
+						<span id="byteInfo">0</span>/90Byte <br> <br> <label
+							for="innerContent">앱 내 메시지 내용</label><br>
+						<textarea id="innerContent" rows="15" cols="30" maxlength="90"
+							onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
+							placeholder="앱 내 내용을 입력해 주세요"></textarea>
+						<span id="byteInfo">0</span>/90Byte
+						<input type="button" id="textPushBtn" class="btn btn-success btn-lg"
+					value="PUSH!!" />
+					</div>
+
+					<!-- 리치 푸시 내용 -->
+					<div id="richPushContent" style="display: none;">
+						<label for="pushPopupContent">내 용</label><br>
+						<textarea class="ckeditor" cols="1" id="pushPopupContentEditor"
+							name="pushPopupContentEditor" rows="15">
+					</textarea>
+						<span id="byteInfo">0</span>/90Byte <br> <label
+							for="innerContent">앱 내 메시지 내용</label><br>
+						<textarea class="ckeditor" cols="1" id="innerContentEditor"
+							name="innerContentEditor" rows="15">
+					</textarea>
+						<span id="byteInfo">0</span>/90Byte <br>
+					</div>
+					<input type="button" id="richPushBtn" class="btn btn-success btn-lg"
+					value="PUSH!!" />
 				</div>
 
-				<input type="button" id="pushBtn" class="btn btn-success btn-lg"
-					value="PUSH!!" />
+				
 			</div>
 
 
