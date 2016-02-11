@@ -24,7 +24,7 @@ $(document).ready(function() {
 	});
 	
 	//리치 푸시 전송 버튼
-	$('#textPushBtn').click(function(e) {
+	$('#richPushBtn').click(function(e) {
 
 		$.ajax({
 			url : './push.do',
