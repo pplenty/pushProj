@@ -9,6 +9,7 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	protected String reg_date;
 	protected int push_total;
 	protected int push_succ;
+	protected int push_wait;
 	protected int push_fail;
 	protected int push_open;
 	protected int push_click;
@@ -61,14 +62,18 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	public void setCamp_reqUid(String camp_reqUid) {
 		this.camp_reqUid = camp_reqUid;
 	}
+	
+	public int getPush_wait() {
+		return push_wait;
+	}
+	public void setPush_wait(int push_wait) {
+		this.push_wait = push_wait;
+	}
 	@Override
 	public String toString() {
-		return "PushCampaignVo [camp_id=" + camp_id + ", reg_date=" + reg_date
-				+ ", push_total=" + push_total + ", push_succ=" + push_succ
-				+ ", push_fail=" + push_fail + ", push_open=" + push_open
-				+ ", push_click=" + push_click + ", camp_reqUid=" + camp_reqUid
-				+ "]";
+		return "PushCampaignVo [camp_id=" + camp_id + ", reg_date=" + reg_date + ", push_total=" + push_total
+				+ ", push_succ=" + push_succ + ", push_wait=" + push_wait + ", push_fail=" + push_fail + ", push_open="
+				+ push_open + ", push_click=" + push_click + ", camp_reqUid=" + camp_reqUid + "]";
 	}
-	
 	
 }

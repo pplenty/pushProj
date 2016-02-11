@@ -10,6 +10,7 @@
 		<result column="reg_date"  		property="reg_date" />
 		<result column="push_total" 	property="push_total" />
 		<result column="push_succ" 	  	property="push_succ" />
+		<result column="push_wait" 	  	property="push_wait" />
 		<result column="push_fail"   	property="push_fail" />
 		<result column="push_open" 	  	property="push_open" />
 		<result column="push_click" 	property="push_click" />
@@ -17,7 +18,7 @@
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignVoMap">
-		SELECT CAMP_ID, reg_date, push_total, push_succ, push_fail, push_open, push_click, camp_reqUid
+		SELECT CAMP_ID, reg_date, push_total, push_succ, push_wait, push_fail, push_open, push_click, camp_reqUid
 		FROM PUSH_CAMPAIGN_DETAIL
 	</select>
 

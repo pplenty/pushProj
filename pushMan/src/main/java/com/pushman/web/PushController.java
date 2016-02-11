@@ -103,8 +103,6 @@ public class PushController {
 		jo.addProperty("pushKey", "1");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		jo.addProperty("pushValue", "http://www.pushpia.com");
 		jo.addProperty("reserveTime", "20150417101702");
-//		jo.addProperty("reqUid", "pushpia_20150417101702");
-//		jo.addProperty("custId", "436149");
 
 		
 		// 동보발송(사용자 list 추가)
@@ -157,7 +155,7 @@ public class PushController {
 			}
 			
 			
-			System.out.println("결과: " + returnMsg);
+			System.out.println("응답: " + returnMsg);
 			return returnMsg.toString();
 			
 		} catch (IOException e) {

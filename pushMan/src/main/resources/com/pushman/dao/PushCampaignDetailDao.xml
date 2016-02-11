@@ -11,7 +11,7 @@
 		<result column="reqUid" 	  property="reqUid" />
 		<result column="rtn_type" 	  property="rtn_type" />
 		<result column="res_cd"   	  property="res_cd" />
-		<result column="cust_id" 	  property="cust_id" />
+		<result column="user_id" 	  property="user_id" />
 		<result column="camp_id" 	  property="camp_id" />
 	</resultMap>
 
