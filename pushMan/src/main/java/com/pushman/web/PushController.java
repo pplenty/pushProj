@@ -120,7 +120,7 @@ public class PushController {
 		
 		jo.add("list", jarr);
 		
-
+		
 		
 		try {
 			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
@@ -146,14 +146,13 @@ public class PushController {
 		return responseData;
 	}
 
-	// 웹 서버로 부터 받은 웹 페이지 결과를 콘솔에 출력하는 메소드
+	// 웹 서버로 부터 받은 웹 페이지 결과를 스트링으로 리턴하는 메소드
 	public String printByInputStream(InputStream is) {
 		byte[] buf = new byte[1024];
 		int len = -1;
 		StringBuffer returnMsg = new StringBuffer();
 		try {
 			while ((len = is.read(buf, 0, buf.length)) != -1) {
-//				System.out.write(buf, 0, len);
 				returnMsg.append(new String(buf, 0, len));
 			}
 			
