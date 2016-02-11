@@ -80,7 +80,7 @@ public class PushController {
 		URLConnection urlConnection = null;
 		String body = null;
 
-		// URL 주소
+		// 요청 URL 주소
 		String sUrl = "http://dev-api.pushpia.com/msg/send/realtime";
 
 		// 파라미터 이름
@@ -88,6 +88,9 @@ public class PushController {
 
 		// 파라미터 이름에 대한 값
 		String paramValue = null;
+		
+		// 응답 JSON
+		String responseJSON;
 
 		JsonObject jo = new JsonObject();
 		jo.addProperty("bizId", "06d388bd180a42018ba0da946d099d09");
@@ -115,6 +118,7 @@ public class PushController {
 		jo.add("list", jarr);
 		
 
+		
 		try {
 			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
 
@@ -138,13 +142,14 @@ public class PushController {
 		}
 
 		HashMap<String, String> responseData = new HashMap<String, String>();
+		
 		responseData.put("body", body);
 		responseData.put("jo", jo.toString());
 		return responseData;
 	}
 
 	// 웹 서버로 부터 받은 웹 페이지 결과를 콘솔에 출력하는 메소드
-	public void printByInputStream(InputStream is) {
+	public String printByInputStream(InputStream is) {
 		byte[] buf = new byte[1024];
 		int len = -1;
 		StringBuffer returnMsg = new StringBuffer();
@@ -154,10 +159,14 @@ public class PushController {
 				returnMsg.append(new String(buf, 0, len));
 			}
 			
+			
 			System.out.println("결과: " + returnMsg);
+			return returnMsg.toString();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return returnMsg.toString();
 	}
 
 	// 웹 서버로 파라미터명과 값의 쌍을 전송하는 메소드
