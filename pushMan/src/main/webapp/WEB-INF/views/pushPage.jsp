@@ -36,7 +36,7 @@
 <script src="./js/pushPage.js"></script>
 
 <script src="./editor/ckeditor.js"></script>
-<link rel="stylesheet" href="./editor/samples/samples.css">
+<link rel="stylesheet" href="./editor/samples/css/samples.css">
 </head>
 
 <body>
