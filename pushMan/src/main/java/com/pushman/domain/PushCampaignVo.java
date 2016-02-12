@@ -6,6 +6,11 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	private static final long serialVersionUID = 1L;
 
 	protected int camp_id;
+	protected String push_camp_title;
+	protected String push_title;
+	protected String push_msg;
+	protected String popup_content;
+	protected String inapp_content;
 	protected String reg_date;
 	protected int push_total;
 	protected int push_succ;
@@ -19,6 +24,36 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	}
 	public void setCamp_id(int camp_id) {
 		this.camp_id = camp_id;
+	}
+	public String getPush_camp_title() {
+		return push_camp_title;
+	}
+	public void setPush_camp_title(String push_camp_title) {
+		this.push_camp_title = push_camp_title;
+	}
+	public String getPush_title() {
+		return push_title;
+	}
+	public void setPush_title(String push_title) {
+		this.push_title = push_title;
+	}
+	public String getPush_msg() {
+		return push_msg;
+	}
+	public void setPush_msg(String push_msg) {
+		this.push_msg = push_msg;
+	}
+	public String getPopup_content() {
+		return popup_content;
+	}
+	public void setPopup_content(String popup_content) {
+		this.popup_content = popup_content;
+	}
+	public String getInapp_content() {
+		return inapp_content;
+	}
+	public void setInapp_content(String inapp_content) {
+		this.inapp_content = inapp_content;
 	}
 	public String getReg_date() {
 		return reg_date;
@@ -37,6 +72,12 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	}
 	public void setPush_succ(int push_succ) {
 		this.push_succ = push_succ;
+	}
+	public int getPush_wait() {
+		return push_wait;
+	}
+	public void setPush_wait(int push_wait) {
+		this.push_wait = push_wait;
 	}
 	public int getPush_fail() {
 		return push_fail;
@@ -62,18 +103,15 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	public void setCamp_reqUid(String camp_reqUid) {
 		this.camp_reqUid = camp_reqUid;
 	}
-	
-	public int getPush_wait() {
-		return push_wait;
-	}
-	public void setPush_wait(int push_wait) {
-		this.push_wait = push_wait;
-	}
 	@Override
 	public String toString() {
-		return "PushCampaignVo [camp_id=" + camp_id + ", reg_date=" + reg_date + ", push_total=" + push_total
-				+ ", push_succ=" + push_succ + ", push_wait=" + push_wait + ", push_fail=" + push_fail + ", push_open="
-				+ push_open + ", push_click=" + push_click + ", camp_reqUid=" + camp_reqUid + "]";
+		return "PushCampaignVo [camp_id=" + camp_id + ", push_camp_title=" + push_camp_title + ", push_title="
+				+ push_title + ", push_msg=" + push_msg + ", popup_content=" + popup_content + ", inapp_content="
+				+ inapp_content + ", reg_date=" + reg_date + ", push_total=" + push_total + ", push_succ=" + push_succ
+				+ ", push_wait=" + push_wait + ", push_fail=" + push_fail + ", push_open=" + push_open + ", push_click="
+				+ push_click + ", camp_reqUid=" + camp_reqUid + "]";
 	}
+	
+	
 	
 }

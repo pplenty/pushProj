@@ -25,6 +25,7 @@ import com.pushman.dao.AppUserDao;
 import com.pushman.domain.AppUserVo;
 import com.pushman.domain.PushCampaignVo;
 import com.pushman.domain.SmsUserVo;
+import com.pushman.util.PushSetting;
 
 @Controller
 public class PushController {
@@ -43,48 +44,29 @@ public class PushController {
 
 		return "pushPage";
 	}
-	
-	@RequestMapping("/pushTest")
-	@ResponseBody
-	public Object pushTest(
-			HttpServletRequest request,
-			HttpServletResponse response, HttpSession session) {
-		
-		
-		String pushCampTitle = request.getParameter("pushCampTitle");	
-		String pushPopupTitle = request.getParameter("pushPopupTitle");	
-		String pushPopupContent = request.getParameter("pushPopupContent");	
-		String innerContent = request.getParameter("innerContent");	
-
-		
-		
-		System.out.println(pushCampTitle);
-		
-		HashMap<String, String> responseData = new HashMap<String, String>();
-		responseData.put("body", "ok");
-		return responseData;
-	}
 
 	@RequestMapping("/push")
 	@ResponseBody
 	public Object push(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 
-		
-		PushCampaignVo pushCampaignVo = new PushCampaignVo();
-		
 		// ajax 요청 파라미터
 		String pushCampTitle = request.getParameter("pushCampTitle");	
 		String pushPopupTitle = request.getParameter("pushPopupTitle");	
+		String pushMsg = request.getParameter("pushPopupContent");// 이부분 인풋 추가해야함	
 		String pushPopupContent = request.getParameter("pushPopupContent");	
 		String innerContent = request.getParameter("innerContent");	
+		
+		PushCampaignVo pushCampaignVo = new PushCampaignVo();
+		
+		
 		
 		URL url = null;
 		URLConnection urlConnection = null;
 		String body = null;
 
 		// 요청 URL 주소(고정 값)
-		String sUrl = "http://dev-api.pushpia.com/msg/send/realtime";
+		String requestUrl = PushSetting.REQUEST_URL;
 
 		// 파라미터 이름(고정 값)
 		String paramName = "d";
@@ -96,14 +78,15 @@ public class PushController {
 		String responseJSON = null;
 
 		JsonObject jo = new JsonObject();
-		jo.addProperty("bizId", "06d388bd180a42018ba0da946d099d09");
-		jo.addProperty("msgType", "T");
+		jo.addProperty("bizId", PushSetting.TEXT_PUSH_BIZ_KEY); // biz key
+		jo.addProperty("msgType", "T"); // TEXT
 		jo.addProperty("pushTime", 1800);// 고정 값(발송 유효 시간)
-		jo.addProperty("pushTitle", pushPopupTitle);
-		jo.addProperty("pushMsg", pushPopupContent);
-		jo.addProperty("inappContent", innerContent);
+		jo.addProperty("pushTitle", pushPopupTitle);// 팝업, 상태창 제목
+		jo.addProperty("pushMsg", pushMsg);// 상태창 메시지
+		jo.addProperty("popupContent", pushPopupContent);//팝업 내용
+		jo.addProperty("inappContent", innerContent);// 인앱 메시지
 		jo.addProperty("pushKey", "l");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
-		jo.addProperty("pushValue", "http://www.pushpia.com");
+		jo.addProperty("pushValue", PushSetting.PUSHVALUE_URL);
 		jo.addProperty("reserveTime", "20150417101702");
 		System.out.println(jo);
 
@@ -127,7 +110,7 @@ public class PushController {
 			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
 
 			// Post방식으로 전송 하기(푸시 요청)
-			url = new URL(sUrl);
+			url = new URL(requestUrl);
 			urlConnection = url.openConnection();
 			urlConnection.setDoOutput(true);
 
@@ -208,7 +191,7 @@ public class PushController {
 		
 		try {
 			paramValue = URLEncoder.encode(jo.toString(), "UTF-8");
-			System.out.println("url인코딩: " + paramValue);
+			System.out.println("http://dev-api.pushpia.com/msg/send/realtime?d=" + paramValue);
 			// Post방식으로 전송 하기(푸시 요청)
 			url = new URL(sUrl);
 			urlConnection = url.openConnection();

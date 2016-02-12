@@ -42,6 +42,7 @@ public class PushReportController {
 		model.addAttribute("name", smsUser.getName());
 		
 
+		// SQL(select문) 조건 parameter 세팅
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 	    sqlParams.put("startIndex", ListPagingUtil.getStartIndexOfPage(pageNo, pageSize));
 	    sqlParams.put("pageSize", pageSize);
@@ -51,13 +52,14 @@ public class PushReportController {
 		
 		List<PushCampaignVo> pushList = pushCampaignDao.selectList(sqlParams);
 
-		model.addAttribute("countList", pushList.size());
-		model.addAttribute("list", pushList);
 		
-		model.addAttribute("pageNo", pageNo);
-		model.addAttribute("pageSize", pageSize);
-		model.addAttribute("maxPage",
-				ListPagingUtil.countTotalPage(pageSize, pushList.size()));
+		//View로 값 전달
+		model.addAttribute("countList", pushList.size());
+		model.addAttribute("list", 		pushList);
+		
+		model.addAttribute("pageNo", 	pageNo);
+		model.addAttribute("pageSize",  pageSize);
+		model.addAttribute("maxPage", 	ListPagingUtil.countTotalPage(pageSize, pushList.size()));
 
 		return "pushReport";
 	}

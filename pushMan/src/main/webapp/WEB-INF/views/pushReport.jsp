@@ -80,9 +80,9 @@
 				<c:forEach items="${list}" var="pushCamp">
 					<tr cno="${pushCamp.camp_id}">
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
-								   title="$pushCamp.push_title}" 
-								   data-content="${pushCamp.camp_reqUid}"
-								   style="text-decoration:none;">$pushCamp.push_title}</a></td>
+								   title="{$pushCamp.push_title}" 
+								   data-content="${pushCamp.inapp_content}"
+								   style="text-decoration:none;">${pushCamp.push_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>
 							<td style="text-align: center;">${pushCamp.push_succ}</td><!-- 성공 -->
