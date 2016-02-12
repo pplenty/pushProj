@@ -30,13 +30,12 @@
     <![endif]-->
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js">
-	<script src="//cdn.ckeditor.com/4.5.7/basic/ckeditor.js">
 </script>
 
 <script src="./js/pushPage.js"></script>
 
 <script src="./editor/ckeditor.js"></script>
-<link rel="stylesheet" href="./editor/samples/css/samples.css">
+<!-- <link rel="stylesheet" href="./editor/samples/css/samples.css"> -->
 </head>
 
 <body>
