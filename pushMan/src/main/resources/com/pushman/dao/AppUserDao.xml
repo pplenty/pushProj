@@ -18,9 +18,14 @@
   
   <insert id="insert" parameterType="AppUserVo"
         keyColumn="user_id" keyProperty="user_id" useGeneratedKeys="true">
-      INSERT INTO app_user (mobile, cust_id, reg_date)
-      VALUES (#{mobile}, #{cust_id}, SYSDATE())
+      INSERT INTO app_user (mobile, cust_id, reg_date, last_login_date)
+      VALUES (#{mobile}, #{cust_id}, SYSDATE(), SYSDATE())
   </insert>
+ 
+  <update id="update" parameterType="AppUserVo"
+      keyColumn="user_id" keyProperty="user_id" useGeneratedKeys="true">
+      UPDATE app_user SET last_login_date=SYSDATE() WHERE mobile=#{mobile}
+  </update>
 	
 	<select id="countAll" parameterType="map" resultType="int">
 		SELECT

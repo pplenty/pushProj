@@ -22,6 +22,7 @@ public class TestController {
 	
 	@RequestMapping("/test")
 	@ResponseBody
+	//최초 앱 실행시 자동 로그인
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -36,5 +37,23 @@ public class TestController {
 		appUserVo.setMobile(phoneNum);
 		
 		appUserDao.insert(appUserVo);
+	}
+	
+	@RequestMapping("/test2")
+	@ResponseBody
+	//앱을 실행할 때마다 최근 접속 시간 업데이트
+	protected void doGetConnect(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		String mobile = request.getParameter("mobile");
+		String connect = request.getParameter("connect");
+
+		System.out.println(mobile);
+		System.out.println(connect);
+		
+		AppUserVo appUserVo = new AppUserVo();
+		appUserVo.setMobile(mobile);
+		
+		appUserDao.update(appUserVo);
 	}
 }

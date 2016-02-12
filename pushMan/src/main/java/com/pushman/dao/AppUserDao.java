@@ -11,6 +11,8 @@ import com.pushman.domain.AppUserVo;
 public interface AppUserDao {
 	int insert(AppUserVo appUserVo);
 	
+	int update(AppUserVo appUserVo);
+	
 	int countAll(Map<String, Object> paramMap);
 	
 	List<AppUserVo> selectListAll(Map<String, Object> paramMap);
