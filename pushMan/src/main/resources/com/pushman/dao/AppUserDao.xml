@@ -18,8 +18,8 @@
   
   <insert id="insert" parameterType="AppUserVo"
         keyColumn="user_id" keyProperty="user_id" useGeneratedKeys="true">
-      INSERT INTO SMS_USER (user_email, user_name, user_mobile, user_pwd, user_reg_date)
-      VALUES (#{cust_id},#{mobile}, #{mobile}, #{password}, SYSDATE())
+      INSERT INTO app_user (mobile, cust_id, reg_date)
+      VALUES (#{mobile}, #{cust_id}, SYSDATE())
   </insert>
 	
 	<select id="countAll" parameterType="map" resultType="int">
@@ -35,12 +35,3 @@
 	</select>
 	
 </mapper>
-
-
-
-
-
-
-
-
-
