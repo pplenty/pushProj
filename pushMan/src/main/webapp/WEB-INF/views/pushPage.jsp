@@ -70,9 +70,15 @@
 					<!-- 푸시 작성 공통 내용 -->
 					<label for="pushPopupTitle">팝업 제목</label> <input type="text"
 						class="form-control" id="pushPopupTitle" maxlength="30"
-						placeholder="팝업 제목" style="width: 60%">
+						placeholder="팝업 제목" style="width: 60%"><br>
+					<select name="받는 사람">
+					    <option value="">대상자 선택</option>
+					    <option value="전체 사용자">전체 사용자</option>
+					    <option value="로그인 사용자">로그인 사용자</option>
+					</select>
 
 					<!-- 텍스트 푸시 내용 -->
+					<p></p>
 					<div id="textPushContent">
 						<label for="pushPopupContent">내 용</label><br>
 						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
@@ -83,7 +89,7 @@
 						<textarea id="innerContent" rows="15" cols="30" maxlength="90"
 							onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
 							placeholder="앱 내 내용을 입력해 주세요"></textarea>
-						<span id="byteInfo">0</span>/90Byte
+						<span id="byteInfo">0</span>/90Byte <br>
 						<input type="button" id="textPushBtn" class="btn btn-success btn-lg"
 					value="PUSH!!" />
 					</div>
@@ -91,8 +97,9 @@
 					<!-- 리치 푸시 내용 -->
 					<div id="richPushContent" style="display: none;">
 						<label for="pushPopupContent">내 용</label><br>
-						<textarea class="ckeditor" cols="1" id="richPushPopupContentEditor"
-							name="richPushPopupContentEditor" rows="15">
+						<textarea class="ckeditor" cols="1"
+							id="richPushPopupContentEditor" name="richPushPopupContentEditor"
+							rows="15">
 					</textarea>
 						<span id="byteInfo">0</span>/90Byte <br> <label
 							for="innerContent">앱 내 메시지 내용</label><br>
@@ -100,8 +107,8 @@
 							name="richInnerContentEditor" rows="15">
 					</textarea>
 						<span id="byteInfo">0</span>/90Byte <br>
-					<input type="button" id="richPushBtn" class="btn btn-success btn-lg"
-					value="PUSH!!" />
+						<input type="button"
+							id="richPushBtn" class="btn btn-success btn-lg" value="PUSH!!" />
 					</div>
 				</div>
 
