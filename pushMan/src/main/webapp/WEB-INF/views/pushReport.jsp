@@ -59,39 +59,40 @@
 		</form>
           <h2 class="sub-header">발송 결과  [ ${countList}건 ] </h2>
           <div class="table-responsive">
-          <div class="hiddenMap" hm='${num_error}' style="display:none;"></div>
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>캠페인</th>
-                  <th style="width: 10%; text-align: center;">종류</th>
+                  <th>제목</th>
                   <th style="width: 20%; text-align: center;">발송시간</th>
                   <th style="width: 8%; text-align: center;">전체</th>
                   <th style="width: 8%; text-align: center;">성공</th>
                   <th style="width: 8%; text-align: center;">대기</th>
                   <th style="width: 8%; text-align: center;">실패</th>
+                  <th style="width: 8%; text-align: center;">오픈</th>
+                  <th style="width: 8%; text-align: center;">클릭</th>
                   <th style="width: 15%; text-align: center;">발송 결과</th>
                 </tr>
               </thead>
               <tbody class="campaign">
               	<c:if test="${list == '[]'}">
-              		<tr><td colspan=8 style="text-align: center;">데이터가 없습니다.</td></tr>
+              		<tr><td colspan=9 style="text-align: center;">데이터가 없습니다.</td></tr>
               	</c:if>
-				<c:forEach items="${list}" var="campaign">
-					<tr cno="${campaign.camp_no}">
+				<c:forEach items="${list}" var="pushCamp">
+					<tr cno="${pushCamp.camp_id}">
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
-								   title="${campaign.camp_title}" 
-								   data-content="${campaign.camp_content}"
-								   style="text-decoration:none;">${campaign.camp_title}</a></td>
-							<td style="text-align: center;">${campaign.attr_sms}</td>
-							<td style="text-align: center;">${campaign.send_date}</td>
-							<td style="text-align: center;">${campaign.send_total}</td>
-							<td style="text-align: center;">0</td><!-- 성공 -->
-							<td style="text-align: center;">0</td><!-- 대기 -->
-							<td style="text-align: center;">0</td><!-- 실패 -->
+								   title="$pushCamp.push_title}" 
+								   data-content="${pushCamp.camp_reqUid}"
+								   style="text-decoration:none;">$pushCamp.push_title}</a></td>
+							<td style="text-align: center;">${pushCamp.reg_date}</td>
+							<td style="text-align: center;">${pushCamp.push_total}</td>
+							<td style="text-align: center;">${pushCamp.push_succ}</td><!-- 성공 -->
+							<td style="text-align: center;">${pushCamp.push_wait}</td><!-- 대기 -->
+							<td style="text-align: center;">${pushCamp.push_fail}</td><!-- 실패 -->
+							<td style="text-align: center;">${pushCamp.push_open}</td><!-- 오픈 -->
+							<td style="text-align: center;">${pushCamp.push_click}</td><!-- 클릭 -->
 							<td style="text-align: center;">
 								<button class="btn detailBtn" 
-										cno="${campaign.camp_no}"> 상세</button></td>
+										cno="${pushCamp.camp_id}"> 상세</button></td>
 					</tr>
 				</c:forEach>
 

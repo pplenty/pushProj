@@ -51,6 +51,14 @@ public class PushReportController {
 		
 		List<PushCampaignVo> pushList = pushCampaignDao.selectList(sqlParams);
 
+		model.addAttribute("countList", pushList.size());
+		model.addAttribute("list", pushList);
+		
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("maxPage",
+				ListPagingUtil.countTotalPage(pageSize, pushList.size()));
+
 		return "pushReport";
 	}
 }
