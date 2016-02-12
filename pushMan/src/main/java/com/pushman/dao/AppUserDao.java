@@ -15,3 +15,5 @@ public interface AppUserDao {
 	
 	List<AppUserVo> selectListAll(Map<String, Object> paramMap);
 }
+
+
