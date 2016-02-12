@@ -9,7 +9,7 @@
             <li class="sendSideBar"><a href="senderPage.do">문자 보내기</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li class="sendSideBar"><a href="">푸시 결과</a></li>
+            <li class="sendSideBar"><a href="pushList.do">푸시 결과</a></li>
             <li class="sendSideBar"><a href="pushPage.do">푸시 보내기</a></li>
           </ul>
         </div>
