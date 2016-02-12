@@ -19,6 +19,7 @@ import com.pushman.dao.CampaignDao;
 import com.pushman.dao.CampaignDetailDao;
 import com.pushman.domain.CampaignVo;
 import com.pushman.domain.SmsUserVo;
+import com.pushman.util.ListPagingUtil;
 
 @Controller
 public class ReportController {
@@ -42,7 +43,7 @@ public class ReportController {
 		model.addAttribute("name", smsUser.getName());
 		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-	    sqlParams.put("startIndex", getStartIndexOfPage(pageNo, pageSize));
+	    sqlParams.put("startIndex", ListPagingUtil.getStartIndexOfPage(pageNo, pageSize));
 	    sqlParams.put("pageSize", pageSize);
 	    sqlParams.put("word", word);
 	    sqlParams.put("order", order);
@@ -87,7 +88,7 @@ public class ReportController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("maxPage",
-				countTotalPage(pageSize, countList));
+				ListPagingUtil.countTotalPage(pageSize, countList));
 		
 
 		model.addAttribute("num_error", jo);// camp별 성공건수가 담긴 맵
@@ -111,7 +112,7 @@ public class ReportController {
 		model.addAttribute("name", smsUser.getName());
 		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-	    sqlParams.put("startIndex", getStartIndexOfPage(pageNo, pageSize));
+	    sqlParams.put("startIndex", ListPagingUtil.getStartIndexOfPage(pageNo, pageSize));
 	    sqlParams.put("pageSize", pageSize);
 	    sqlParams.put("word", word);
 	    sqlParams.put("order", order);
@@ -125,7 +126,7 @@ public class ReportController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("maxPage",
-				countTotalPage(pageSize, countList));
+				ListPagingUtil.countTotalPage(pageSize, countList));
 		model.addAttribute("cno", cno);
 		model.addAttribute("order", order);
 
@@ -189,21 +190,5 @@ public class ReportController {
 
 		return "./sendPage";
 	}
-	
-	//현재페이지 시작 인덱스
-	private int getStartIndexOfPage(int pageNo, int pageSize) {
-		return (pageNo - 1) * pageSize;
-	}
-
-	// 전체 페이지 수
-	private int countTotalPage(int pageSize, int totalRecords) {
-		int maxPage = totalRecords / pageSize;
-		if (totalRecords % pageSize > 0) {
-			maxPage++;
-		}
-		return maxPage;
-	}
-	
-	
 
 }
