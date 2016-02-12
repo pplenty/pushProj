@@ -29,8 +29,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-<script src="//code.jquery.com/jquery-1.12.0.min.js">
-</script>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 
 <script src="./js/pushPage.js"></script>
 
