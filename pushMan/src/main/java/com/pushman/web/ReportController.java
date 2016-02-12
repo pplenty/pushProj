@@ -19,7 +19,7 @@ import com.pushman.dao.CampaignDao;
 import com.pushman.dao.CampaignDetailDao;
 import com.pushman.domain.CampaignVo;
 import com.pushman.domain.SmsUserVo;
-import com.pushman.util.ListPagingUtil;
+import com.pushman.util.CommonMethod;
 
 @Controller
 public class ReportController {
@@ -43,7 +43,7 @@ public class ReportController {
 		model.addAttribute("name", smsUser.getName());
 		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-	    sqlParams.put("startIndex", ListPagingUtil.getStartIndexOfPage(pageNo, pageSize));
+	    sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
 	    sqlParams.put("pageSize", pageSize);
 	    sqlParams.put("word", word);
 	    sqlParams.put("order", order);
@@ -88,7 +88,7 @@ public class ReportController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("maxPage",
-				ListPagingUtil.countTotalPage(pageSize, countList));
+				CommonMethod.countTotalPage(pageSize, countList));
 		
 
 		model.addAttribute("num_error", jo);// camp별 성공건수가 담긴 맵
@@ -112,7 +112,7 @@ public class ReportController {
 		model.addAttribute("name", smsUser.getName());
 		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-	    sqlParams.put("startIndex", ListPagingUtil.getStartIndexOfPage(pageNo, pageSize));
+	    sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
 	    sqlParams.put("pageSize", pageSize);
 	    sqlParams.put("word", word);
 	    sqlParams.put("order", order);
@@ -126,7 +126,7 @@ public class ReportController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("maxPage",
-				ListPagingUtil.countTotalPage(pageSize, countList));
+				CommonMethod.countTotalPage(pageSize, countList));
 		model.addAttribute("cno", cno);
 		model.addAttribute("order", order);
 

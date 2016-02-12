@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pushman.dao.AppUserDao;
 import com.pushman.dao.PushCampaignDao;
-import com.pushman.domain.CampaignVo;
 import com.pushman.domain.PushCampaignVo;
 import com.pushman.domain.SmsUserVo;
-import com.pushman.util.ListPagingUtil;
+import com.pushman.util.CommonMethod;
 
 @Controller
 public class PushReportController {
@@ -44,7 +43,7 @@ public class PushReportController {
 
 		// SQL(select문) 조건 parameter 세팅
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-	    sqlParams.put("startIndex", ListPagingUtil.getStartIndexOfPage(pageNo, pageSize));
+	    sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
 	    sqlParams.put("pageSize", pageSize);
 	    sqlParams.put("word", word);
 	    sqlParams.put("order", order);
@@ -59,7 +58,7 @@ public class PushReportController {
 		
 		model.addAttribute("pageNo", 	pageNo);
 		model.addAttribute("pageSize",  pageSize);
-		model.addAttribute("maxPage", 	ListPagingUtil.countTotalPage(pageSize, pushList.size()));
+		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, pushList.size()));
 
 		return "pushReport";
 	}

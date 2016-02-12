@@ -37,6 +37,7 @@ import com.pushman.dao.CampaignDetailDao;
 import com.pushman.domain.CampaignDetailVo;
 import com.pushman.domain.CampaignVo;
 import com.pushman.domain.SmsUserVo;
+import com.pushman.util.CommonMethod;
 
 
 @Controller
@@ -169,7 +170,7 @@ public class SendController {
 	    
 	    int lastIndexForDot = originalFilename.lastIndexOf(".");
 	    String fileName = System.currentTimeMillis() + "-" 
-	                      + count() 
+	                      + CommonMethod.count()
 	                      + originalFilename.substring(lastIndexForDot);
 		
 
@@ -218,8 +219,9 @@ public class SendController {
 	    return responseData;
 	}
 	
-	int count = 0;
+	
 	// 오직 한 번에 한 스레드 만이 카운트 값을 얻을 수 있다. 중복 불가!
+	int count = 0;
 	synchronized private int count() {
 		if (count == 100) {
 			count = 0;

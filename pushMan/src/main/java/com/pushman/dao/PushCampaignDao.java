@@ -12,5 +12,7 @@ public interface PushCampaignDao {
 	int insert(PushCampaignVo pushCampaignVo);
 
 	List<PushCampaignVo> selectList(Map<String, Object> paramMap);
+	
+	int updateInit(PushCampaignVo pushCampaignVo);
 
 }

@@ -36,10 +36,18 @@
 		INSERT INTO PUSH_CAMPAIGN
 			(push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			reg_date, push_total, push_succ, push_wait, push_fail, push_open, 
-			push_click, camp_reqUid)
+			push_click)
 		VALUES (#{push_camp_title}, #{push_title},#{push_msg}, #{popup_content}, #{inapp_content}, 
-				SYSDATE(), #{push_total}, 0, 0, 0, 0, 0, #{camp_reqUid})
+				SYSDATE(), 0, 0, 0, 0, 0, 0)
 	</insert>
+	
+	
+	<update id="updateInit" parameterType="PushCampaignVo" keyColumn="camp_id"
+		keyProperty="camp_id" useGeneratedKeys="true">
+		UPDATE PUSH_CAMPAIGN 
+		SET push_total=${push_total}, camp_reqUid='${camp_reqUid}'
+		WHERE camp_id=${camp_id}
+	</update>
 
 
 </mapper>

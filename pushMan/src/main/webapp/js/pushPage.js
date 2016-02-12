@@ -10,7 +10,8 @@ $(document).ready(function() {
 				pushCampTitle	 : $('#pushCampTitle').val(),
 				pushPopupTitle 	 : $('#pushPopupTitle').val(),
 				pushPopupContent : $('#pushPopupContent').val(),
-				innerContent 	 : $('#innerContent').val()
+				innerContent 	 : $('#innerContent').val(),
+				pushType		 : 'text'
 			},
 			success : function(result) {
 				console.log(result);
@@ -27,14 +28,15 @@ $(document).ready(function() {
 	$('#richPushBtn').click(function(e) {
 
 		$.ajax({
-			url : './richPush.do',
+			url : './push.do',
 			method : 'POST',
             dataType: 'html',
 			data : {
 				pushCampTitle	 : $('#pushCampTitle').val(),
 				pushPopupTitle 	 : $('#pushPopupTitle').val(),
 				pushPopupContent : CKEDITOR.instances.richPushPopupContentEditor.getData(),
-				innerContent 	 : CKEDITOR.instances.richInnerContentEditor.getData()
+				innerContent 	 : CKEDITOR.instances.richInnerContentEditor.getData(),
+				pushType		 : 'html'
 			},
 			success : function(result) {
 				console.log(result);
