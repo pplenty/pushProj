@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" xmlns:task="http://www.springframework.org/schema/task"
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring" 
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -16,8 +21,15 @@
         http://www.springframework.org/schema/jee
         http://www.springframework.org/schema/jee/spring-jee.xsd
         http://mybatis.org/schema/mybatis-spring
-        http://mybatis.org/schema/mybatis-spring.xsd">
+        http://mybatis.org/schema/mybatis-spring.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
+
+
+	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
+	<task:executor id="taskExecutor" pool-size="1" />
+	<task:scheduler id="taskScheduler" />
 
 	<!-- 페이지 컨트롤러는 제외하고 객체 준비하는 베이스 패키지 -->
 	<context:component-scan base-package="com.pushman">

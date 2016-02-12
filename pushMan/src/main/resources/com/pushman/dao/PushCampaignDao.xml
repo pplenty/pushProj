@@ -37,7 +37,7 @@
 			(push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			reg_date, push_total, push_succ, push_wait, push_fail, push_open, 
 			push_click)
-		VALUES (#{push_camp_title}, #{push_title},#{push_msg}, #{popup_content}, #{inapp_content}, 
+		VALUES (#{push_camp_title}, #{push_title}, #{push_msg}, #{popup_content}, #{inapp_content}, 
 				SYSDATE(), 0, 0, 0, 0, 0, 0)
 	</insert>
 	

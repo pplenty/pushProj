@@ -102,6 +102,8 @@ public class PushController {
 			// 타겟별 상세 캠페인 등록
 			pushCampaignDetailVo = new PushCampaignDetailVo();
 			pushCampaignDetailVo.setReqUid(campReqUid + appUserVo.getCust_id());
+			pushCampaignDetailVo.setCamp_id(pushCampaignVo.getCamp_id());
+			pushCampaignDetailVo.setUser_id(appUserVo.getUser_id());
 			pushCampaignDetailDao.insert(pushCampaignDetailVo);
 			
 			// 타겟 리스트 파라미터에 추가

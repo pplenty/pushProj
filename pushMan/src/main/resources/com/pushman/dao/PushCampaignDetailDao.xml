@@ -16,10 +16,17 @@
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
-		SELECT CD_NO, LOG_MSG_SEQ, RCV_NAME, RCV_MOB, SEND_ERROR, SEND_TIME,
-		CAMP_NO
+		SELECT cd_no, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id
 		FROM CAMPAIGN_DETAIL
 	</select>
+	
+	<insert id="insert" parameterType="PushCampaignDetailVo" keyColumn="cd_no"
+		keyProperty="cd_no" useGeneratedKeys="true">
+		INSERT INTO PUSH_CAMPAIGN_DETAIL
+			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id)
+		VALUES 
+			(SYSDATE(), '${reqUid}', null, null, ${user_id}, ${camp_id})
+	</insert>
 	
 </mapper>
 
