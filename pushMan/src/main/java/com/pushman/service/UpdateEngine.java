@@ -1,5 +1,6 @@
 package com.pushman.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,9 +69,15 @@ public class UpdateEngine {
 
 				// 데이터소스 SET - 로컬 DB
 				MultipleDataSource.setDataSourceKey("localDB");
-				// 
-				pushCampaignDetailVo.setUser_id(
-						appUserDao.selectOneByCustId(tb_SEND_QUE_LOG_Vo.getCust_id()).getUser_id());
+				String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
+				// 로그 예외처리
+				if(custId != null) {
+					appUserDao.selectOneByCustId(custId);
+				}
+				
+				
+				pushCampaignDetailDao.updatePushLog(pushCampaignDetailVo);
+				
 				
 				
 			}

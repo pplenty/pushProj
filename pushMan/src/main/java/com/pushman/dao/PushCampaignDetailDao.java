@@ -16,4 +16,6 @@ public interface PushCampaignDetailDao {
 	List<PushCampaignDetailVo> selectListLogIsNull();
 
 	int getMaxLogId();
+	
+	int updatePushLog(PushCampaignDetailVo pushCampaignDetailVo);
 }
