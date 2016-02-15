@@ -61,6 +61,9 @@ public class PushController {
 	public Object push(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 
+		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
+		if (smsUser == null) return "index";// 세션 없을 시 메인으로
+
 		// ajax 요청 파라미터 받기
 		String pushCampTitle = request.getParameter("pushCampTitle");	
 		String pushPopupTitle = request.getParameter("pushPopupTitle");	
@@ -82,6 +85,7 @@ public class PushController {
 		pushCampaignVo.setPush_msg(pushMsg);
 		pushCampaignVo.setPopup_content(pushPopupContent);
 		pushCampaignVo.setInapp_content(innerContent);
+		pushCampaignVo.setUser_no(smsUser.getNo());
 		
 		pushCampaignDao.insert(pushCampaignVo);// INSERT 캠페인
 		campReqUid += pushCampaignVo.getCamp_id();// campReqUid에 camp_id 넣기
