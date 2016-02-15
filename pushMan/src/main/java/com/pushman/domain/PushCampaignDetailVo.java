@@ -9,7 +9,7 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	protected int cd_id;
 	protected String reg_date;
 	protected String reqUid;
-	protected String rtn_type;
+	protected char rtn_type;
 	protected String res_cd;
 	protected int camp_id;
 	protected int user_id;
@@ -32,10 +32,10 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	public void setReqUid(String reqUid) {
 		this.reqUid = reqUid;
 	}
-	public String getRtn_type() {
+	public char getRtn_type() {
 		return rtn_type;
 	}
-	public void setRtn_type(String rtn_type) {
+	public void setRtn_type(char rtn_type) {
 		this.rtn_type = rtn_type;
 	}
 	public String getRes_cd() {

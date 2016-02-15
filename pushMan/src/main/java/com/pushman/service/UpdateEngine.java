@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.pushman.dao.AppUserDao;
 import com.pushman.dao.PushCampaignDetailDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
 import com.pushman.domain.PushCampaignDetailVo;
@@ -17,6 +18,8 @@ import com.pushman.util.PushSetting;
 
 @Service
 public class UpdateEngine {
+	@Autowired
+	AppUserDao appUserDao;
 	@Autowired
 	PushCampaignDetailDao pushCampaignDetailDao;
 	@Autowired
@@ -40,7 +43,7 @@ public class UpdateEngine {
 		}
 		 
 		 
-		 // 업데이트 된 게 있을 때 
+		 // 업데이트 된 로그가 있을 때 
 		if (!isNullList.isEmpty()) {
 
 			// 데이터소스 SET - 푸시피아 DB
@@ -52,14 +55,22 @@ public class UpdateEngine {
 			List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListByRtnType(sqlParams);
 			
 			System.out.println(pushLogList.get(0));
+			PushCampaignDetailVo pushCampaignDetailVo;
 			for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
-				tb_SEND_QUE_LOG_Vo.getReg_date();
-				tb_SEND_QUE_LOG_Vo.getReq_uid();
-				tb_SEND_QUE_LOG_Vo.getRtn_type();
-				tb_SEND_QUE_LOG_Vo.getRes_cd();
-				tb_SEND_QUE_LOG_Vo.getSend_que_id();
-//				tb_SEND_QUE_LOG_Vo.get
-//				tb_SEND_QUE_LOG_Vo.getSend_que_id();
+				pushCampaignDetailVo = new PushCampaignDetailVo();
+				pushCampaignDetailVo.setReg_date(tb_SEND_QUE_LOG_Vo.getReg_date());
+				pushCampaignDetailVo.setReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid());
+				pushCampaignDetailVo.setRtn_type(tb_SEND_QUE_LOG_Vo.getRtn_type());
+				pushCampaignDetailVo.setRes_cd(tb_SEND_QUE_LOG_Vo.getRes_cd());
+				pushCampaignDetailVo.setPush_log_id(tb_SEND_QUE_LOG_Vo.getSend_que_id());
+				pushCampaignDetailVo.setCamp_id(getCampIdFromReqUid(pushCampaignDetailVo.getReqUid()));
+				pushCampaignDetailVo.setCd_id(getCdIdFromReqUid(pushCampaignDetailVo.getReqUid()));
+
+				// 데이터소스 SET - 로컬 DB
+				MultipleDataSource.setDataSourceKey("localDB");
+				// 
+				pushCampaignDetailVo.setUser_id(
+						appUserDao.selectOneByCustId(tb_SEND_QUE_LOG_Vo.getCust_id()).getUser_id());
 				
 				
 			}
@@ -78,10 +89,28 @@ public class UpdateEngine {
 //	 }
 	 
 	 
-	 //ReqUid에서 cd_id 뽑기
-	 public String getCdIdFromReqUid(String ReqUid) {
-		 String[] result = ReqUid.split("_");
-		 return result[result.length - 1];
-	 }
+	// ReqUid에서 cd_id 뽑기
+	public int getCdIdFromReqUid(String ReqUid) {
+		String[] resultSet = ReqUid.split("_");
+		int result = 0;
+		try {
+			result =  Integer.parseInt(resultSet[resultSet.length - 1]);
+		} catch (Exception e) {
+			return 0;
+		}
+		return result;
+	}
+
+	// ReqUid에서 camp_id 뽑기(project_pushType_campId_cdId)
+	public int getCampIdFromReqUid(String ReqUid) {
+		String[] resultSet = ReqUid.split("_");
+		int result = 0;
+		try {
+			result =  Integer.parseInt(resultSet[resultSet.length - 2]);
+		} catch (Exception e) {
+			return 0;
+		}
+		return result;
+	}
 	
 }

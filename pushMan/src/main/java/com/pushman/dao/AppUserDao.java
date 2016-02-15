@@ -16,6 +16,8 @@ public interface AppUserDao {
 	int countAll(Map<String, Object> paramMap);
 	
 	List<AppUserVo> selectListAll(Map<String, Object> paramMap);
+	
+	AppUserVo selectOneByCustId(String cust_id);
 }
 
 
