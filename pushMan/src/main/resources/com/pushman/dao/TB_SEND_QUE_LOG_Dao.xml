@@ -34,7 +34,7 @@
       FROM TB_SEND_QUE_LOG
       WHERE biz_id='06d388bd180a42018ba0da946d099d09' 
       		OR biz_id='f91e805198204094b753262839e3e551'
-  </select>
+  	</select>
   
   
     <select id="selectListByRtnType" parameterType="map" resultMap="TB_SEND_QUE_LOG_VoMap">
@@ -45,7 +45,26 @@
       WHERE (biz_id='${text_biz_id}' 
       		OR biz_id='${rich_biz_id}' )
       		AND rtn_type='${rtn_type}'
-  </select>
+  	</select>
+  	
+    <select id="selectListByRtnType2" parameterType="map" resultMap="TB_SEND_QUE_LOG_VoMap">
+      SELECT ID, BIZ_ID, REQ_UID, CUST_ID, RTN_TYPE, RES_CD, DATA, 
+      			 DATE_FORMAT(RES_DATE, '%Y-%m-%d %H:%m:%s') RES_DATE, CHECK_FLAG, 
+      			 DATE_FORMAT(REG_DATE, '%Y-%m-%d %H:%m:%s') REG_DATE, APP_USER_ID
+      FROM TB_SEND_QUE_LOG
+      WHERE (biz_id='${text_biz_id}' 
+      		OR biz_id='${rich_biz_id}' )
+      		AND (rtn_type='R' OR rtn_type='C')
+      		AND ID > ${maxID}
+  	</select>
+
+	<select id="getMaxLogId" parameterType="map" resultType="int">
+		SELECT MAX(ID)
+		FROM TB_SEND_QUE_LOG
+      	WHERE (biz_id='${text_biz_id}' 
+      		OR biz_id='${rich_biz_id}' )
+      		AND (rtn_type='R' OR rtn_type='C')
+	</select>
   
   
 </mapper>
