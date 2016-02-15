@@ -17,7 +17,7 @@ public class UpdateEngine {
 	
 	// 푸시 로그 스케줄러
 	 @Scheduled(fixedDelay = 5000)
-	 public void getPushLogSchedular() throws RuntimeException {
+	 public void updatePushLogSchedular() throws RuntimeException {
 
 		 MultipleDataSource.setDataSourceKey("localDB");
 		 MultipleDataSource.setDataSourceKey("pushpiaDB");
@@ -32,5 +32,10 @@ public class UpdateEngine {
 //	 public void HOWSchedular() throws RuntimeException {
 //		 System.out.println("02시 00분");
 //	 }
+	 
+	 //ReqUid
+	 public void getCdIdFromReqUid(String ReqUid) {
+		 
+	 }
 	
 }

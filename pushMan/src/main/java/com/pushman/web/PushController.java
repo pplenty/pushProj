@@ -88,7 +88,7 @@ public class PushController {
 		pushCampaignVo.setUser_no(smsUser.getNo());
 		
 		pushCampaignDao.insert(pushCampaignVo);// INSERT 캠페인
-		campReqUid += pushCampaignVo.getCamp_id() + "_";// campReqUid에 camp_id 넣기
+		campReqUid += pushCampaignVo.getCamp_id();// campReqUid에 camp_id 넣기
 		
 		
 
@@ -105,14 +105,14 @@ public class PushController {
 
 			// 타겟별 상세 캠페인 등록
 			pushCampaignDetailVo = new PushCampaignDetailVo();
-			pushCampaignDetailVo.setReqUid(campReqUid + appUserVo.getCust_id());
+//			pushCampaignDetailVo.setReqUid(campReqUid + appUserVo.getCust_id());
 			pushCampaignDetailVo.setCamp_id(pushCampaignVo.getCamp_id());
 			pushCampaignDetailVo.setUser_id(appUserVo.getUser_id());
 			pushCampaignDetailDao.insert(pushCampaignDetailVo);
 			
 			// 타겟 리스트 파라미터에 추가
 			targetJSON = new JsonObject();
-			targetJSON.addProperty("reqUid", campReqUid + pushCampaignDetailVo.getCd_id());
+			targetJSON.addProperty("reqUid", campReqUid + "_" + pushCampaignDetailVo.getCd_id());
 			targetJSON.addProperty("custId", appUserVo.getCust_id());
 			jarr.add(targetJSON);
 		}
