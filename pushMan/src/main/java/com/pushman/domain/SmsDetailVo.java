@@ -10,6 +10,7 @@ public class SmsDetailVo implements Serializable {
 	protected String tg_mobile;
 	protected String error_code;
 	protected int cd_id;
+	protected int MSG_SEQ;
 	public int getSms_id() {
 		return sms_id;
 	}
@@ -39,6 +40,12 @@ public class SmsDetailVo implements Serializable {
 	}
 	public void setCd_id(int cd_id) {
 		this.cd_id = cd_id;
+	}
+	public int getMSG_SEQ() {
+		return MSG_SEQ;
+	}
+	public void setMSG_SEQ(int mSG_SEQ) {
+		MSG_SEQ = mSG_SEQ;
 	}
 
 }

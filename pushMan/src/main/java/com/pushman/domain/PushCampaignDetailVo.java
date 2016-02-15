@@ -1,6 +1,7 @@
 package com.pushman.domain;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데이터 이전이 가능하도록 직렬화를
 	private static final long serialVersionUID = 1L;
@@ -12,6 +13,7 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	protected String res_cd;
 	protected int camp_id;
 	protected int user_id;
+	protected int push_log_id;
 	public int getCd_id() {
 		return cd_id;
 	}
@@ -54,11 +56,19 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
+	public int getPush_log_id() {
+		return push_log_id;
+	}
+	public void setPush_log_id(int push_log_id) {
+		this.push_log_id = push_log_id;
+	}
 	@Override
 	public String toString() {
 		return "PushCampaignDetailVo [cd_id=" + cd_id + ", reg_date=" + reg_date + ", reqUid=" + reqUid + ", rtn_type="
-				+ rtn_type + ", res_cd=" + res_cd + ", camp_id=" + camp_id + ", user_id=" + user_id + "]";
+				+ rtn_type + ", res_cd=" + res_cd + ", camp_id=" + camp_id + ", user_id=" + user_id + ", push_log_id="
+				+ push_log_id + "]";
 	}
+
 	
 	
 
