@@ -27,25 +27,24 @@ public class UpdateEngine {
 	@Autowired
 	TB_SEND_QUE_LOG_Dao tbSendQueLogDao;
 	
-	// 푸시 로그 스케줄러
-	 @Scheduled(fixedDelay = 10000)
-	 public void updatePushLogSchedular() throws RuntimeException {
+	// 푸시 로그 스케줄러('SEND')
+	@Scheduled(fixedDelay = 10000)
+	public void updatePushLogSchedular() throws RuntimeException {
 
-		 // 데이터소스 SET - 로컬DB
-		 MultipleDataSource.setDataSourceKey("localDB");
-		 List<PushCampaignDetailVo> isNullList = pushCampaignDetailDao.selectListLogIsNull();
-		 
-		 int maxLogId = 0;
-		 
-		 // 초기 업데이트가 안되 있는 경우 getMaxLogId NULL 예외 발생
-		 try {
-			 maxLogId = pushCampaignDetailDao.getMaxLogId();
+		// 데이터소스 SET - 로컬DB
+		MultipleDataSource.setDataSourceKey("localDB");
+		List<PushCampaignDetailVo> isNullList = pushCampaignDetailDao.selectListLogIsNull();
+
+		int maxLogId = 0;
+
+		// 초기 업데이트가 안되 있는 경우 getMaxLogId NULL 예외 발생
+		try {
+			maxLogId = pushCampaignDetailDao.getMaxLogId();
 		} catch (Exception e) {
 			maxLogId = -1;
 		}
-		 
-		 
-		 // 업데이트 된 로그가 있을 때 (시퀀스가 빈 로그가 있을 때)
+
+		// 업데이트 된 로그가 있을 때 (시퀀스가 빈 로그가 있을 때)
 		if (!isNullList.isEmpty()) {
 
 			for (PushCampaignDetailVo pushCampaignDetailVo : isNullList) {
@@ -53,16 +52,15 @@ public class UpdateEngine {
 				// 데이터소스 SET - 푸시피아 DB
 				MultipleDataSource.setDataSourceKey("pushpiaDB");
 				HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-				
-				// 
+
+				//
 				sqlParams.put("text_biz_id", PushSetting.TEXT_PUSH_BIZ_KEY);
 				sqlParams.put("rich_biz_id", PushSetting.RICH_PUSH_BIZ_KEY);
 				sqlParams.put("rtn_type", "S");
-//				sqlParams.put("maxLogId", maxLogId);
+				// sqlParams.put("maxLogId", maxLogId);
 				List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListByRtnType(sqlParams);
 				for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
-					if (getCdIdFromReqUid(
-							tb_SEND_QUE_LOG_Vo.getReq_uid()) == pushCampaignDetailVo.getCd_id()) {
+					if (getCdIdFromReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid()) == pushCampaignDetailVo.getCd_id()) {
 						pushCampaignDetailVo.setReg_date(tb_SEND_QUE_LOG_Vo.getReg_date());
 						pushCampaignDetailVo.setReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid());
 						pushCampaignDetailVo.setRtn_type(tb_SEND_QUE_LOG_Vo.getRtn_type());
@@ -70,7 +68,7 @@ public class UpdateEngine {
 						pushCampaignDetailVo.setPush_log_id(tb_SEND_QUE_LOG_Vo.getSend_que_id());
 						pushCampaignDetailVo.setCamp_id(getCampIdFromReqUid(pushCampaignDetailVo.getReqUid()));
 						pushCampaignDetailVo.setCd_id(getCdIdFromReqUid(pushCampaignDetailVo.getReqUid()));
-						
+
 						// 데이터소스 SET - 로컬 DB
 						MultipleDataSource.setDataSourceKey("localDB");
 						// 상세 로그 업데이트
@@ -85,10 +83,46 @@ public class UpdateEngine {
 					}
 				}
 			}
+		}
+	}
+	 
+	// 푸시 로그 스케줄러('READ')
+	@Scheduled(fixedDelay = 10000)
+	public void updatePushReadLogSchedular() throws RuntimeException {
+
+		// 데이터소스 SET - 로컬DB
+		MultipleDataSource.setDataSourceKey("localDB");
+		
+		int maxLocagLogId = 0;
+		int maxExLogId = 0;
+
+		// 초기 업데이트가 안되 있는 경우 getMaxLogId NULL 예외 발생
+		try {
+			maxLocagLogId = pushCampaignDetailDao.getMaxLogId();
+		} catch (Exception e) {
+			return;
+		}
+
+		// 데이터소스 SET - 푸시피아 DB
+		MultipleDataSource.setDataSourceKey("pushpiaDB");
+		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
+		//
+		sqlParams.put("text_biz_id", PushSetting.TEXT_PUSH_BIZ_KEY);
+		sqlParams.put("rich_biz_id", PushSetting.RICH_PUSH_BIZ_KEY);
+//		sqlParams.put("maxLogId", maxLogId);
+		maxExLogId = tbSendQueLogDao.getMaxLogId(sqlParams);
+		
+		if (maxLocagLogId < maxExLogId) {
+			// 로그 업데이트 실행
+			sqlParams.put("maxID", maxLocagLogId);
+			List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListByRtnType2(sqlParams);
 			
-			
-			
-/*			for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
+//			System.out.println(pushLogList.size());
+
+			// 데이터소스 SET - 로컬DB
+			MultipleDataSource.setDataSourceKey("localDB");
+			PushCampaignDetailVo pushCampaignDetailVo;
+			for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
 				pushCampaignDetailVo = new PushCampaignDetailVo();
 				pushCampaignDetailVo.setReg_date(tb_SEND_QUE_LOG_Vo.getReg_date());
 				pushCampaignDetailVo.setReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid());
@@ -96,41 +130,28 @@ public class UpdateEngine {
 				pushCampaignDetailVo.setRes_cd(tb_SEND_QUE_LOG_Vo.getRes_cd());
 				pushCampaignDetailVo.setPush_log_id(tb_SEND_QUE_LOG_Vo.getSend_que_id());
 				pushCampaignDetailVo.setCamp_id(getCampIdFromReqUid(pushCampaignDetailVo.getReqUid()));
-				pushCampaignDetailVo.setCd_id(getCdIdFromReqUid(pushCampaignDetailVo.getReqUid()));
-
-				// 데이터소스 SET - 로컬 DB
-				MultipleDataSource.setDataSourceKey("localDB");
-				
-//				String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
+				pushCampaignDetailVo.setCd_id(getCdIdFromReqUid(pushCampaignDetailVo.getReqUid())); 
+				String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
 				// 로그 예외처리
-//				if(custId != null) {
-//					appUserDao.selectOneByCustId(custId);
-//				}
-				int cnt = 0;
-				// 유효한 경우, 업데이트
-				if (pushCampaignDetailVo.getCamp_id() != 0 && pushCampaignDetailVo.getCd_id() != 0) {
-					
-					// 상세 로그 업데이트
-					pushCampaignDetailDao.updatePushLog(pushCampaignDetailVo);
-					System.out.println(cnt++);
-
-					// 캠페인 성공/실패 업데이트
-					HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
-					sqlParams2.put("res_cd", pushCampaignDetailVo.getRes_cd());
-					sqlParams2.put("rtn_type", pushCampaignDetailVo.getRtn_type());
-					sqlParams2.put("camp_id", pushCampaignDetailVo.getCamp_id());
-					pushCampaignDao.updateResult(sqlParams2);
+				if (appUserDao.selectOneByCustId(custId) != null) {
+					pushCampaignDetailVo.setUser_id(appUserDao.selectOneByCustId(custId).getUser_id());
 				}
+				pushCampaignDetailDao.insertLog(pushCampaignDetailVo);
 				
-				
-			}*/
-
+				// 캠페인 리드/클릭 업데이트
+				HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
+				sqlParams2.put("res_cd", pushCampaignDetailVo.getRes_cd());
+				sqlParams2.put("rtn_type", pushCampaignDetailVo.getRtn_type());
+				sqlParams2.put("camp_id", pushCampaignDetailVo.getCamp_id());
+				pushCampaignDao.updateResult(sqlParams2);
+			}
 		}
-		 
-//		 System.out.println(pushLogList.size());
-		 
-		 
-	 }
+		
+
+	}
+	 
+	 
+	 
 	 
 	// 매일 새벽 2시에 로그인 횟수 초기화
 //	 @Scheduled(cron="0 0 02 * * ?")

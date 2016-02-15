@@ -18,4 +18,6 @@ public interface PushCampaignDetailDao {
 	int getMaxLogId();
 	
 	int updatePushLog(PushCampaignDetailVo pushCampaignDetailVo);
+
+	int insertLog(PushCampaignDetailVo pushCampaignDetailVo);
 }

@@ -11,5 +11,7 @@ public interface TB_SEND_QUE_LOG_Dao {
 
 	List<TB_SEND_QUE_LOG_Vo> selectListByRtnType(Map<String, Object> paramMap);
 	
-	int getMaxLogId();
+	List<TB_SEND_QUE_LOG_Vo> selectListByRtnType2(Map<String, Object> paramMap);
+	
+	int getMaxLogId(Map<String, Object> paramMap);
 }

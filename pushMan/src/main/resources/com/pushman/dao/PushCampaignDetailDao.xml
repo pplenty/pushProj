@@ -29,6 +29,15 @@
 			(SYSDATE(), '${reqUid}', null, null, ${user_id}, ${camp_id})
 	</insert>
 	
+	<insert id="insertLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
+		keyProperty="cd_id" useGeneratedKeys="true">
+		INSERT INTO PUSH_CAMPAIGN_DETAIL
+			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id)
+		VALUES 
+			(SYSDATE(), '${reqUid}', '${rtn_type}', '${res_cd}', ${user_id}, 
+			 ${camp_id}, ${push_log_id})
+	</insert>
+	
 	<select id="selectListLogIsNull" parameterType="map" resultMap="PushCampaignDetailVoMap">
 		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
 		FROM PUSH_CAMPAIGN_DETAIL

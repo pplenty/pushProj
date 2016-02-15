@@ -66,6 +66,12 @@
 			<when test="res_cd == '1000'">
 				SET push_wait = push_wait - 1, push_succ = push_succ + 1
 			</when>
+			<when test="rtn_type == 'R'">
+				SET push_open = push_open + 1
+			</when>
+			<when test="rtn_type == 'C'">
+				SET push_click = push_click + 1
+			</when>
 			<otherwise>
 				SET push_wait = push_wait - 1, push_fail = push_fail + 1
 			</otherwise>
