@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 
 function showDetail(cno) {
-	var url = './listDetail.do?cno=' + cno;
+	var url = './pushListDetail.do?cno=' + cno;
 	
 	launchCenter(url,'상세', 700, 500,'menubar=no, status=no, toolbar=no');
 }

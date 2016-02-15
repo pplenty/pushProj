@@ -14,11 +14,18 @@
 		<result column="user_id" 	  property="user_id" />
 		<result column="camp_id" 	  property="camp_id" />
 		<result column="push_log_id"  property="push_log_id" />
+		<result column="mobile"  	  property="mobile" />
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
 		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
 		FROM PUSH_CAMPAIGN_DETAIL
+	</select>
+	
+	<select id="selectListByCamp" parameterType="map" resultMap="PushCampaignDetailVoMap">
+		SELECT cd_id, b.reg_date, reqUid, rtn_type, res_cd, mobile, camp_id, push_log_id 
+		FROM PUSH_CAMPAIGN_DETAIL A JOIN APP_USER B ON A.user_id = B.user_id
+		WHERE camp_id=${camp_id}
 	</select>
 	
 	<insert id="insert" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
@@ -27,15 +34,6 @@
 			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id)
 		VALUES 
 			(SYSDATE(), '${reqUid}', null, null, ${user_id}, ${camp_id})
-	</insert>
-	
-	<insert id="insertLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
-		keyProperty="cd_id" useGeneratedKeys="true">
-		INSERT INTO PUSH_CAMPAIGN_DETAIL
-			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id)
-		VALUES 
-			(SYSDATE(), '${reqUid}', '${rtn_type}', '${res_cd}', ${user_id}, 
-			 ${camp_id}, ${push_log_id})
 	</insert>
 	
 	<select id="selectListLogIsNull" parameterType="map" resultMap="PushCampaignDetailVoMap">
@@ -59,12 +57,3 @@
 	
 	
 </mapper>
-
-
-
-
-
-
-
-
-
