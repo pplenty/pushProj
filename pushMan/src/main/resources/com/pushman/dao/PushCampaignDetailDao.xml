@@ -6,7 +6,7 @@
 <mapper namespace="com.pushman.dao.PushCampaignDetailDao">
 
 	<resultMap type="PushCampaignDetailVo" id="PushCampaignDetailVoMap">
-		<id 	column="cd_no" 		  property="cd_no" />
+		<id 	column="cd_id" 		  property="cd_id" />
 		<result column="reg_date"  	  property="reg_date" />
 		<result column="reqUid" 	  property="reqUid" />
 		<result column="rtn_type" 	  property="rtn_type" />
@@ -17,17 +17,23 @@
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
-		SELECT cd_no, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
-		FROM CAMPAIGN_DETAIL
+		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
+		FROM PUSH_CAMPAIGN_DETAIL
 	</select>
 	
-	<insert id="insert" parameterType="PushCampaignDetailVo" keyColumn="cd_no"
-		keyProperty="cd_no" useGeneratedKeys="true">
+	<insert id="insert" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
+		keyProperty="cd_id" useGeneratedKeys="true">
 		INSERT INTO PUSH_CAMPAIGN_DETAIL
 			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id)
 		VALUES 
 			(SYSDATE(), '${reqUid}', null, null, ${user_id}, ${camp_id})
 	</insert>
+	
+	<select id="selectListLogIsNull" parameterType="map" resultMap="PushCampaignDetailVoMap">
+		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
+		FROM PUSH_CAMPAIGN_DETAIL
+		WHERE push_log_id IS NULL
+	</select>
 	
 </mapper>
 
