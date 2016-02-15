@@ -20,7 +20,6 @@ public class CommonMethod {
 		return currentTime;
 	}
 	
-	
 	// 현재페이지 시작 인덱스 구하는 함수
 	public static int getStartIndexOfPage(int pageNo, int pageSize) {
 		return (pageNo - 1) * pageSize;
