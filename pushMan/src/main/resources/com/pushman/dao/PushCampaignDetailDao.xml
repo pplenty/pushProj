@@ -35,6 +35,12 @@
 		WHERE push_log_id IS NULL
 	</select>
 	
+	<select id="getMaxLogId" resultType="int">
+		SELECT MAX(push_log_id)
+		FROM PUSH_CAMPAIGN_DETAIL
+	</select>
+	
+	
 </mapper>
 
 
