@@ -11,6 +11,7 @@
 		<result column="reg_date" 	  property="reg_date" />
 		<result column="tg_mobile" 	  property="tg_mobile" />
 		<result column="error_code"   property="error_code" />
+		<result column="MSG_SEQ"	  property="MSG_SEQ" />
 	</resultMap>
 
 </mapper>

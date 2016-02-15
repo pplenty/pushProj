@@ -20,6 +20,7 @@
 		<result column="push_open" 	  		property="push_open" />
 		<result column="push_click" 		property="push_click" />
 		<result column="camp_reqUid" 		property="camp_reqUid" />
+		<result column="user_no" 			property="user_no" />
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignVoMap">
@@ -27,7 +28,7 @@
 			camp_id, push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			DATE_FORMAT(reg_date, '%Y-%m-%d %H:%m:%s') reg_date,
 			push_total, push_succ, push_wait, push_fail, push_open, push_click,
-			camp_reqUid
+			camp_reqUid, user_no
 		FROM PUSH_CAMPAIGN
 	</select>
 
@@ -36,9 +37,9 @@
 		INSERT INTO PUSH_CAMPAIGN
 			(push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			reg_date, push_total, push_succ, push_wait, push_fail, push_open, 
-			push_click)
+			push_click, user_no)
 		VALUES (#{push_camp_title}, #{push_title}, #{push_msg}, #{popup_content}, #{inapp_content}, 
-				SYSDATE(), 0, 0, 0, 0, 0, 0)
+				SYSDATE(), 0, 0, 0, 0, 0, 0, #{user_no})
 	</insert>
 	
 	

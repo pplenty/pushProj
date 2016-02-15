@@ -13,10 +13,11 @@
 		<result column="res_cd"   	  property="res_cd" />
 		<result column="user_id" 	  property="user_id" />
 		<result column="camp_id" 	  property="camp_id" />
+		<result column="push_log_id"  property="push_log_id" />
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
-		SELECT cd_no, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id
+		SELECT cd_no, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
 		FROM CAMPAIGN_DETAIL
 	</select>
 	
