@@ -11,9 +11,11 @@ import com.pushman.dao.AppUserDao;
 import com.pushman.dao.MSG_DATA_Dao;
 import com.pushman.dao.PushCampaignDao;
 import com.pushman.dao.PushCampaignDetailDao;
+import com.pushman.dao.SmsDetailDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
 import com.pushman.domain.MSG_DATA_Vo;
 import com.pushman.domain.PushCampaignDetailVo;
+import com.pushman.domain.SmsDetailVo;
 import com.pushman.domain.TB_SEND_QUE_LOG_Vo;
 import com.pushman.util.MultipleDataSource;
 import com.pushman.util.PushSetting;
@@ -30,6 +32,8 @@ public class UpdateEngine {
 	TB_SEND_QUE_LOG_Dao tbSendQueLogDao;
 	@Autowired
 	MSG_DATA_Dao MsgDataDao;
+	@Autowired
+	SmsDetailDao smsDetailDao;
 	
 	// 푸시 로그 스케줄러('SEND')
 	@Scheduled(fixedDelay = 10000)
@@ -99,7 +103,8 @@ public class UpdateEngine {
 				System.out.println(pushCampaignDetailVo);
 				if (pushCampaignDetailVo.getRes_cd() == null || 
 						!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) {
-					// 데이터소스 SET - SMS 중계사 DB
+
+				  // 데이터소스 SET - SMS 중계사 DB
 					MultipleDataSource.setDataSourceKey("iHeartDB");
 					
 					//실패 한 타겟들 문자로 재발송
@@ -108,6 +113,25 @@ public class UpdateEngine {
 					msgDataVo.setSms_txt("PUSH 리타겟팅");
 					msgDataVo.setMsg_etc2(Integer.toString(pushCampaignDetailVo.getCd_id()));
 					MsgDataDao.sendSMS(msgDataVo);
+					
+					/**********************************************************************/
+					
+					// 발송 후 SMS Detail 캠페인 등록
+					SmsDetailVo smsDetailVo = new SmsDetailVo();
+					smsDetailVo.setCd_id(0);
+					smsDetailVo.setError_code(targetMobile);
+					smsDetailVo.setMSG_SEQ(0);
+					smsDetailVo.setReg_date(null);
+					smsDetailVo.setSms_id(0);
+					smsDetailVo.setTg_mobile(null);
+					
+				// 데이터소스 SET - local DB
+          MultipleDataSource.setDataSourceKey("localDB");
+          smsDetailDao.insert(smsDetailVo);
+					
+					
+					
+					/**********************************************************************/
 				}
 				
 			}
@@ -177,7 +201,71 @@ public class UpdateEngine {
 		
 
 	}
-	 
+	/* 
+	
+//SMS 발송 Detail 로그 스케줄러
+ @Scheduled(fixedDelay = 10000)
+ public void updateSMSLog() throws RuntimeException {
+
+   // 데이터소스 SET - 로컬DB
+   MultipleDataSource.setDataSourceKey("localDB");
+   
+   int maxLocagLogId = 0;
+   int maxExLogId = 0;
+
+   // 초기 업데이트가 안되 있는 경우 getMaxLogId NULL 예외 발생
+   try {
+     maxLocagLogId = pushCampaignDetailDao.getMaxLogId();
+   } catch (Exception e) {
+     return;
+   }
+
+   // 데이터소스 SET - 푸시피아 DB
+   MultipleDataSource.setDataSourceKey("pushpiaDB");
+   HashMap<String, Object> sqlParams = new HashMap<String, Object>();
+   //
+   sqlParams.put("text_biz_id", PushSetting.TEXT_PUSH_BIZ_KEY);
+   sqlParams.put("rich_biz_id", PushSetting.RICH_PUSH_BIZ_KEY);
+//   sqlParams.put("maxLogId", maxLogId);
+   maxExLogId = tbSendQueLogDao.getMaxLogId(sqlParams);
+   
+   if (maxLocagLogId < maxExLogId) {
+     // 로그 업데이트 실행
+     sqlParams.put("maxID", maxLocagLogId);
+     List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListByRtnType2(sqlParams);
+     
+//     System.out.println(pushLogList.size());
+
+     // 데이터소스 SET - 로컬DB
+     MultipleDataSource.setDataSourceKey("localDB");
+     PushCampaignDetailVo pushCampaignDetailVo;
+     for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
+       pushCampaignDetailVo = new PushCampaignDetailVo();
+       pushCampaignDetailVo.setReg_date(tb_SEND_QUE_LOG_Vo.getReg_date());
+       pushCampaignDetailVo.setReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid());
+       pushCampaignDetailVo.setRtn_type(tb_SEND_QUE_LOG_Vo.getRtn_type());
+       pushCampaignDetailVo.setRes_cd(tb_SEND_QUE_LOG_Vo.getRes_cd());
+       pushCampaignDetailVo.setPush_log_id(tb_SEND_QUE_LOG_Vo.getSend_que_id());
+       pushCampaignDetailVo.setCamp_id(getCampIdFromReqUid(pushCampaignDetailVo.getReqUid()));
+       pushCampaignDetailVo.setCd_id(getCdIdFromReqUid(pushCampaignDetailVo.getReqUid())); 
+       String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
+       // 로그 예외처리
+       if (appUserDao.selectOneByCustId(custId) != null) {
+         pushCampaignDetailVo.setUser_id(appUserDao.selectOneByCustId(custId).getUser_id());
+       }
+       pushCampaignDetailDao.insertLog(pushCampaignDetailVo);
+       
+       // 캠페인 리드/클릭 업데이트
+       HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
+       sqlParams2.put("res_cd", pushCampaignDetailVo.getRes_cd());
+       sqlParams2.put("rtn_type", pushCampaignDetailVo.getRtn_type());
+       sqlParams2.put("camp_id", pushCampaignDetailVo.getCamp_id());
+       pushCampaignDao.updateResult(sqlParams2);
+     }
+   }
+   
+
+ }*/
 	 
 	 
 	 
