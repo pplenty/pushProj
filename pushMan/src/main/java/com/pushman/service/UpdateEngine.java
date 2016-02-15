@@ -14,13 +14,23 @@ import com.pushman.util.MultipleDataSource;
 public class UpdateEngine {
 	@Autowired
 	TB_SEND_QUE_LOG_Dao tbSendQueLogDao;
-	// 로그 스케줄러
+	
+	// 푸시 로그 스케줄러
 	 @Scheduled(fixedDelay = 5000)
 	 public void getPushLogSchedular() throws RuntimeException {
-		 
+
+		 MultipleDataSource.setDataSourceKey("localDB");
 		 MultipleDataSource.setDataSourceKey("pushpiaDB");
 		 List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListAll(null);
-		 System.out.println(pushLogList.size());
+//		 System.out.println(pushLogList.size());
+		 
+		 
 	 }
+	 
+	// 매일 새벽 2시에 로그인 횟수 초기화
+//	 @Scheduled(cron="0 0 02 * * ?")
+//	 public void HOWSchedular() throws RuntimeException {
+//		 System.out.println("02시 00분");
+//	 }
 	
 }

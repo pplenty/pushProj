@@ -49,7 +49,7 @@ public class PushReportController {
 	    sqlParams.put("order", order);
 		sqlParams.put("user_no", smsUser.getNo());
 		
-		List<PushCampaignVo> pushList = pushCampaignDao.selectList(sqlParams);
+		List<PushCampaignVo> pushList = pushCampaignDao.selectListByPusher(sqlParams);
 
 		
 		//View로 값 전달

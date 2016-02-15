@@ -31,6 +31,16 @@
 			camp_reqUid, user_no
 		FROM PUSH_CAMPAIGN
 	</select>
+	
+	<select id="selectListByPusher" parameterType="map" resultMap="PushCampaignVoMap">
+		SELECT
+			camp_id, push_camp_title, push_title, push_msg, popup_content, inapp_content,
+			DATE_FORMAT(reg_date, '%Y-%m-%d %H:%m:%s') reg_date,
+			push_total, push_succ, push_wait, push_fail, push_open, push_click,
+			camp_reqUid, user_no
+		FROM PUSH_CAMPAIGN
+		WHERE user_no=${user_no}
+	</select>
 
 	<insert id="insert" parameterType="PushCampaignVo" keyColumn="camp_id"
 		keyProperty="camp_id" useGeneratedKeys="true">
