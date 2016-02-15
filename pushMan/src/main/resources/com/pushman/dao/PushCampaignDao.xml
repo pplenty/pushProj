@@ -40,6 +40,7 @@
 			camp_reqUid, user_no
 		FROM PUSH_CAMPAIGN
 		WHERE user_no=${user_no}
+		ORDER BY reg_date DESC
 	</select>
 
 	<insert id="insert" parameterType="PushCampaignVo" keyColumn="camp_id"

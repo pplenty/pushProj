@@ -31,8 +31,8 @@
   <insert id="sendSMS" parameterType="MSG_DATA_Vo">
       INSERT INTO MSG_DATA (CUR_STATE, CALL_TO, CALL_FROM, SMS_TXT,
 							MSG_TYPE, REQ_DATE, MSG_ETC1, MSG_ETC2)
-      VALUES (0, ${CALL_TO}, ${CALL_FROM}, ${SMS_TXT},
-			  4, SYSDATE(), 'kohPush', ${cd_id})
+      VALUES (0, #{call_to}, #{call_from}, #{sms_txt},
+			  4, SYSDATE(), 'kohPush', #{msg_etc2})
   </insert>
   
 

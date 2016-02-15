@@ -18,6 +18,8 @@ public interface AppUserDao {
 	List<AppUserVo> selectListAll(Map<String, Object> paramMap);
 	
 	AppUserVo selectOneByCustId(String cust_id);
+	
+	AppUserVo selectOneByUserId(int user_id);
 }
 
 

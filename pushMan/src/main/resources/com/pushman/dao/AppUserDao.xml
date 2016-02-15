@@ -39,10 +39,18 @@
 		FROM APP_USER
 	</select>
 	
-	<select id="selectOneByCustId" parameterType="string" resultMap="AppUserVoMap">
+	<select id="selectOneByCustId" parameterType="String" resultMap="AppUserVoMap">
 		SELECT USER_ID, MOBILE, CUST_ID, REG_DATE, LAST_LOGIN_DATE,
 			   CNT_LOGIN, USER_ETC1, USER_ETC2, USER_ETC3
 		FROM APP_USER
 		WHERE CUST_ID=#{value}
+	</select>
+	
+	
+	<select id="selectOneByUserId" parameterType="int" resultMap="AppUserVoMap">
+		SELECT USER_ID, MOBILE, CUST_ID, REG_DATE, LAST_LOGIN_DATE,
+			   CNT_LOGIN, USER_ETC1, USER_ETC2, USER_ETC3
+		FROM APP_USER
+		WHERE USER_ID=#{value}
 	</select>
 </mapper>

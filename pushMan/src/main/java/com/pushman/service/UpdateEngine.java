@@ -8,9 +8,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.pushman.dao.AppUserDao;
+import com.pushman.dao.MSG_DATA_Dao;
 import com.pushman.dao.PushCampaignDao;
 import com.pushman.dao.PushCampaignDetailDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
+import com.pushman.domain.MSG_DATA_Vo;
 import com.pushman.domain.PushCampaignDetailVo;
 import com.pushman.domain.TB_SEND_QUE_LOG_Vo;
 import com.pushman.util.MultipleDataSource;
@@ -26,6 +28,8 @@ public class UpdateEngine {
 	PushCampaignDetailDao pushCampaignDetailDao;
 	@Autowired
 	TB_SEND_QUE_LOG_Dao tbSendQueLogDao;
+	@Autowired
+	MSG_DATA_Dao MsgDataDao;
 	
 	// 푸시 로그 스케줄러('SEND')
 	@Scheduled(fixedDelay = 10000)
@@ -48,12 +52,18 @@ public class UpdateEngine {
 		if (!isNullList.isEmpty()) {
 
 			for (PushCampaignDetailVo pushCampaignDetailVo : isNullList) {
-				pushCampaignDetailVo.getCd_id();
+
+				// 데이터소스 SET - 로컬DB
+				MultipleDataSource.setDataSourceKey("localDB");
+				// 타겟 모바일 번호 저장
+				int user_id = pushCampaignDetailVo.getUser_id();
+				String targetMobile = appUserDao.selectOneByUserId(user_id).getMobile();
+				
 				// 데이터소스 SET - 푸시피아 DB
 				MultipleDataSource.setDataSourceKey("pushpiaDB");
 				HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 
-				//
+				// 로그테이블에서 SEND 로그만 가져오기
 				sqlParams.put("text_biz_id", PushSetting.TEXT_PUSH_BIZ_KEY);
 				sqlParams.put("rich_biz_id", PushSetting.RICH_PUSH_BIZ_KEY);
 				sqlParams.put("rtn_type", "S");
@@ -82,6 +92,24 @@ public class UpdateEngine {
 						pushCampaignDao.updateResult(sqlParams2);
 					}
 				}
+				
+				// 캠페인 SMS 리타게팅 
+				MSG_DATA_Vo msgDataVo = new MSG_DATA_Vo();
+				// && 캠페인 VO. reTarget == Y 
+				System.out.println(pushCampaignDetailVo);
+				if (pushCampaignDetailVo.getRes_cd() == null || 
+						!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) {
+					// 데이터소스 SET - SMS 중계사 DB
+					MultipleDataSource.setDataSourceKey("iHeartDB");
+					
+					//실패 한 타겟들 문자로 재발송
+					msgDataVo.setCall_to(targetMobile);
+					msgDataVo.setCall_from("01063757314");//하드코딩 수정
+					msgDataVo.setSms_txt("PUSH 리타겟팅");
+					msgDataVo.setMsg_etc2(Integer.toString(pushCampaignDetailVo.getCd_id()));
+					MsgDataDao.sendSMS(msgDataVo);
+				}
+				
 			}
 		}
 	}
