@@ -28,7 +28,7 @@ public class UpdateEngine {
 	TB_SEND_QUE_LOG_Dao tbSendQueLogDao;
 	
 	// 푸시 로그 스케줄러
-	 @Scheduled(fixedDelay = 5000)
+	 @Scheduled(fixedDelay = 10000)
 	 public void updatePushLogSchedular() throws RuntimeException {
 
 		 // 데이터소스 SET - 로컬DB
@@ -45,20 +45,50 @@ public class UpdateEngine {
 		}
 		 
 		 
-		 // 업데이트 된 로그가 있을 때 
+		 // 업데이트 된 로그가 있을 때 (시퀀스가 빈 로그가 있을 때)
 		if (!isNullList.isEmpty()) {
 
-			// 데이터소스 SET - 푸시피아 DB
-			MultipleDataSource.setDataSourceKey("pushpiaDB");
-			HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-			sqlParams.put("text_biz_id", PushSetting.TEXT_PUSH_BIZ_KEY);
-			sqlParams.put("rich_biz_id", PushSetting.RICH_PUSH_BIZ_KEY);
-			sqlParams.put("rtn_type", "S");
-			List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListByRtnType(sqlParams);
+			for (PushCampaignDetailVo pushCampaignDetailVo : isNullList) {
+				pushCampaignDetailVo.getCd_id();
+				// 데이터소스 SET - 푸시피아 DB
+				MultipleDataSource.setDataSourceKey("pushpiaDB");
+				HashMap<String, Object> sqlParams = new HashMap<String, Object>();
+				
+				// 
+				sqlParams.put("text_biz_id", PushSetting.TEXT_PUSH_BIZ_KEY);
+				sqlParams.put("rich_biz_id", PushSetting.RICH_PUSH_BIZ_KEY);
+				sqlParams.put("rtn_type", "S");
+//				sqlParams.put("maxLogId", maxLogId);
+				List<TB_SEND_QUE_LOG_Vo> pushLogList = tbSendQueLogDao.selectListByRtnType(sqlParams);
+				for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
+					if (getCdIdFromReqUid(
+							tb_SEND_QUE_LOG_Vo.getReq_uid()) == pushCampaignDetailVo.getCd_id()) {
+						pushCampaignDetailVo.setReg_date(tb_SEND_QUE_LOG_Vo.getReg_date());
+						pushCampaignDetailVo.setReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid());
+						pushCampaignDetailVo.setRtn_type(tb_SEND_QUE_LOG_Vo.getRtn_type());
+						pushCampaignDetailVo.setRes_cd(tb_SEND_QUE_LOG_Vo.getRes_cd());
+						pushCampaignDetailVo.setPush_log_id(tb_SEND_QUE_LOG_Vo.getSend_que_id());
+						pushCampaignDetailVo.setCamp_id(getCampIdFromReqUid(pushCampaignDetailVo.getReqUid()));
+						pushCampaignDetailVo.setCd_id(getCdIdFromReqUid(pushCampaignDetailVo.getReqUid()));
+						
+						// 데이터소스 SET - 로컬 DB
+						MultipleDataSource.setDataSourceKey("localDB");
+						// 상세 로그 업데이트
+						pushCampaignDetailDao.updatePushLog(pushCampaignDetailVo);
+
+						// 캠페인 성공/실패 업데이트
+						HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
+						sqlParams2.put("res_cd", pushCampaignDetailVo.getRes_cd());
+						sqlParams2.put("rtn_type", pushCampaignDetailVo.getRtn_type());
+						sqlParams2.put("camp_id", pushCampaignDetailVo.getCamp_id());
+						pushCampaignDao.updateResult(sqlParams2);
+					}
+				}
+			}
 			
-			System.out.println(pushLogList.get(0));
-			PushCampaignDetailVo pushCampaignDetailVo;
-			for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
+			
+			
+/*			for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : pushLogList) {
 				pushCampaignDetailVo = new PushCampaignDetailVo();
 				pushCampaignDetailVo.setReg_date(tb_SEND_QUE_LOG_Vo.getReg_date());
 				pushCampaignDetailVo.setReqUid(tb_SEND_QUE_LOG_Vo.getReq_uid());
@@ -76,12 +106,13 @@ public class UpdateEngine {
 //				if(custId != null) {
 //					appUserDao.selectOneByCustId(custId);
 //				}
-				
+				int cnt = 0;
 				// 유효한 경우, 업데이트
-				if (pushCampaignDetailVo.getCamp_id() != 0) {
+				if (pushCampaignDetailVo.getCamp_id() != 0 && pushCampaignDetailVo.getCd_id() != 0) {
 					
 					// 상세 로그 업데이트
 					pushCampaignDetailDao.updatePushLog(pushCampaignDetailVo);
+					System.out.println(cnt++);
 
 					// 캠페인 성공/실패 업데이트
 					HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
@@ -92,7 +123,7 @@ public class UpdateEngine {
 				}
 				
 				
-			}
+			}*/
 
 		}
 		 
@@ -112,6 +143,8 @@ public class UpdateEngine {
 	public int getCdIdFromReqUid(String ReqUid) {
 		String[] resultSet = ReqUid.split("_");
 		int result = 0;
+		//ReqUid가 형식에 맞지 않을 경우 0 리턴
+		if (resultSet.length < 4) return result;
 		try {
 			result =  Integer.parseInt(resultSet[resultSet.length - 1]);
 		} catch (Exception e) {
@@ -124,6 +157,8 @@ public class UpdateEngine {
 	public int getCampIdFromReqUid(String ReqUid) {
 		String[] resultSet = ReqUid.split("_");
 		int result = 0;
+		//ReqUid가 형식에 맞지 않을 경우 0 리턴
+		if (resultSet.length < 4) return result;
 		try {
 			result =  Integer.parseInt(resultSet[resultSet.length - 2]);
 		} catch (Exception e) {
