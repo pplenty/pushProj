@@ -56,8 +56,27 @@
 	<update id="updateInit" parameterType="PushCampaignVo" keyColumn="camp_id"
 		keyProperty="camp_id" useGeneratedKeys="true">
 		UPDATE PUSH_CAMPAIGN 
-		SET push_total=${push_total}, camp_reqUid='${camp_reqUid}'
+		SET push_total=${push_total}, camp_reqUid='${camp_reqUid}', push_wait=${push_total}
 		WHERE camp_id=${camp_id}
+	</update>
+	
+	<update id="updateResult" parameterType="map">
+		UPDATE PUSH_CAMPAIGN
+		<choose>
+			<when test="res_cd == '1000'">
+				SET push_wait = push_wait - 1, push_succ = push_succ + 1
+			</when>
+			<when test="rtn_type == 'R'">
+				SET push_wait = push_wait - 1, push_open = push_open + 1
+			</when>
+			<when test="rtn_type == 'C'">
+				SET push_wait = push_wait - 1, push_click = push_click + 1
+			</when>
+			<otherwise>
+				SET push_wait = push_wait - 1, push_fail = push_fail + 1
+			</otherwise>
+		</choose>
+		WHERE camp_id=#{camp_id}
 	</update>
 
 

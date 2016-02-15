@@ -1,6 +1,5 @@
 package com.pushman.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,11 +8,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.pushman.dao.AppUserDao;
+import com.pushman.dao.PushCampaignDao;
 import com.pushman.dao.PushCampaignDetailDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
 import com.pushman.domain.PushCampaignDetailVo;
 import com.pushman.domain.TB_SEND_QUE_LOG_Vo;
-import com.pushman.util.CommonMethod;
 import com.pushman.util.MultipleDataSource;
 import com.pushman.util.PushSetting;
 
@@ -21,6 +20,8 @@ import com.pushman.util.PushSetting;
 public class UpdateEngine {
 	@Autowired
 	AppUserDao appUserDao;
+	@Autowired
+	PushCampaignDao pushCampaignDao;
 	@Autowired
 	PushCampaignDetailDao pushCampaignDetailDao;
 	@Autowired
@@ -69,15 +70,26 @@ public class UpdateEngine {
 
 				// 데이터소스 SET - 로컬 DB
 				MultipleDataSource.setDataSourceKey("localDB");
-				String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
+				
+//				String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
 				// 로그 예외처리
-				if(custId != null) {
-					appUserDao.selectOneByCustId(custId);
+//				if(custId != null) {
+//					appUserDao.selectOneByCustId(custId);
+//				}
+				
+				// 유효한 경우, 업데이트
+				if (pushCampaignDetailVo.getCamp_id() != 0) {
+					
+					// 상세 로그 업데이트
+					pushCampaignDetailDao.updatePushLog(pushCampaignDetailVo);
+
+					// 캠페인 성공/실패 업데이트
+					HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
+					sqlParams2.put("res_cd", pushCampaignDetailVo.getRes_cd());
+					sqlParams2.put("rtn_type", pushCampaignDetailVo.getRtn_type());
+					sqlParams2.put("camp_id", pushCampaignDetailVo.getCamp_id());
+					pushCampaignDao.updateResult(sqlParams2);
 				}
-				
-				
-				pushCampaignDetailDao.updatePushLog(pushCampaignDetailVo);
-				
 				
 				
 			}

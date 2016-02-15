@@ -40,8 +40,8 @@
 		FROM PUSH_CAMPAIGN_DETAIL
 	</select>
 
-	<update id="updatePushLog" parameterType="AppUserVo" keyColumn="user_id"
-		keyProperty="user_id" useGeneratedKeys="true">
+	<update id="updatePushLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
+		keyProperty="cd_id" useGeneratedKeys="true">
 		UPDATE PUSH_CAMPAIGN_DETAIL 
 		SET reqUid='${reqUid}', rtn_type='${rtn_type}', res_cd='${res_cd}', 
 			push_log_id='${push_log_id}'
