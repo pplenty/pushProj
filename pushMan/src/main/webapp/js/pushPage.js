@@ -22,7 +22,6 @@ $(document).ready(function() {
 				console.error('ajax 에러: ' + e.status);
 			}
 		});
-
 	});
 	
 	//리치 푸시 전송 버튼
@@ -49,10 +48,6 @@ $(document).ready(function() {
 		});
 
 	});
-	
-	
-	
-
 });
 
 
@@ -85,7 +80,7 @@ function fnChkByte(obj, maxByte, byteInfo) {
 		obj.value = str2;
 		fnChkByte(obj, maxByte);
 	} else {
-		document.getElementsByName(byteInfo).innerText = rbyte;
+		document.getElementById(byteInfo).innerText = rbyte;
 	} 
 }
 
@@ -97,8 +92,10 @@ function keydownFunction(obj, previewName){
 	$(previewSelector).text(previewText);
 }
 
+
 //TEXT/RICH 스왑
 $(document).ready(function(){
+	//텍스트-리치 탭 버튼 이벤트
     $("#textPush").click(function(){
         $("#richPushContent").hide();
         $("#textPushContent").show();
@@ -112,31 +109,63 @@ $(document).ready(function(){
         $("#textPush").removeClass("active");
     });
     
+    //텍스트 푸시 미리보기 버튼 이벤트
+    //팝업푸시 미리보기 버튼 클릭 시 
     $("#previewPopupPush").click(function(){
     	$("#previewPopupPushImg").show();
     	$("#previewNotiImg").hide();
     	$("#previewInAppMessageImg").hide();
     })
+    //Noti 미리보기 버튼 클릭 시
     $("#previewNoti").click(function(){
     	$("#previewPopupPushImg").hide();
     	$("#previewNotiImg").show();
     	$("#previewInAppMessageImg").hide();
     })
+    //인앱메시지 미리보기 버튼 클릭 시
     $("#previewInAppMessage").click(function(){
     	$("#previewPopupPushImg").hide();
     	$("#previewNotiImg").hide();
     	$("#previewInAppMessageImg").show();
     })
     
+    //리치푸시 미리보기 버튼 이벤트
+    //팝업푸시 미리보기 버튼 클릭 시 
+    $("#richPreviewPopupPush").click(function(){
+    	$("#richPreviewPopupPushImg").show();
+    	$("#richPreviewNotiImg").hide();
+    	$("#richPreviewInAppMessageImg").hide();
+    })
+    //Noti 미리보기 버튼 클릭 시
+    $("#richPreviewNoti").click(function(){
+    	$("#richPreviewPopupPushImg").hide();
+    	$("#richPreviewNotiImg").show();
+    	$("#richPreviewInAppMessageImg").hide();
+    })
+    //인앱메시지 미리보기 버튼 클릭 시
+    $("#richPreviewInAppMessage").click(function(){
+    	$("#richPreviewPopupPushImg").hide();
+    	$("#richPreviewNotiImg").hide();
+    	$("#richPreviewInAppMessageImg").show();
+    })
+    
  // CKEDITOR
+    editor = CKEDITOR.replace('richPushPopupContentEditor');
+    CKEDITOR.instances["richPushPopupContentEditor"].on("instanceReady", function(){
+        this.document.on("keyup", richKeydownFunction);
+   });
     editor = CKEDITOR.replace('richInnerContentEditor');
     CKEDITOR.instances["richInnerContentEditor"].on("instanceReady", function(){
-        this.document.on("keyup", updateHtmls);
+        this.document.on("keyup", richKeydownFunction_inapp);
    });
 });
 
 // CKEDITOR
-function updateHtmls(){
-    /*alert(editor.getData());*/
+function richKeydownFunction(){
+	$('.richPreview').html(CKEDITOR.instances.richPushPopupContentEditor.getData());
+}
+
+function richKeydownFunction_inapp(){
+	$('.richPreviewInAppMessageText').text(CKEDITOR.instances.richInnerContentEditor.getData());
 }
 
