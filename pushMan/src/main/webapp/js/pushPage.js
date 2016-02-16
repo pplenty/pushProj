@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 
 	//텍스트 푸시 전송 버튼
@@ -56,7 +57,7 @@ $(document).ready(function() {
 
 
 //내용 바이트 제한
-function fnChkByte(obj, maxByte) {
+function fnChkByte(obj, maxByte, byteInfo) {
 	var str = obj.value;
 	var str_len = str.length;
 
@@ -84,10 +85,11 @@ function fnChkByte(obj, maxByte) {
 		obj.value = str2;
 		fnChkByte(obj, maxByte);
 	} else {
-		document.getElementById('byteInfo').innerText = rbyte;
-	}
+		document.getElementById(byteInfo).innerText = rbyte;
+	} 
 }
 
+//TEXT/RICH 스왑
 $(document).ready(function(){
     $("#textPush").click(function(){
         $("#richPushContent").hide();
@@ -96,9 +98,22 @@ $(document).ready(function(){
         $("#richPush").removeClass("active");
     });
     $("#richPush").click(function(){
-    	$("#richPushContent").show();
+     $("#richPushContent").show();
         $("#textPushContent").hide();
         $("#richPush").addClass("active");
         $("#textPush").removeClass("active");
     });
+    
+    
+ // CKEDITOR
+    editor = CKEDITOR.replace('richInnerContentEditor');
+    CKEDITOR.instances["richInnerContentEditor"].on("instanceReady", function(){
+        this.document.on("keyup", updateHtmls);
+   });
 });
+
+// CKEDITOR
+function updateHtmls(){
+    /*alert(editor.getData());*/
+}
+

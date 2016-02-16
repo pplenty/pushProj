@@ -78,23 +78,23 @@
 
 					<!-- 텍스트 푸시 내용 -->
 					<p></p>
-					<div id="textPushContent">
+					<div id="textPushContent" style="width:50%; float:left">
 						<label for="pushPopupContent">내 용</label><br>
 						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
+							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo')" style="resize: none;"
 							placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
 						<span id="byteInfo">0</span>/90Byte <br> <br> <label
 							for="innerContent">앱 내 메시지 내용</label><br>
 						<textarea id="innerContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90')" style="resize: none;"
+							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo2')" style="resize: none;"
 							placeholder="앱 내 내용을 입력해 주세요"></textarea>
-						<span id="byteInfo">0</span>/90Byte <br>
+						<span id="byteInfo2">0</span>/90Byte <br>
 						<input type="button" id="textPushBtn" class="btn btn-success btn-lg"
 					value="PUSH!!" />
 					</div>
 
 					<!-- 리치 푸시 내용 -->
-					<div id="richPushContent" style="display: none;">
+					<div id="richPushContent" style="display: none; width:50%; float:left">
 						<label for="pushPopupContent">내 용</label><br>
 						<textarea class="ckeditor" cols="1"
 							id="richPushPopupContentEditor" name="richPushPopupContentEditor"
@@ -109,6 +109,24 @@
 						<input type="button"
 							id="richPushBtn" class="btn btn-success btn-lg" value="PUSH!!" />
 					</div>
+					
+					<div id="previewScreen" style="width:50%; float:left">
+						<div>
+							<button id="previewPopupPush" type="button" class="btn btn-default btn-lg">팝업 푸시</button>
+							<button id="previewNoti" type="button" class="btn btn-default btn-lg">상태창</button>
+							<button id="previewInAppMessage" type="button" class="btn btn-default btn-lg">앱 내 메시지</button>
+						</div>
+						<div>
+							<img id="previewPopupPushImg" src="../images/preview_push.PNG" width="62%" height="62%">
+						</div>
+						<div>
+							<img id="previewNotiImg" src="../images/preview_noti.PNG" width="62%" height="62%" style="display: none">
+						</div>
+						<div>
+							<img id="previewInAppMessageImg" src="../images/preview_inapp.PNG" width="62%" height="62%" style="display: none">
+						</div>
+					</div>
+					
 				</div>
 
 				
