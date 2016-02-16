@@ -13,11 +13,14 @@ import com.pushman.dao.MSG_LOG_Dao;
 import com.pushman.dao.PushCampaignDao;
 import com.pushman.dao.PushCampaignDetailDao;
 import com.pushman.dao.SmsDetailDao;
+import com.pushman.dao.SmsUserDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
 import com.pushman.domain.MSG_DATA_Vo;
 import com.pushman.domain.MSG_LOG_Vo;
 import com.pushman.domain.PushCampaignDetailVo;
+import com.pushman.domain.PushCampaignVo;
 import com.pushman.domain.SmsDetailVo;
+import com.pushman.domain.SmsUserVo;
 import com.pushman.domain.TB_SEND_QUE_LOG_Vo;
 import com.pushman.util.MultipleDataSource;
 import com.pushman.util.PushSetting;
@@ -26,6 +29,8 @@ import com.pushman.util.PushSetting;
 public class UpdateEngine {
 	@Autowired
 	AppUserDao appUserDao;
+	@Autowired
+	SmsUserDao smsUserDao;
 	@Autowired
 	PushCampaignDao pushCampaignDao;
 	@Autowired
@@ -39,7 +44,7 @@ public class UpdateEngine {
 	@Autowired
 	SmsDetailDao smsDetailDao;
 	
-	// 푸시 로그 스케줄러('SEND')
+	// 푸시 로그 스케줄러('SEND') / 실패 시 SMS 재전송
 	@Scheduled(fixedDelay = 10000)
 	public void updatePushLogSchedular() throws RuntimeException {
 
@@ -67,6 +72,11 @@ public class UpdateEngine {
 				int user_id = pushCampaignDetailVo.getUser_id();
 				String targetMobile = appUserDao.selectOneByUserId(user_id).getMobile();
 				
+				// 발송자 mobile 얻기
+				PushCampaignVo pushCampVo = pushCampaignDao.selectOneByCampId(pushCampaignDetailVo.getCamp_id());
+				SmsUserVo smsUserVo = smsUserDao.selectOneByUserNo(pushCampVo.getUser_no());
+				String senderMobile = smsUserVo.getMobile();
+
 				// 데이터소스 SET - 푸시피아 DB
 				MultipleDataSource.setDataSourceKey("pushpiaDB");
 				HashMap<String, Object> sqlParams = new HashMap<String, Object>();
@@ -108,28 +118,25 @@ public class UpdateEngine {
 						if (pushCampaignDetailVo.getRes_cd() == null || 
 								!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) {
 
-						  // 데이터소스 SET - SMS 중계사 DB
+							// 데이터소스 SET - SMS 중계사 DB
 							MultipleDataSource.setDataSourceKey("iHeartDB");
 							
 							//실패 한 타겟들 문자로 재발송
 							msgDataVo.setCall_to(targetMobile);
-							msgDataVo.setCall_from("01063757314");//하드코딩 수정
+							msgDataVo.setCall_from(senderMobile);//하드코딩 수정
 							msgDataVo.setSms_txt("PUSH 리타겟팅 TEST");
 							msgDataVo.setMsg_etc2(Integer.toString(cd_id));
 							msgDataDao.sendSMS(msgDataVo);
 							
-							/**********************************************************************/
 							// 발송 후 SMS Detail 캠페인 등록
 							SmsDetailVo smsDetailVo = new SmsDetailVo();
-							smsDetailVo.setError_code("9");
+							smsDetailVo.setError_code("9");// 전송중
 							smsDetailVo.setTg_mobile(targetMobile);
 							smsDetailVo.setCd_id(cd_id);
 							
 							// 데이터소스 SET - local DB
 							MultipleDataSource.setDataSourceKey("localDB");
 							smsDetailDao.insert(smsDetailVo);
-							
-							/**********************************************************************/
 						}
 					}
 				}

@@ -5,9 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.pushman.domain.AuthNumberVo;
-import com.pushman.domain.CampaignDetailVo;
 import com.pushman.domain.SmsDetailVo;
+import com.pushman.domain.SmsUserVo;
 
 @Component
 public interface SmsDetailDao {

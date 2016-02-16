@@ -39,6 +39,30 @@
 		FROM APP_USER
 	</select>
 	
+	<select id="selectListTarget" parameterType="map" resultMap="AppUserVoMap">
+		SELECT USER_ID, MOBILE, CUST_ID, REG_DATE, LAST_LOGIN_DATE,
+			   CNT_LOGIN, USER_ETC1, USER_ETC2, USER_ETC3
+		FROM APP_USER
+		<choose>
+			<when test="target == 'loginToday'">
+			WHERE DATE_FORMAT(LAST_LOGIN_DATE, '%Y-%m-%d') = DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+			</when>
+			<otherwise></otherwise>
+		</choose>
+	</select>
+	
+	<select id="countTarget" parameterType="map" resultType="int">
+		SELECT
+		count(USER_ID)
+		FROM APP_USER
+		<choose>
+			<when test="target == 'loginToday'">
+			WHERE DATE_FORMAT(LAST_LOGIN_DATE, '%Y-%m-%d') = DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+			</when>
+			<otherwise></otherwise>
+		</choose>
+	</select>
+	
 	<select id="selectOneByCustId" parameterType="String" resultMap="AppUserVoMap">
 		SELECT USER_ID, MOBILE, CUST_ID, REG_DATE, LAST_LOGIN_DATE,
 			   CNT_LOGIN, USER_ETC1, USER_ETC2, USER_ETC3
@@ -53,4 +77,5 @@
 		FROM APP_USER
 		WHERE USER_ID=#{value}
 	</select>
+	
 </mapper>

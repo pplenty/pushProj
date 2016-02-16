@@ -26,6 +26,12 @@
       WHERE user_email=#{email}
   </select>
   
+  <select id="selectOneByUserNo" parameterType="int" resultMap="SmsUserVoMap">
+      SELECT user_no, user_name, user_mobile, user_email, user_pwd, user_reg_date
+      FROM SMS_USER
+      WHERE user_no=#{value}
+  </select>
+  
   
   <insert id="insert" parameterType="SmsUserVo"
         keyColumn="user_no" keyProperty="no" useGeneratedKeys="true">
