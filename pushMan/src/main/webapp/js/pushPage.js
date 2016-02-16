@@ -89,6 +89,11 @@ function fnChkByte(obj, maxByte, byteInfo) {
 	} 
 }
 
+function keydownFunction(obj, toPreview){
+	var text = obj.value;
+	document.getElementById(toPreview).innerText = text;
+}
+
 //TEXT/RICH 스왑
 $(document).ready(function(){
     $("#textPush").click(function(){
@@ -104,6 +109,21 @@ $(document).ready(function(){
         $("#textPush").removeClass("active");
     });
     
+    $("#previewPopupPush").click(function(){
+    	$("#previewPopupPushImg").show();
+    	$("#previewNotiImg").hide();
+    	$("#previewInAppMessageImg").hide();
+    })
+    $("#previewNoti").click(function(){
+    	$("#previewPopupPushImg").hide();
+    	$("#previewNotiImg").show();
+    	$("#previewInAppMessageImg").hide();
+    })
+    $("#previewInAppMessage").click(function(){
+    	$("#previewPopupPushImg").hide();
+    	$("#previewNotiImg").hide();
+    	$("#previewInAppMessageImg").show();
+    })
     
  // CKEDITOR
     editor = CKEDITOR.replace('richInnerContentEditor');

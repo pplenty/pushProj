@@ -81,12 +81,13 @@
 					<div id="textPushContent" style="width:50%; float:left">
 						<label for="pushPopupContent">내 용</label><br>
 						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo')" style="resize: none;"
+							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo')" onkeydown="keydownFunction(this, 'previewPopupPushText')" style="resize: none;"
 							placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
 						<span id="byteInfo">0</span>/90Byte <br> <br> <label
 							for="innerContent">앱 내 메시지 내용</label><br>
+						
 						<textarea id="innerContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo2')" style="resize: none;"
+							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo2')" onkeydown="keydownFunction(this, 'previewInAppMessageText')" style="resize: none;"
 							placeholder="앱 내 내용을 입력해 주세요"></textarea>
 						<span id="byteInfo2">0</span>/90Byte <br>
 						<input type="button" id="textPushBtn" class="btn btn-success btn-lg"
@@ -109,22 +110,39 @@
 						<input type="button"
 							id="richPushBtn" class="btn btn-success btn-lg" value="PUSH!!" />
 					</div>
-					
 					<div id="previewScreen" style="width:50%; float:left">
 						<div>
 							<button id="previewPopupPush" type="button" class="btn btn-default btn-lg">팝업 푸시</button>
 							<button id="previewNoti" type="button" class="btn btn-default btn-lg">상태창</button>
 							<button id="previewInAppMessage" type="button" class="btn btn-default btn-lg">앱 내 메시지</button>
 						</div>
-						<div>
-							<img id="previewPopupPushImg" src="../images/preview_push.PNG" width="62%" height="62%">
+
+
+						<div id="previewPopupPushImg" style="position: relative;">
+							<img src="../images/preview_push.PNG" width="340px" height="500px">
+							<textarea id="previewPopupPushText" cols="30" rows="6"
+								style='position: absolute; top: 70px; left: 50px; z-index: 1; border: none; resize: none; background-color:transparent;'>
+							</textarea>
 						</div>
-						<div>
-							<img id="previewNotiImg" src="../images/preview_noti.PNG" width="62%" height="62%" style="display: none">
+						
+						
+						<div id="previewNotiImg" style="position: relative; display: none">
+							<img src="../images/preview_noti.PNG" width="340px" height="500px">
+							<textarea id="previewPopupPushText" cols="40" rows="2"
+								style='position: absolute; top: 120px; left: 60px; z-index: 1; border: none; resize: none; background-color:transparent; color:white;'>
+							</textarea>
 						</div>
-						<div>
-							<img id="previewInAppMessageImg" src="../images/preview_inapp.PNG" width="62%" height="62%" style="display: none">
+						
+						<div id="previewInAppMessageImg" style="position: relative; display: none">
+							<img src="../images/preview_inapp.PNG" width="340px" height="500px">
+							<textarea id="previewInAppMessageText" cols="40" rows="6"
+								style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color:transparent; color:white;'>
+							</textarea>
+							
+							
 						</div>
+
+
 					</div>
 					
 				</div>
