@@ -1,8 +1,10 @@
 package com.pushman.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pushman.domain.AppUserVo;
+import com.pushman.domain.PushCampaignDetailVo;
 import com.pushman.domain.SmsUserVo;
 import com.pushman.dao.AppUserDao;
 import com.pushman.dao.PushCampaignDao;
@@ -37,7 +40,7 @@ public class TestController {
 	
 	@RequestMapping("/test")
 	@ResponseBody
-	//理쒖큹 ???ㅽ뻾???먮룞 濡쒓렇??
+	//최초 앱 실행시 모바일 사용자의 정보를 로컬 DB에 저장
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -56,7 +59,7 @@ public class TestController {
 	
 	@RequestMapping("/test2")
 	@ResponseBody
-	//?깆쓣 ?ㅽ뻾???뚮쭏??理쒓렐 ?묒냽 ?쒓컙 ?낅뜲?댄듃
+	// 앱을 실행할 때마다 모바일 번호를 저장함
 	protected void doGetConnect(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -72,6 +75,7 @@ public class TestController {
 		appUserDao.update(appUserVo);
 	}
 	
+	//캠페인 레포트 디테일
 	@RequestMapping("/pushListDetail")
 	public String pushListDetail(
 			@RequestParam(required = false, defaultValue = "1") int pageNo,
@@ -81,21 +85,30 @@ public class TestController {
 			Model model, int cno, HttpSession session)
 			throws Exception {
 
-		// sqlParams??媛믩떞?꾩꽌 ?섍?
+		//
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
-		if (smsUser == null) return "index";// ?몄뀡 ?놁쓣 ??硫붿씤?쇰줈
+		if (smsUser == null) return "index";
 		model.addAttribute("name", smsUser.getName());
 		
-		// SQL(select臾? 議곌굔 parameter ?명똿
+		//
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
 		sqlParams.put("pageSize", pageSize);
 		sqlParams.put("word", word);
 		sqlParams.put("order", order);
 		sqlParams.put("camp_id", cno);
+		
+		List<Map<String, Object>> campDetailList = pushCampaignDetailDao.selectListByCamp(sqlParams);
+//		List<String> mobileList = new ArrayList<String>();
 				
+//		AppUserVo appUserVo;
+//		for (PushCampaignDetailVo pushCampaignDetailVo : campDetailList) {
+//			appUserVo = appUserDao.selectOneByUserId(pushCampaignDetailVo.getUser_id());
+//			mobileList.add(appUserVo.getMobile());
+//		}
 //		model.addAttribute("countList", pushList.size());
-		model.addAttribute("list", 		pushCampaignDetailDao.selectListByCamp(sqlParams));
+		model.addAttribute("list", 		campDetailList);
+//		model.addAttribute("mobileList", mobileList);
 //		model.addAttribute("pageNo", 	pageNo);
 //		model.addAttribute("pageSize",  pageSize);
 //		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, pushList.size()));
