@@ -166,6 +166,6 @@ function richKeydownFunction(){
 }
 
 function richKeydownFunction_inapp(){
-	$('.richPreviewInAppMessageText').text(CKEDITOR.instances.richInnerContentEditor.getData());
+	$('.richPreviewInAppMessageText').html(CKEDITOR.instances.richInnerContentEditor.getData());
 }
 

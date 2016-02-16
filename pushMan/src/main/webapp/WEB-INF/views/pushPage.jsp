@@ -130,7 +130,8 @@
 								<img src="../images/preview_inapp.PNG" width="340px"
 									height="500px">
 								<textarea id="previewInAppMessageText"
-									class="previewInAppMessageText" cols="40" rows="6" readonly="readonly"
+									class="previewInAppMessageText" cols="40" rows="6"
+									readonly="readonly"
 									style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
 							</textarea>
 							</div>
@@ -196,7 +197,8 @@
 								<img src="../images/preview_inapp.PNG" width="340px"
 									height="500px">
 								<textarea id="richPreviewInAppMessageText"
-									class="richPreviewInAppMessageText" cols="40" rows="6" readonly="readonly"
+									class="richPreviewInAppMessageText" cols="40" rows="6"
+									readonly="readonly"
 									style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
 							</textarea>
 							</div>
