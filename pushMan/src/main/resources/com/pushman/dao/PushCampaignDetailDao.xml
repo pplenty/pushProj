@@ -21,7 +21,7 @@
 		FROM PUSH_CAMPAIGN_DETAIL
 	</select>
 	
-	<select id="selectListByCamp" parameterType="map" resultMap="PushCampaignDetailVoMap">
+	<select id="selectListByCamp" parameterType="map" resultType="map">
 		SELECT cd_id, b.reg_date, reqUid, rtn_type, res_cd, mobile, camp_id, push_log_id 
 		FROM PUSH_CAMPAIGN_DETAIL A JOIN APP_USER B ON A.user_id = B.user_id
 		WHERE camp_id=${camp_id}
