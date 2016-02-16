@@ -65,17 +65,36 @@ public class PushController {
 		if (smsUser == null) return "index";// 세션 없을 시 메인으로
 
 		// ajax 요청 파라미터 받기
-		String pushCampTitle = request.getParameter("pushCampTitle");	
-		String pushPopupTitle = request.getParameter("pushPopupTitle");	
-		String pushMsg = request.getParameter("pushPopupContent");// 이부분 인풋 추가해야함	
-		String pushPopupContent = request.getParameter("pushPopupContent");	
-		String innerContent = request.getParameter("innerContent");	
-		String pushType = request.getParameter("pushType");
+		String pushType 		= request.getParameter("pushType"); 		// 푸시 타입 구분(Text/Html)
+		String checkReTarget 	= request.getParameter("checkReTarget"); 				// 푸시 실패 시 SMS 전송 여부
+		String targetType 		= request.getParameter("targetType"); 				// 타겟 타입(전체/로그인한 사람)
+		String pushCampTitle  	= request.getParameter("pushCampTitle");	// 캠페인 관리용 제목
+		String pushPopupTitle 	= request.getParameter("pushPopupTitle");	// 헤드라인, 팝업 제목
+		String smsContent		= null;										// SMS 재발송 내용
+		String pushMsg 			= null;										// notification 내용
+		String pushPopupContent = null;										// 팝업 내용
+		String innerContent 	= null;									 	// 인 앱 내용	
 		
-		// 캠페인 reqUid
+		// TEXT / RICH content, 캠페인 reqUid 생성
 		String campReqUid = null;
-		if ("text".equals(pushType)) campReqUid = create_ReqUid('T');
-		else campReqUid = create_ReqUid('H');
+		
+		// TEXT push 인 경우
+		if ("text".equals(pushType)) {
+			campReqUid = create_ReqUid('T');
+			pushMsg = request.getParameter("pushPopupContent");	
+			pushPopupContent = request.getParameter("pushPopupContent");	
+			innerContent = request.getParameter("innerContent");	
+		}//rich push 인 경우
+		else {
+			// SMS 재발송이 YES인 경우
+//			if (checkReTarget.equals("Y")) {
+//				smsContent = request.getParameter("smsContent");
+//			}
+			campReqUid = create_ReqUid('H');
+			pushMsg = request.getParameter("pushPopupContent");	
+			pushPopupContent = request.getParameter("pushPopupContent");	
+			innerContent = request.getParameter("innerContent");	
+		}
 				
 				
 		// 푸시 캠페인 등록
@@ -86,7 +105,7 @@ public class PushController {
 		pushCampaignVo.setPopup_content(pushPopupContent);
 		pushCampaignVo.setInapp_content(innerContent);
 		pushCampaignVo.setUser_no(smsUser.getNo());
-		
+		/* PUSH_CAMPAIGN 수정 */		
 		pushCampaignDao.insert(pushCampaignVo);// INSERT 캠페인
 		campReqUid += pushCampaignVo.getCamp_id();// campReqUid에 camp_id 넣기
 		
@@ -142,14 +161,16 @@ public class PushController {
 			pushReqParam.addProperty("msgType", "H"); // HTML
 		}
 		
-		pushReqParam.addProperty("pushTime", 1800);// 고정 값(발송 유효 시간)
-		pushReqParam.addProperty("pushTitle", pushPopupTitle);// 팝업, 상태창 제목
-		pushReqParam.addProperty("pushMsg", pushMsg);// 상태창 메시지
-		pushReqParam.addProperty("popupContent", pushPopupContent);//팝업 내용
-		pushReqParam.addProperty("inappContent", innerContent);// 인앱 메시지
-		pushReqParam.addProperty("pushKey", "l");// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
+		pushReqParam.addProperty("pushTime", 1800);							// 고정 값(발송 유효 시간)
+		pushReqParam.addProperty("pushTitle", pushPopupTitle);				// 팝업, 상태창 제목
+		pushReqParam.addProperty("pushMsg", pushMsg);						// 상태창 메시지
+		pushReqParam.addProperty("popupContent", pushPopupContent  			//팝업 내용
+				+ "<script src='http://pushpia.com/pms-sdk.js'></script>");
+		pushReqParam.addProperty("inappContent", innerContent				// 인앱 메시지
+				+ "<script src='http://pushpia.com/pms-sdk.js'></script>");
+		pushReqParam.addProperty("pushKey", "l");							// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		pushReqParam.addProperty("pushValue", PushSetting.PUSHVALUE_URL);
-		pushReqParam.addProperty("reserveTime", "20160201120000");// 고정 값(과거 값)
+		pushReqParam.addProperty("reserveTime", "20160201120000");			// 고정 값(과거 값)
 		
 		pushReqParam.add("list", jarr);// 동보 메시지 타겟 리스트 추가
 		
