@@ -9,8 +9,7 @@ import com.pushman.domain.MSG_LOG_Vo;
 
 @Component
 public interface MSG_LOG_Dao {
-	
-	List<MSG_LOG_Vo> selectListAll(Map<String, Object> paramMap);
+	List<MSG_LOG_Vo> selectListSmsLog(Map<String, String> paramMap);
 }
 
 

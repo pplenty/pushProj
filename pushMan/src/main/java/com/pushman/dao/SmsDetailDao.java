@@ -28,4 +28,8 @@ public interface SmsDetailDao {
 	SmsDetailVo selectOne(Map<String, String> paramMap);
 
 	SmsDetailVo selectOneforEmail(Map<String, String> paramMap);
+
+	List<SmsDetailVo> selectListLogIsNull();
+
+	int updateSMSLog(SmsDetailVo smsDetailVo);
 }

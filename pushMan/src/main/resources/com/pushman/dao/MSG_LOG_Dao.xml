@@ -28,18 +28,13 @@
     <result column="msg_etc5" 		  property="msg_etc5" />
   </resultMap>
   
-  
-<!--   <select id="selectListAll" parameterType="map" resultMap="MSG_LOG_VoMap">
+    <select id="selectListSmsLog" parameterType="map" resultMap="MSG_LOG_VoMap">
       SELECT USERDATA, MSG_SEQ, CUR_STATE, SENT_DATE, RSLT_DATE, REPORT_DATE, 
       		 REQ_DATE, RSLT_CODE, RSLT_CODE2, RSLT_NET, CALL_TO, CALL_FROM, 
-      		 SMS_TXT, MSG_TYPE, CONT_SEQ, MSG_ETC1, MSG_ETC2, MSG_ETC3
-      FROM MSG_LOG_201601
-  </select> -->
-  
-    <select id="selectListAll" parameterType="map" resultMap="MSG_LOG_VoMap">
-      SELECT MSG_SEQ, USERDATA, CUR_STATE, SENT_DATE, RSLT_CODE2
-      FROM MSG_LOG_201601
-  </select>
+      		 SMS_TXT, MSG_TYPE, CONT_SEQ, MSG_ETC1, MSG_ETC2, MSG_ETC3, MSG_ETC4, MSG_ETC5
+      FROM MSG_LOG_201602
+      WHERE MSG_ETC1=#{MSG_ETC1}
+  	</select>
   
   
 </mapper>

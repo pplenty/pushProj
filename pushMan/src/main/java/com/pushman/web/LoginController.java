@@ -40,7 +40,7 @@ public class LoginController {
 		MultipleDataSource.setDataSourceKey("iHeartDB");
 		
 		HashMap<String, Object> hm = new HashMap<String, Object>();
-		List<MSG_LOG_Vo> list = msg_log_dao.selectListAll(hm);
+//		List<MSG_LOG_Vo> list = msg_log_dao.selectListAll(hm);
 //		System.out.println(list.get(0));
 		
 		MultipleDataSource.setDataSourceKey("pushpiaDB");

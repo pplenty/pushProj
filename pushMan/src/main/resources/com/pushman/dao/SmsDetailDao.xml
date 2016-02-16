@@ -23,14 +23,27 @@
   protected int MSG_SEQ;
   
    -->
+
+	<insert id="insert" parameterType="SmsDetailVo" keyColumn="sms_id"
+		keyProperty="sms_id" useGeneratedKeys="true">
+		INSERT INTO SMS_DETAIL
+		(reg_date, tg_mobile, error_code, cd_id)
+		VALUES
+		(SYSDATE(), #{tg_mobile}, #{error_code}, #{cd_id})
+	</insert>
 	
-	 <insert id="insert" parameterType="SmsDetailVo" keyColumn="cd_id"
-    keyProperty="cd_id" useGeneratedKeys="true">
-    INSERT INTO SMS_DETAIL 
-        (sms_id, reg_date, tg_mobile, error_code, MSG_SEQ)
-    VALUES
-        (#{sms_id}, SYSDATE(), #{tg_mobile}, #{error_code}, #{MSG_SEQ})
-  </insert>
+	<select id="selectListLogIsNull" resultMap="SmsDetailVoMap">
+		SELECT sms_id, reg_date, tg_mobile, error_code, cd_id, MSG_SEQ
+		FROM SMS_DETAIL
+		WHERE MSG_SEQ IS NULL
+	</select>
+	
+	<update id="updateSMSLog" parameterType="SmsDetailVo" keyColumn="sms_id"
+		keyProperty="sms_id" useGeneratedKeys="true">
+		UPDATE SMS_DETAIL
+		SET error_code='${error_code}', MSG_SEQ='${MSG_SEQ}'
+		WHERE cd_id=#{cd_id}
+	</update>
 
 </mapper>
 

@@ -14,4 +14,7 @@ public class PushSetting {
 	// html push biz key (고정 값)
 	public static final String RICH_PUSH_BIZ_KEY = "f91e805198204094b753262839e3e551";
 
+	// SMS(iHeart DB) 식별 키 - MSG_ETC_1
+	public static final String RE_SMS_KEY = "kohPush";
+
 }
