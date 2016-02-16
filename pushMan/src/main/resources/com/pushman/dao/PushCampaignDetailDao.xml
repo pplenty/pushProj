@@ -14,7 +14,6 @@
 		<result column="user_id" 	  property="user_id" />
 		<result column="camp_id" 	  property="camp_id" />
 		<result column="push_log_id"  property="push_log_id" />
-		<result column="mobile"  	  property="mobile" />
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
@@ -54,6 +53,15 @@
 			push_log_id='${push_log_id}'
 		WHERE cd_id=#{cd_id}
 	</update>
+	
+	<insert id="insertLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
+		keyProperty="cd_id" useGeneratedKeys="true">
+		INSERT INTO PUSH_CAMPAIGN_DETAIL
+			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id)
+		VALUES 
+			(SYSDATE(), '${reqUid}', '${rtn_type}', '${res_cd}', ${user_id}, 
+			 ${camp_id}, ${push_log_id})
+	</insert>
 	
 	
 </mapper>

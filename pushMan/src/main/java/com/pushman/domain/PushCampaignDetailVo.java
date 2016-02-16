@@ -14,14 +14,7 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	protected int camp_id;
 	protected int user_id;
 	protected int push_log_id;
-	protected String mobile;
 
-	public String getMobile() {
-		return mobile;
-	}
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
 	public int getCd_id() {
 		return cd_id;
 	}

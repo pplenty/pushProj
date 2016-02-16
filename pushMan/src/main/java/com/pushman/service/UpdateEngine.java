@@ -94,45 +94,47 @@ public class UpdateEngine {
 						sqlParams2.put("rtn_type", pushCampaignDetailVo.getRtn_type());
 						sqlParams2.put("camp_id", pushCampaignDetailVo.getCamp_id());
 						pushCampaignDao.updateResult(sqlParams2);
+						
+						
+
+						// 캠페인 SMS 리타게팅 
+						MSG_DATA_Vo msgDataVo = new MSG_DATA_Vo();
+						// && 캠페인 VO. reTarget == Y 
+						System.out.println(pushCampaignDetailVo.getRes_cd());
+						if (pushCampaignDetailVo.getRes_cd() == null || 
+								!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) {
+
+						  // 데이터소스 SET - SMS 중계사 DB
+							MultipleDataSource.setDataSourceKey("iHeartDB");
+							
+							//실패 한 타겟들 문자로 재발송
+							msgDataVo.setCall_to(targetMobile);
+							msgDataVo.setCall_from("01063757314");//하드코딩 수정
+							msgDataVo.setSms_txt("PUSH 리타겟팅");
+							msgDataVo.setMsg_etc2(Integer.toString(pushCampaignDetailVo.getCd_id()));
+							MsgDataDao.sendSMS(msgDataVo);
+							
+							/**********************************************************************/
+							
+							// 발송 후 SMS Detail 캠페인 등록
+							SmsDetailVo smsDetailVo = new SmsDetailVo();
+							smsDetailVo.setCd_id(0);
+							smsDetailVo.setError_code(targetMobile);
+							smsDetailVo.setMSG_SEQ(0);
+							smsDetailVo.setReg_date(null);
+							smsDetailVo.setSms_id(0);
+							smsDetailVo.setTg_mobile(null);
+							
+							// 데이터소스 SET - local DB
+							MultipleDataSource.setDataSourceKey("localDB");
+							smsDetailDao.insert(smsDetailVo);
+							
+							
+							/**********************************************************************/
+						}
 					}
 				}
 				
-				// 캠페인 SMS 리타게팅 
-				MSG_DATA_Vo msgDataVo = new MSG_DATA_Vo();
-				// && 캠페인 VO. reTarget == Y 
-				System.out.println(pushCampaignDetailVo);
-				if (pushCampaignDetailVo.getRes_cd() == null || 
-						!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) {
-
-				  // 데이터소스 SET - SMS 중계사 DB
-					MultipleDataSource.setDataSourceKey("iHeartDB");
-					
-					//실패 한 타겟들 문자로 재발송
-					msgDataVo.setCall_to(targetMobile);
-					msgDataVo.setCall_from("01063757314");//하드코딩 수정
-					msgDataVo.setSms_txt("PUSH 리타겟팅");
-					msgDataVo.setMsg_etc2(Integer.toString(pushCampaignDetailVo.getCd_id()));
-					MsgDataDao.sendSMS(msgDataVo);
-					
-					/**********************************************************************/
-					
-					// 발송 후 SMS Detail 캠페인 등록
-					SmsDetailVo smsDetailVo = new SmsDetailVo();
-					smsDetailVo.setCd_id(0);
-					smsDetailVo.setError_code(targetMobile);
-					smsDetailVo.setMSG_SEQ(0);
-					smsDetailVo.setReg_date(null);
-					smsDetailVo.setSms_id(0);
-					smsDetailVo.setTg_mobile(null);
-					
-				// 데이터소스 SET - local DB
-          MultipleDataSource.setDataSourceKey("localDB");
-          smsDetailDao.insert(smsDetailVo);
-					
-					
-					
-					/**********************************************************************/
-				}
 				
 			}
 		}
