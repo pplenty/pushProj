@@ -81,7 +81,7 @@
 					<div id="textPushContent" style="width:50%; float:left">
 						<label for="pushPopupContent">내 용</label><br>
 						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo')" onkeydown="keydownFunction(this, 'previewPopupPushText')" style="resize: none;"
+							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo')" onkeydown="keydownFunction(this, 'preview')" style="resize: none;"
 							placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
 						<span id="byteInfo">0</span>/90Byte <br> <br> <label
 							for="innerContent">앱 내 메시지 내용</label><br>
@@ -120,7 +120,7 @@
 
 						<div id="previewPopupPushImg" style="position: relative;">
 							<img src="../images/preview_push.PNG" width="340px" height="500px">
-							<textarea id="previewPopupPushText" cols="30" rows="6"
+							<textarea id="previewPushText" class="preview" cols="30" rows="6"
 								style='position: absolute; top: 70px; left: 50px; z-index: 1; border: none; resize: none; background-color:transparent;'>
 							</textarea>
 						</div>
@@ -128,14 +128,14 @@
 						
 						<div id="previewNotiImg" style="position: relative; display: none">
 							<img src="../images/preview_noti.PNG" width="340px" height="500px">
-							<textarea id="previewPopupPushText" cols="40" rows="2"
-								style='position: absolute; top: 120px; left: 60px; z-index: 1; border: none; resize: none; background-color:transparent; color:white;'>
+							<textarea id="previewPushText" class="preview" cols="35" rows="2"
+								style='position: absolute; top: 120px; left: 70px; z-index: 1; border: none; resize: none; background-color:transparent; color:white;'>
 							</textarea>
 						</div>
 						
 						<div id="previewInAppMessageImg" style="position: relative; display: none">
 							<img src="../images/preview_inapp.PNG" width="340px" height="500px">
-							<textarea id="previewInAppMessageText" cols="40" rows="6"
+							<textarea id="previewInAppMessageText" class="previewInAppMessageText" cols="40" rows="6"
 								style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color:transparent; color:white;'>
 							</textarea>
 							

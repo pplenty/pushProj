@@ -85,13 +85,16 @@ function fnChkByte(obj, maxByte, byteInfo) {
 		obj.value = str2;
 		fnChkByte(obj, maxByte);
 	} else {
-		document.getElementById(byteInfo).innerText = rbyte;
+		document.getElementsByName(byteInfo).innerText = rbyte;
 	} 
 }
 
-function keydownFunction(obj, toPreview){
-	var text = obj.value;
-	document.getElementById(toPreview).innerText = text;
+
+
+function keydownFunction(obj, previewName){
+	var previewText = obj.value;
+	var previewSelector = '.'+previewName;
+	$(previewSelector).text(previewText);
 }
 
 //TEXT/RICH 스왑
