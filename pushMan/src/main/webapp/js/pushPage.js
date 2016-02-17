@@ -8,10 +8,12 @@ $(document).ready(function() {
 			url : './push.do',
 			method : 'POST',
 			data : {
-				pushCampTitle	 : $('#pushCampTitle').val(),
-				pushPopupTitle 	 : $('#pushPopupTitle').val(),
-				pushPopupContent : $('#pushPopupContent').val(),
-				innerContent 	 : $('#innerContent').val(),
+				pushCampTitle	 : $('#pushCampTitle').val(),	//푸시 캠페인 이름
+				pushPopupTitle 	 : $('#pushPopupTitle').val(),	//푸시  팝업 제목
+				targetType		 : $('#targetType').val(),		//푸시 대상자
+				checkReTarget	 : $('#checkReTarget').val(),	//SMS 리타켓 여부
+				pushPopupContent : $('#pushPopupContent').val(),//푸시 팝업 내용
+				innerContent 	 : $('#innerContent').val(),	//푸시 인앱 내용
 				pushType		 : 'text'
 			},
 			success : function(result) {
@@ -32,10 +34,13 @@ $(document).ready(function() {
 			method : 'POST',
             dataType: 'html',
 			data : {
-				pushCampTitle	 : $('#pushCampTitle').val(),
-				pushPopupTitle 	 : $('#pushPopupTitle').val(),
-				pushPopupContent : CKEDITOR.instances.richPushPopupContentEditor.getData(),
-				innerContent 	 : CKEDITOR.instances.richInnerContentEditor.getData(),
+				pushCampTitle	 : $('#pushCampTitle').val(),		//푸시 캠페인 이름
+				pushPopupTitle 	 : $('#pushPopupTitle').val(),		//푸시  팝업 제목
+				targetType		 : $('#targetType').val(),			//푸시 대상자
+				checkReTarget	 : $('#checkReTarget').val(),		//SMS 리타켓 여부
+				pushMsg		     : $('#richPushNotiContent').val(), //푸시 상태창 내용
+				pushPopupContent : CKEDITOR.instances.richPushPopupContentEditor.getData(),	//푸시 팝업 내용
+				innerContent 	 : CKEDITOR.instances.richInnerContentEditor.getData(),		//푸시 인앱 내용
 				pushType		 : 'html'
 			},
 			success : function(result) {
@@ -133,6 +138,16 @@ $(document).ready(function(){
     CKEDITOR.instances["richInnerContentEditor"].on("instanceReady", function(){
         this.document.on("keyup", richKeydownFunction_inapp);
    });
+});
+
+$(document).ready(function(){
+    $("#checkReTarget").change(function(){
+        if($("#checkReTarget").is(":checked")){
+        	$("#smsTarget").show();
+        }else{
+        	$("#smsTarget").hide();
+        }
+    });
 });
 
 //텍스트 푸시 미리보기
