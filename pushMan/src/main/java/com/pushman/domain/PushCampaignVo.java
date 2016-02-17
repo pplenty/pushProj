@@ -20,6 +20,9 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	protected int push_click;
 	protected String camp_reqUid;
 	protected int user_no;//웹사이트 로그인 사용자
+	protected String checkReTarget;//SMS 재발송 여부
+	protected String smsContent;// SMS 재발송 내용
+	protected String targetType;//타게팅 타입(all/login)
 	public int getCamp_id() {
 		return camp_id;
 	}
@@ -110,13 +113,33 @@ public class PushCampaignVo implements Serializable {// WAS 사이에 데이터 
 	public void setUser_no(int user_no) {
 		this.user_no = user_no;
 	}
+	public String getCheckReTarget() {
+		return checkReTarget;
+	}
+	public void setCheckReTarget(String checkReTarget) {
+		this.checkReTarget = checkReTarget;
+	}
+	public String getSmsContent() {
+		return smsContent;
+	}
+	public void setSmsContent(String smsContent) {
+		this.smsContent = smsContent;
+	}
+	public String getTargetType() {
+		return targetType;
+	}
+	public void setTargetType(String targetType) {
+		this.targetType = targetType;
+	}
 	@Override
 	public String toString() {
 		return "PushCampaignVo [camp_id=" + camp_id + ", push_camp_title=" + push_camp_title + ", push_title="
 				+ push_title + ", push_msg=" + push_msg + ", popup_content=" + popup_content + ", inapp_content="
 				+ inapp_content + ", reg_date=" + reg_date + ", push_total=" + push_total + ", push_succ=" + push_succ
 				+ ", push_wait=" + push_wait + ", push_fail=" + push_fail + ", push_open=" + push_open + ", push_click="
-				+ push_click + ", camp_reqUid=" + camp_reqUid + ", user_no=" + user_no + "]";
+				+ push_click + ", camp_reqUid=" + camp_reqUid + ", user_no=" + user_no + ", checkReTarget="
+				+ checkReTarget + ", smsContent=" + smsContent + ", targetType=" + targetType + "]";
 	}
+	
 	
 }

@@ -21,6 +21,9 @@
 		<result column="push_click" 		property="push_click" />
 		<result column="camp_reqUid" 		property="camp_reqUid" />
 		<result column="user_no" 			property="user_no" />
+		<result column="checkReTarget" 		property="checkReTarget" />
+		<result column="smsContent" 		property="smsContent" />
+		<result column="targetType" 		property="targetType" />
 	</resultMap>
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignVoMap">
@@ -28,7 +31,7 @@
 			camp_id, push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date,
 			push_total, push_succ, push_wait, push_fail, push_open, push_click,
-			camp_reqUid, user_no
+			camp_reqUid, user_no, checkReTarget, smsContent, targetType
 		FROM PUSH_CAMPAIGN
 	</select>
 	
@@ -37,7 +40,7 @@
 			camp_id, push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date,
 			push_total, push_succ, push_wait, push_fail, push_open, push_click,
-			camp_reqUid, user_no
+			camp_reqUid, user_no, checkReTarget, smsContent, targetType
 		FROM PUSH_CAMPAIGN
 		WHERE user_no=${user_no}
 		ORDER BY reg_date DESC
@@ -48,7 +51,7 @@
 			camp_id, push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			DATE_FORMAT(reg_date, '%Y-%m-%d %H:%i:%S') reg_date,
 			push_total, push_succ, push_wait, push_fail, push_open, push_click,
-			camp_reqUid, user_no
+			camp_reqUid, user_no, checkReTarget, smsContent, targetType
 		FROM PUSH_CAMPAIGN
 		WHERE camp_id=#{value}
 	</select>

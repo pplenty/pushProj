@@ -14,7 +14,8 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	protected int camp_id;
 	protected int user_id;
 	protected int push_log_id;
-
+	protected int clk_id;
+	protected int tb_click_id;
 	public int getCd_id() {
 		return cd_id;
 	}
@@ -63,15 +64,25 @@ public class PushCampaignDetailVo implements Serializable {// WAS 사이에 데�
 	public void setPush_log_id(int push_log_id) {
 		this.push_log_id = push_log_id;
 	}
+	public int getClk_id() {
+		return clk_id;
+	}
+	public void setClk_id(int clk_id) {
+		this.clk_id = clk_id;
+	}
+	public int getTb_click_id() {
+		return tb_click_id;
+	}
+	public void setTb_click_id(int tb_click_id) {
+		this.tb_click_id = tb_click_id;
+	}
 	@Override
 	public String toString() {
 		return "PushCampaignDetailVo [cd_id=" + cd_id + ", reg_date=" + reg_date + ", reqUid=" + reqUid + ", rtn_type="
 				+ rtn_type + ", res_cd=" + res_cd + ", camp_id=" + camp_id + ", user_id=" + user_id + ", push_log_id="
-				+ push_log_id + "]";
+				+ push_log_id + ", clk_id=" + clk_id + ", tb_click_id=" + tb_click_id + "]";
 	}
-
 	
 	
-
 	
 }

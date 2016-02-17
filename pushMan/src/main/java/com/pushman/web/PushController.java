@@ -66,8 +66,8 @@ public class PushController {
 
 		// ajax 요청 파라미터 받기
 		String pushType 		= request.getParameter("pushType"); 		// 푸시 타입 구분(Text/Html)
-		String checkReTarget 	= request.getParameter("checkReTarget"); 				// 푸시 실패 시 SMS 전송 여부
-		String targetType 		= request.getParameter("targetType"); 				// 타겟 타입(전체/로그인한 사람)
+		String checkReTarget 	= request.getParameter("checkReTarget"); 	// 푸시 실패 시 SMS 전송 여부
+		String targetType 		= request.getParameter("targetType"); 		// 타겟 타입(전체/로그인한 사람)
 		String pushCampTitle  	= request.getParameter("pushCampTitle");	// 캠페인 관리용 제목
 		String pushPopupTitle 	= request.getParameter("pushPopupTitle");	// 헤드라인, 팝업 제목
 		String smsContent		= null;										// SMS 재발송 내용
@@ -105,7 +105,12 @@ public class PushController {
 		pushCampaignVo.setPopup_content(pushPopupContent);
 		pushCampaignVo.setInapp_content(innerContent);
 		pushCampaignVo.setUser_no(smsUser.getNo());
-		/* PUSH_CAMPAIGN 수정 */		
+		// 여기부터 수정
+		pushCampaignVo.setCheckReTarget(checkReTarget);
+		pushCampaignVo.setSmsContent(smsContent);
+		pushCampaignVo.setTargetType(targetType);
+		
+		// 푸시 캠페인 초기 INSERT	
 		pushCampaignDao.insert(pushCampaignVo);// INSERT 캠페인
 		campReqUid += pushCampaignVo.getCamp_id();// campReqUid에 camp_id 넣기
 		
@@ -164,8 +169,8 @@ public class PushController {
 		pushReqParam.addProperty("pushTime", 1800);							// 고정 값(발송 유효 시간)
 		pushReqParam.addProperty("pushTitle", pushPopupTitle);				// 팝업, 상태창 제목
 		pushReqParam.addProperty("pushMsg", pushMsg);						// 상태창 메시지
-		pushReqParam.addProperty("popupContent", pushPopupContent  			//팝업 내용
-				+ "<script src='http://pushpia.com/pms-sdk.js'></script>");
+		pushReqParam.addProperty("popupContent", pushPopupContent  			// 팝업 내용
+				+ "<script src='http://pushpia.com/pms-sdk.js'></script>"); // (푸시피아 버그 스크립트 삽입)
 		pushReqParam.addProperty("inappContent", innerContent				// 인앱 메시지
 				+ "<script src='http://pushpia.com/pms-sdk.js'></script>");
 		pushReqParam.addProperty("pushKey", "l");							// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)

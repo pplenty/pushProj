@@ -3,25 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pushman.dao.PushCampaignDetailDao">
+<mapper namespace="com.pushman.dao.PushCampaignDetailClickDao">
 
-	<resultMap type="PushCampaignDetailVo" id="PushCampaignDetailVoMap">
-		<id 	column="cd_id" 		  property="cd_id" />
-		<result column="reg_date"  	  property="reg_date" />
-		<result column="reqUid" 	  property="reqUid" />
-		<result column="rtn_type" 	  property="rtn_type" />
-		<result column="res_cd"   	  property="res_cd" />
-		<result column="user_id" 	  property="user_id" />
-		<result column="camp_id" 	  property="camp_id" />
-		<result column="push_log_id"  property="push_log_id" />
-		<result column="clk_id"  	  property="clk_id" />
-		<result column="tb_click_id"  property="tb_click_id" />
+	<resultMap type="PushCampaignDetailClickVo" id="PushCampaignDetailClickVoMap">
+		<id 	column="click_id" 		  property="click_id" />
+		<result column="tb_click_id"  	  property="tb_click_id" />
+		<result column="link_seq" 	  	  property="link_seq" />
+		<result column="link" 	 		  property="link" />
+		<result column="msg_push_type"    property="msg_push_type" />
+		<result column="click_cnt" 	  	  property="click_cnt" />
+		<result column="reg_date" 	  	  property="reg_date" />
+		<result column="upt_date"  		  property="upt_date" />
+		<result column="camp_id"  	  	  property="camp_id" />
 	</resultMap>
 
-	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
-		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id,
-			   clk_id, tb_click_id
-		FROM PUSH_CAMPAIGN_DETAIL
+	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailClickVoMap">
+		SELECT click_id, tb_click_id, link_seq, link, msg_push_type, click_cnt, 
+			   reg_date, upt_date, camp_id
+		FROM PUSH_CAMPAIGN_DETAIL_CLICK
 	</select>
 	
 	<select id="selectListByCamp" parameterType="map" resultType="map">
@@ -30,7 +29,7 @@
 		WHERE camp_id=${camp_id}
 	</select>
 	
-	<insert id="insert" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
+	<insert id="insert" parameterType="PushCampaignDetailClickVo" keyColumn="cd_id"
 		keyProperty="cd_id" useGeneratedKeys="true">
 		INSERT INTO PUSH_CAMPAIGN_DETAIL
 			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id)
@@ -38,16 +37,16 @@
 			(SYSDATE(), '${reqUid}', null, null, ${user_id}, ${camp_id})
 	</insert>
 	
-	<select id="selectListLogIsNull" resultMap="PushCampaignDetailVoMap">
-		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id
-			   clk_id, tb_click_id
+	<select id="selectListLogIsNull" resultMap="PushCampaignDetailClickVoMap">
+		SELECT click_id, tb_click_id, link_seq, link, msg_push_type, click_cnt, 
+			   reg_date, upt_date, camp_id
 		FROM PUSH_CAMPAIGN_DETAIL
 		WHERE push_log_id IS NULL
 	</select>
 	
 	<select id="getMaxLogId" resultType="int">
-		SELECT MAX(push_log_id)
-		FROM PUSH_CAMPAIGN_DETAIL
+		SELECT MAX(click_id)
+		FROM PUSH_CAMPAIGN_DETAIL_CLICK
 	</select>
 
 	<update id="updatePushLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
