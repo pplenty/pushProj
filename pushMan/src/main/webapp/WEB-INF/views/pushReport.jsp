@@ -89,10 +89,9 @@
 							<td style="text-align: center;">${pushCamp.push_wait}</td><!-- 대기 -->
 							<td style="text-align: center;">${pushCamp.push_fail}</td><!-- 실패 -->
 							<td style="text-align: center;">${pushCamp.push_open}</td><!-- 오픈 -->
-							<td style="text-align: center;">${pushCamp.push_click}</td><!-- 클릭 -->
+							<td style="text-align: center; cursor:pointer;">${pushCamp.push_click}</td><!-- 클릭 -->
 							<td style="text-align: center;">
-								<button class="btn detailBtn" 
-										cno="${pushCamp.camp_id}"> 상세</button></td>
+								<button class="btn detailBtn" cno="${pushCamp.camp_id}">상세</button></td>
 					</tr>
 				</c:forEach>
 
