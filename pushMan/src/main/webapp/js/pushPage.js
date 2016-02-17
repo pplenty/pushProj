@@ -3,7 +3,19 @@ $(document).ready(function() {
 
 	//텍스트 푸시 전송 버튼
 	$('#textPushBtn').click(function(e) {
-
+	if($('#pushCampTitle').val()==''){
+		alert('관리용 제목을 입력하세요');
+		$('#pushCampTitle').focus();
+	}else if ($('#pushPopupTitle').val() == '') {
+		alert('상태창 제목을 입력하세요');
+		$('#pushPopupTitle').focus();
+	}else if ($('#pushPopupContent').val() == '') {
+		alert('팝업 내용을 입력하세요');
+		$('#pushPopupContent').focus();
+	}else if ($('#innerContent').val() == '') {
+		alert('인앱 메시지 내용을 입력하세요');
+		$('#innerContent').focus();
+	}else if(confirm("푸시를 발송하시겠습니까?")==true){
 		$.ajax({
 			url : './push.do',
 			method : 'POST',
@@ -19,17 +31,37 @@ $(document).ready(function() {
 			},
 			success : function(result) {
 				console.log(result);
-//				window.location.replace("list.do");
+				window.location.replace("list.do");
 			},
 			error : function(e) {
 				console.error('ajax 에러: ' + e.status);
 			}
 		});
+		
+	}else{
+		alert("푸시 발송이 취소되었습니다.");
+		return;
+	}
 	});
 	
 	//리치 푸시 전송 버튼
 	$('#richPushBtn').click(function(e) {
-
+		if($('#pushCampTitle').val()==''){
+			alert('관리용 제목을 입력하세요');
+			$('#pushCampTitle').focus();
+		}else if ($('#pushPopupTitle').val() == '') {
+			alert('상태창 제목을 입력하세요');
+			$('#pushPopupTitle').focus();
+		}else if ($('#richPushNotiContent').val() == '') {
+			alert('상태창 내용을 입력하세요');
+			$('#richPushNotiContent').focus();
+		}else if (CKEDITOR.instances.richPushPopupContentEditor.getData() == '') {
+			alert('팝업 내용을 입력하세요');
+			CKEDITOR.instances.richPushPopupContentEditor.focus();
+		}else if (CKEDITOR.instances.richInnerContentEditor.getData() == '') {
+			alert('인앱 메시지 내용을 입력하세요');
+			CKEDITOR.instances.richInnerContentEditor.focus();
+		}else if(confirm("푸시를 발송하시겠습니까?")==true){
 		$.ajax({
 			url : './push.do',
 			method : 'POST',
@@ -47,13 +79,16 @@ $(document).ready(function() {
 			},
 			success : function(result) {
 				console.log(result);
-//				window.location.replace("list.do");
+				window.location.replace("list.do");
 			},
 			error : function(e) {
 				console.error('ajax 에러: ' + e.status);
 			}
 		});
-
+		}else{
+			alert("푸시 발송이 취소되었습니다.");
+			return;
+		}
 	});
 });
 

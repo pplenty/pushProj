@@ -9,15 +9,12 @@ $(document).ready(function() {
 	$('[data-toggle="popover"]').popover();
 });
 
-
 //$(function() {
 //	$('[data-toggle="popover"]').popover();
 //})
 
-
 function showDetail(cno) {
 	var url = './pushListDetail.do?cno=' + cno;
-	
 	launchCenter(url,'상세', 700, 500,'menubar=no, status=no, toolbar=no');
 }
 
