@@ -50,12 +50,113 @@ $(document).ready(function() {
 	});
 });
 
+//TEXT/RICH 스왑
+$(document).ready(function(){
+	//텍스트-리치 탭 버튼 이벤트
+    $("#textPush").click(function(){
+        $("#richPushContent").hide();
+        $("#textPushContent").show();
+        $("#textPush").addClass("active");
+        $("#richPush").removeClass("active");
+    });
+    $("#richPush").click(function(){
+    	$("#richPushContent").show();
+        $("#textPushContent").hide();
+        $("#richPush").addClass("active");
+        $("#textPush").removeClass("active");
+    });
+    
+    //텍스트 푸시 미리보기 버튼 이벤트
+    //팝업푸시 미리보기 버튼 클릭 시 
+    $("#previewPopupPush").click(function(){
+    	$("#previewPopupPushImg").show();
+    	$("#previewNotiImg").hide();
+    	$("#previewInAppMessageImg").hide();
+    	$("#previewPopupPush").addClass("active");
+        $("#previewNoti").removeClass("active");
+        $("#previewInAppMessage").removeClass("active");
+    })
+    //Noti 미리보기 버튼 클릭 시
+    $("#previewNoti").click(function(){
+    	$("#previewPopupPushImg").hide();
+    	$("#previewNotiImg").show();
+    	$("#previewInAppMessageImg").hide();
+    	$("#previewPopupPush").removeClass("active");
+        $("#previewNoti").addClass("active");
+        $("#previewInAppMessage").removeClass("active");
+    })
+    //인앱메시지 미리보기 버튼 클릭 시
+    $("#previewInAppMessage").click(function(){
+    	$("#previewPopupPushImg").hide();
+    	$("#previewNotiImg").hide();
+    	$("#previewInAppMessageImg").show();
+    	$("#previewPopupPush").removeClass("active");
+        $("#previewNoti").removeClass("active");
+        $("#previewInAppMessage").addClass("active");
+    })
+    
+    //리치푸시 미리보기 버튼 이벤트
+    //팝업푸시 미리보기 버튼 클릭 시 
+    $("#richPreviewPopupPush").click(function(){
+    	$("#richPreviewPopupPushImg").show();
+    	$("#richPreviewNotiImg").hide();
+    	$("#richPreviewInAppMessageImg").hide();
+    	$("#richPreviewPopupPush").addClass("active");
+        $("#richPreviewNoti").removeClass("active");
+        $("#richPreviewInAppMessage").removeClass("active");
+    })
+    //Noti 미리보기 버튼 클릭 시
+    $("#richPreviewNoti").click(function(){
+    	$("#richPreviewPopupPushImg").hide();
+    	$("#richPreviewNotiImg").show();
+    	$("#richPreviewInAppMessageImg").hide();
+    	$("#richPreviewPopupPush").removeClass("active");
+        $("#richPreviewNoti").addClass("active");
+        $("#richPreviewInAppMessage").removeClass("active");
+    })
+    //인앱메시지 미리보기 버튼 클릭 시
+    $("#richPreviewInAppMessage").click(function(){
+    	$("#richPreviewPopupPushImg").hide();
+    	$("#richPreviewNotiImg").hide();
+    	$("#richPreviewInAppMessageImg").show();
+    	$("#richPreviewPopupPush").removeClass("active");
+        $("#richPreviewNoti").removeClass("active");
+        $("#richPreviewInAppMessage").addClass("active");
+    })
+    
+ // CKEDITOR
+    editor = CKEDITOR.replace('richPushPopupContentEditor');
+    CKEDITOR.instances["richPushPopupContentEditor"].on("instanceReady", function(){
+        this.document.on("keyup", richKeydownFunction);
+   });
+    editor = CKEDITOR.replace('richInnerContentEditor');
+    CKEDITOR.instances["richInnerContentEditor"].on("instanceReady", function(){
+        this.document.on("keyup", richKeydownFunction_inapp);
+   });
+});
 
-//내용 바이트 제한
+//텍스트 푸시 미리보기
+function keyUpFunction(obj, previewName){
+	var previewText = obj.value;
+	var previewSelector = '.'+previewName;
+	$(previewSelector).text(previewText);
+}
+
+// CKEDITOR HTML 파싱 함수
+function richKeydownFunction(){
+	$('.richPreview').html($.parseHTML(CKEDITOR.instances.richPushPopupContentEditor.getData()));
+}
+function richKeydownFunction_inapp(){
+	$('.richPreviewInAppMessageText').html($.parseHTML(CKEDITOR.instances.richInnerContentEditor.getData()));
+}
+
+// 텍스트 푸시의 Textarea 내용 바이트 제한
 function fnChkByte(obj, maxByte, byteInfo) {
+	//객체 값
 	var str = obj.value;
+	//객체 값의 길이
 	var str_len = str.length;
-
+	
 	var rbyte = 0;
 	var rlen = 0;
 	var one_char = "";
@@ -83,89 +184,3 @@ function fnChkByte(obj, maxByte, byteInfo) {
 		document.getElementById(byteInfo).innerText = rbyte;
 	} 
 }
-
-
-
-function keydownFunction(obj, previewName){
-	var previewText = obj.value;
-	var previewSelector = '.'+previewName;
-	$(previewSelector).text(previewText);
-}
-
-
-//TEXT/RICH 스왑
-$(document).ready(function(){
-	//텍스트-리치 탭 버튼 이벤트
-    $("#textPush").click(function(){
-        $("#richPushContent").hide();
-        $("#textPushContent").show();
-        $("#textPush").addClass("active");
-        $("#richPush").removeClass("active");
-    });
-    $("#richPush").click(function(){
-     $("#richPushContent").show();
-        $("#textPushContent").hide();
-        $("#richPush").addClass("active");
-        $("#textPush").removeClass("active");
-    });
-    
-    //텍스트 푸시 미리보기 버튼 이벤트
-    //팝업푸시 미리보기 버튼 클릭 시 
-    $("#previewPopupPush").click(function(){
-    	$("#previewPopupPushImg").show();
-    	$("#previewNotiImg").hide();
-    	$("#previewInAppMessageImg").hide();
-    })
-    //Noti 미리보기 버튼 클릭 시
-    $("#previewNoti").click(function(){
-    	$("#previewPopupPushImg").hide();
-    	$("#previewNotiImg").show();
-    	$("#previewInAppMessageImg").hide();
-    })
-    //인앱메시지 미리보기 버튼 클릭 시
-    $("#previewInAppMessage").click(function(){
-    	$("#previewPopupPushImg").hide();
-    	$("#previewNotiImg").hide();
-    	$("#previewInAppMessageImg").show();
-    })
-    
-    //리치푸시 미리보기 버튼 이벤트
-    //팝업푸시 미리보기 버튼 클릭 시 
-    $("#richPreviewPopupPush").click(function(){
-    	$("#richPreviewPopupPushImg").show();
-    	$("#richPreviewNotiImg").hide();
-    	$("#richPreviewInAppMessageImg").hide();
-    })
-    //Noti 미리보기 버튼 클릭 시
-    $("#richPreviewNoti").click(function(){
-    	$("#richPreviewPopupPushImg").hide();
-    	$("#richPreviewNotiImg").show();
-    	$("#richPreviewInAppMessageImg").hide();
-    })
-    //인앱메시지 미리보기 버튼 클릭 시
-    $("#richPreviewInAppMessage").click(function(){
-    	$("#richPreviewPopupPushImg").hide();
-    	$("#richPreviewNotiImg").hide();
-    	$("#richPreviewInAppMessageImg").show();
-    })
-    
- // CKEDITOR
-    editor = CKEDITOR.replace('richPushPopupContentEditor');
-    CKEDITOR.instances["richPushPopupContentEditor"].on("instanceReady", function(){
-        this.document.on("keyup", richKeydownFunction);
-   });
-    editor = CKEDITOR.replace('richInnerContentEditor');
-    CKEDITOR.instances["richInnerContentEditor"].on("instanceReady", function(){
-        this.document.on("keyup", richKeydownFunction_inapp);
-   });
-});
-
-
-// CKEDITOR
-function richKeydownFunction(){
-	$('.richPreview').html($.parseHTML(CKEDITOR.instances.richPushPopupContentEditor.getData()));
-}
-function richKeydownFunction_inapp(){
-	$('.richPreviewInAppMessageText').html($.parseHTML(CKEDITOR.instances.richInnerContentEditor.getData()));
-}
-
