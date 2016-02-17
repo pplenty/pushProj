@@ -103,18 +103,6 @@
 								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoInner'), keyUpFunction(this, 'previewInAppMessageText')"
 								style="resize: none;" placeholder="앱 내 내용을 입력해 주세요"></textarea>
 							<span id="byteInfoInner">0</span>/90Byte <br>
-							<div>
-								<input type="checkbox" id="checkReTarget" value="Y"> SMS
-								리타겟팅 <br>
-								<div id="smsTarget" style="display: none;">
-									<textarea id="smsContent" rows="5" cols="30"
-										style="resize: none;"
-										placeholder="푸시 실패시 발송할 SMS의 내용을 입력해주새요."
-										onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoSms')"></textarea>
-									<span id="byteInfoSms">0</span>/90Byte
-								</div>
-							</div>
-							<br>
 							<input
 								type="button" id="textPushBtn" class="btn btn-success btn-lg"
 								value="PUSH!!" />
