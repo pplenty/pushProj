@@ -6,7 +6,7 @@
 <mapper namespace="com.pushman.dao.PushCampaignDetailClickDao">
 
 	<resultMap type="PushCampaignDetailClickVo" id="PushCampaignDetailClickVoMap">
-		<id 	column="click_id" 		  property="click_id" />
+		<id 	column="clk_id" 		  property="clk_id" />
 		<result column="tb_click_id"  	  property="tb_click_id" />
 		<result column="link_seq" 	  	  property="link_seq" />
 		<result column="link" 	 		  property="link" />
@@ -16,6 +16,51 @@
 		<result column="upt_date"  		  property="upt_date" />
 		<result column="camp_id"  	  	  property="camp_id" />
 	</resultMap>
+	
+	<select id="getLocalMaxLogId" resultType="int">
+		SELECT MAX(tb_click_id)
+		FROM PUSH_CAMPAIGN_DETAIL_CLICK
+	</select>
+	
+	<select id="getPushpiaMaxLogId" resultType="int">
+		SELECT MAX(ID)
+		FROM TB_CLICK
+	</select>
+	
+	<select id="getPushpiaClickLog" parameterType="int" resultType="map">
+		SELECT ID, LINK_SEQ, LINK, MSG_PUSH_TYPE, CLICK_CNT, 
+			   DATE_FORMAT(REG_DATE, '%Y-%m-%d %H:%m:%s') AS REG_DATE, 
+			   DATE_FORMAT(UPT_DATE, '%Y-%m-%d %H:%m:%s') AS UPT_DATE
+		FROM TB_CLICK
+		WHERE ID > #{value}
+		ORDER BY ID ASC
+	</select>
+	
+	<insert id="insertClickLog" parameterType="PushCampaignDetailClickVo" keyColumn="cd_id"
+		keyProperty="cd_id" useGeneratedKeys="true">
+		INSERT INTO PUSH_CAMPAIGN_DETAIL_CLICK
+			(tb_click_id, link_seq, link, msg_push_type, click_cnt, reg_date
+			 <choose>
+			 	<when test="upt_date !=null and word != ''">
+			 		, upt_date)
+			 	</when>
+			 	<otherwise>
+			 		)
+			 	</otherwise>
+		 	</choose>
+		VALUES 
+			(${tb_click_id}, ${link_seq}, '${link}', '${msg_push_type}', ${click_cnt}, '${reg_date}'
+			 <choose>
+			 	<when test="upt_date !=null and word != ''">
+			 		, '${upt_date}')
+			 	</when>
+			 	<otherwise>
+			 		)
+			 	</otherwise>
+		 	</choose>
+	</insert>
+	
+	<!-- ******************************************************************************** -->
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailClickVoMap">
 		SELECT click_id, tb_click_id, link_seq, link, msg_push_type, click_cnt, 
@@ -44,11 +89,6 @@
 		WHERE push_log_id IS NULL
 	</select>
 	
-	<select id="getMaxLogId" resultType="int">
-		SELECT MAX(click_id)
-		FROM PUSH_CAMPAIGN_DETAIL_CLICK
-	</select>
-
 	<update id="updatePushLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
 		keyProperty="cd_id" useGeneratedKeys="true">
 		UPDATE PUSH_CAMPAIGN_DETAIL 
