@@ -20,6 +20,8 @@ public interface AppUserDao {
 	AppUserVo selectOneByCustId(String cust_id);
 	
 	AppUserVo selectOneByUserId(int user_id);
+
+	List<AppUserVo> selectListTarget(Map<String, Object> paramMap);
 }
 
 

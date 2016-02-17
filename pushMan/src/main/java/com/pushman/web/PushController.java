@@ -8,6 +8,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,7 +106,6 @@ public class PushController {
 		pushCampaignVo.setPopup_content(pushPopupContent);
 		pushCampaignVo.setInapp_content(innerContent);
 		pushCampaignVo.setUser_no(smsUser.getNo());
-		// 여기부터 수정
 		pushCampaignVo.setCheckReTarget(checkReTarget);
 		pushCampaignVo.setSmsContent(smsContent);
 		pushCampaignVo.setTargetType(targetType);
@@ -121,24 +121,26 @@ public class PushController {
 		
 
 		// 푸시 발송 타겟팅
-		JsonArray jarr = new JsonArray();
-		JsonObject targetJSON = null;
-		List<AppUserVo> appUserVoList = appUserDao.selectListAll(null);// param: 타겟 옵션
+		JsonArray targetList = new JsonArray();
+		JsonObject targetObject = null;
+		
+		Map<String, Object> sqlParams = new HashMap<String, Object>();
+		sqlParams.put("target", targetType);// all, loginToday
+		List<AppUserVo> appUserVoList = appUserDao.selectListTarget(sqlParams);// param: 타겟 옵션
 		
 		for (AppUserVo appUserVo : appUserVoList) {
 
 			// 타겟별 상세 캠페인 등록
 			pushCampaignDetailVo = new PushCampaignDetailVo();
-//			pushCampaignDetailVo.setReqUid(campReqUid + appUserVo.getCust_id());
 			pushCampaignDetailVo.setCamp_id(pushCampaignVo.getCamp_id());
 			pushCampaignDetailVo.setUser_id(appUserVo.getUser_id());
 			pushCampaignDetailDao.insert(pushCampaignDetailVo);
 			
 			// 타겟 리스트 파라미터에 추가
-			targetJSON = new JsonObject();
-			targetJSON.addProperty("reqUid", campReqUid + "_" + pushCampaignDetailVo.getCd_id());
-			targetJSON.addProperty("custId", appUserVo.getCust_id());
-			jarr.add(targetJSON);
+			targetObject = new JsonObject();
+			targetObject.addProperty("reqUid", campReqUid + "_" + pushCampaignDetailVo.getCd_id());
+			targetObject.addProperty("custId", appUserVo.getCust_id());
+			targetList.add(targetObject);
 		}
 		
 		
@@ -151,33 +153,33 @@ public class PushController {
 		URL url = null;
 		URLConnection urlConnection = null;
 
-		String requestUrl 	= PushSetting.REQUEST_URL;	// 요청 URL 주소(고정 값)
-		String paramName 	= "d";						// 파라미터 이름(고정 값)
-		String paramValue	= null;						// 파라미터 값
-		String responseJSON = null;						// 응답 JSON
+		String requestUrl 	= PushSetting.REQUEST_URL;				// 요청 URL 주소(고정 값)
+		String paramName 	= PushSetting.REQUEST_PARAMETER_NAME;	// 파라미터 이름(고정 값)
+		String paramValue	= null;									// 파라미터 값
+		String responseJSON = null;									// 응답 JSON
 
 		JsonObject pushReqParam = new JsonObject();
 		// text/rich push biz key구분
 		if ("text".equals(pushType)) {
-			pushReqParam.addProperty("bizId", PushSetting.TEXT_PUSH_BIZ_KEY); // text biz key
+			pushReqParam.addProperty("bizId", PushSetting.TEXT_PUSH_BIZ_KEY);	// text biz key
 			pushReqParam.addProperty("msgType", "T"); // TEXT
 		} else {
-			pushReqParam.addProperty("bizId", PushSetting.RICH_PUSH_BIZ_KEY); // rich biz key
+			pushReqParam.addProperty("bizId", PushSetting.RICH_PUSH_BIZ_KEY); 	// rich biz key
 			pushReqParam.addProperty("msgType", "H"); // HTML
 		}
 		
-		pushReqParam.addProperty("pushTime", 1800);							// 고정 값(발송 유효 시간)
-		pushReqParam.addProperty("pushTitle", pushPopupTitle);				// 팝업, 상태창 제목
-		pushReqParam.addProperty("pushMsg", pushMsg);						// 상태창 메시지
-		pushReqParam.addProperty("popupContent", pushPopupContent  			// 팝업 내용
-				+ "<script src='http://pushpia.com/pms-sdk.js'></script>"); // (푸시피아 버그 스크립트 삽입)
-		pushReqParam.addProperty("inappContent", innerContent				// 인앱 메시지
-				+ "<script src='http://pushpia.com/pms-sdk.js'></script>");
-		pushReqParam.addProperty("pushKey", "l");							// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
+		pushReqParam.addProperty("pushTime", PushSetting.PUSH_VALID_TIME);		// 고정 값(발송 유효 시간)
+		pushReqParam.addProperty("pushTitle", pushPopupTitle);					// 팝업, 상태창 제목
+		pushReqParam.addProperty("pushMsg", pushMsg);							// 상태창 메시지
+		pushReqParam.addProperty("popupContent", pushPopupContent  				// 팝업 내용
+											  + PushSetting.INSERT_SCRIPT);	 	// (푸시피아 버그 스크립트 삽입)
+		pushReqParam.addProperty("inappContent", innerContent  					// 인앱 메시지
+				  							  + PushSetting.INSERT_SCRIPT); 	// (푸시피아 버그 스크립트 삽입)
+		pushReqParam.addProperty("pushKey", PushSetting.PUSH_KEY);				// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		pushReqParam.addProperty("pushValue", PushSetting.PUSHVALUE_URL);
-		pushReqParam.addProperty("reserveTime", "20160201120000");			// 고정 값(과거 값)
+		pushReqParam.addProperty("reserveTime", PushSetting.PUSH_RESERVED_TIME);// 고정 값(과거 값)
 		
-		pushReqParam.add("list", jarr);// 동보 메시지 타겟 리스트 추가
+		pushReqParam.add("list", targetList);// 동보 메시지 타겟 리스트 추가
 		
 		
 		try {
@@ -202,7 +204,7 @@ public class PushController {
 		HashMap<String, String> responseData = new HashMap<String, String>();
 		
 		responseData.put("resJSON", responseJSON);
-		responseData.put("jo", pushReqParam.toString());
+		responseData.put("pushReqParam", pushReqParam.toString());
 		return responseData;
 	}
 	
