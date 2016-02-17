@@ -160,12 +160,12 @@ $(document).ready(function(){
    });
 });
 
+
 // CKEDITOR
 function richKeydownFunction(){
-	$('.richPreview').html(CKEDITOR.instances.richPushPopupContentEditor.getData());
+	$('.richPreview').html($.parseHTML(CKEDITOR.instances.richPushPopupContentEditor.getData()));
 }
-
 function richKeydownFunction_inapp(){
-	$('.richPreviewInAppMessageText').html(CKEDITOR.instances.richInnerContentEditor.getData());
+	$('.richPreviewInAppMessageText').html($.parseHTML(CKEDITOR.instances.richInnerContentEditor.getData()));
 }
 

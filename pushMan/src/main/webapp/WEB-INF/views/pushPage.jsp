@@ -67,33 +67,35 @@
 				</div>
 				<div class="form-group">
 					<!-- 푸시 작성 공통 내용 -->
-					<label for="pushPopupTitle">팝업 제목</label> <input type="text"
-						class="form-control" id="pushPopupTitle" maxlength="30"
-						placeholder="팝업 제목" style="width: 60%"><br> <select
-						name="받는 사람">
-						<option value="">대상자 선택</option>
-						<option value="전체 사용자">전체 사용자</option>
-						<option value="로그인 사용자">로그인 사용자</option>
+					<label for="pushPopupTitle">상태창 제목</label> <input type="text"
+						class="form-control" id="pushPopupTitle" maxlength="20"
+						placeholder="팝업 제목" style="width: 60%"
+						onkeydown="keydownFunction(this, 'previewNotiTitle')"><br>
+					<select id="targetType">
+						<option value="all">전체 사용자</option>
+						<option value="loginToday">로그인 사용자</option>
 					</select>
-
+					<input type="checkbox" id="checkReTarget" value="Y"> SMS 리 타겟팅
+					<!-- 푸시 작성 공통 내용 -->
+					
 					<!-- 텍스트 푸시 내용 -->
 					<p></p>
 					<div id="textPushContent">
 						<div style="width: 50%; float: left">
-							<label for="pushPopupContent">내 용</label><br>
+							<label for="pushPopupContent">팝업 내용</label><br>
 							<textarea id="pushPopupContent" rows="15" cols="30"
 								maxlength="90"
-								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo')"
+								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoPopup')"
 								onkeydown="keydownFunction(this, 'preview')"
 								style="resize: none;" placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
-							<span id="byteInfo">0</span>/90Byte <br> <br> <label
+							<span id="byteInfoPopup">0</span>/90Byte <br> <br> <label
 								for="innerContent">앱 내 메시지 내용</label><br>
 
 							<textarea id="innerContent" rows="15" cols="30" maxlength="90"
-								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfo2')"
+								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoInner')"
 								onkeydown="keydownFunction(this, 'previewInAppMessageText')"
 								style="resize: none;" placeholder="앱 내 내용을 입력해 주세요"></textarea>
-							<span id="byteInfo2">0</span>/90Byte <br> <input
+							<span id="byteInfoInner">0</span>/90Byte <br> <input
 								type="button" id="textPushBtn" class="btn btn-success btn-lg"
 								value="PUSH!!" />
 						</div>
@@ -108,23 +110,30 @@
 								<button id="previewInAppMessage" type="button"
 									class="btn btn-default btn-lg">앱 내 메시지</button>
 							</div>
+							<!-- 텍스트 푸시 팝업 메시지 미리보기 -->
 							<div id="previewPopupPushImg" style="position: relative;">
 								<img src="../images/preview_push.PNG" width="340px"
 									height="500px">
 								<textarea id="previewPushPopupText" class="preview" cols="30"
 									rows="6" readonly="readonly"
 									style='position: absolute; top: 70px; left: 50px; z-index: 1; border: none; resize: none; background-color: transparent;'>
-							</textarea>
+								</textarea>
 							</div>
+							<!-- 텍스트 푸시 Notification 미리보기 -->
 							<div id="previewNotiImg"
 								style="position: relative; display: none">
 								<img src="../images/preview_noti.PNG" width="340px"
 									height="500px">
+								<textarea id="previewPushNotiTitle" class="previewNotiTitle"
+									cols="35" rows="1" readonly="readonly"
+									style='position: absolute; top: 106px; left: 60px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
+								</textarea>
 								<textarea id="previewPushNotiText" class="preview" cols="35"
 									rows="3" readonly="readonly"
-									style='position: absolute; top: 120px; left: 70px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
-							</textarea>
+									style='position: absolute; top: 125px; left: 60px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
+								</textarea>
 							</div>
+							<!-- 텍스트 푸시 앱 내 메시지 미리보기 -->
 							<div id="previewInAppMessageImg"
 								style="position: relative; display: none">
 								<img src="../images/preview_inapp.PNG" width="340px"
@@ -133,28 +142,39 @@
 									class="previewInAppMessageText" cols="40" rows="6"
 									readonly="readonly"
 									style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
-							</textarea>
+								</textarea>
 							</div>
 						</div>
 					</div>
-
+					<!-- 텍스트 푸시 내용 -->
 
 					<!-- 리치 푸시 내용 -->
 					<div id="richPushContent" style="display: none">
 						<div style="width: 50%; float: left">
-							<label for="pushPopupContent">내 용</label><br>
+							<label for="pushPopupContent">상대창 내용</label><br> 
+							<textarea id="richPushNotiContent" rows="3" cols="60"
+								maxlength="90"
+								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoRichNoti')"
+								onkeydown="keydownFunction(this, 'preview')"
+								style="resize: none;" placeholder="상태창 내용을 입력해 주세요">
+							</textarea><br>
+							<span id="byteInfoRichNoti">0</span>/90Byte <br>
+								
+							<label for="pushPopupContent">팝업 내용</label><br>
 							<textarea class="ckeditor" cols="1"
 								id="richPushPopupContentEditor"
 								name="richPushPopupContentEditor" rows="15"
+								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoRichPopup')"
 								onkeydown="richKeydownFunction(this, 'richPreview')">
 							</textarea>
-							<span id="byteInfo">0</span>/90Byte <br> <label
+							<span id="byteInfoRichPopup">0</span>/90Byte <br> <label
 								for="innerContent">앱 내 메시지 내용</label><br>
 							<textarea class="ckeditor" cols="1" id="richInnerContentEditor"
 								name="richInnerContentEditor" rows="15"
+								onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoRichInner')"
 								onkeydown="richKeydownFunction(this, 'richPreviewInAppMessageText')">
 							</textarea>
-							<span id="byteInfo">0</span>/90Byte <br> <input
+							<span id="byteInfoRichInner">0</span>/90Byte <br> <input
 								type="button" id="richPushBtn" class="btn btn-success btn-lg"
 								value="PUSH!!" />
 						</div>
@@ -174,10 +194,10 @@
 							<div id="richPreviewPopupPushImg" style="position: relative;">
 								<img src="../images/preview_push.PNG" width="340px"
 									height="500px">
-								<textarea id="richPreviewPushPopupText" class="richPreview"
-									cols="30" rows="6" readonly="readonly"
+								<div id="richPreviewPushPopupText" class="richPreview" cols="30"
+									rows="6" readonly="readonly"
 									style='position: absolute; top: 70px; left: 50px; z-index: 1; border: none; resize: none; background-color: transparent;'>
-							</textarea>
+								</div>
 							</div>
 
 
@@ -185,10 +205,10 @@
 								style="position: relative; display: none">
 								<img src="../images/preview_noti.PNG" width="340px"
 									height="500px">
-								<textarea id="richPreviewPushNotiText" class="richPreview"
-									cols="35" rows="3" readonly="readonly"
+								<div id="richPreviewPushNotiText" class="richPreview" cols="35"
+									rows="3" readonly="readonly"
 									style='position: absolute; top: 120px; left: 70px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
-							</textarea>
+								</div>
 							</div>
 
 
@@ -196,15 +216,15 @@
 								style="position: relative; display: none">
 								<img src="../images/preview_inapp.PNG" width="340px"
 									height="500px">
-								<textarea id="richPreviewInAppMessageText"
+								<div id="richPreviewInAppMessageText"
 									class="richPreviewInAppMessageText" cols="40" rows="6"
 									readonly="readonly"
 									style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
-							</textarea>
+								</div>
 							</div>
 						</div>
 					</div>
-
+					<!-- 리치 푸시 내용 -->
 
 				</div>
 			</div>
