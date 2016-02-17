@@ -6,7 +6,7 @@ public class PushCampaignDetailClickVo implements Serializable {// WAS 사이에
 	private static final long serialVersionUID = 1L;
 
 	protected int clk_id;
-	protected int tb_click_id;
+	protected long tb_click_id;
 	protected int link_seq;
 	protected String link;
 	protected String msg_push_type;
@@ -14,16 +14,17 @@ public class PushCampaignDetailClickVo implements Serializable {// WAS 사이에
 	protected String reg_date;
 	protected String upt_date;
 	protected int camp_id;
+	
 	public int getClk_id() {
 		return clk_id;
 	}
 	public void setClk_id(int clk_id) {
 		this.clk_id = clk_id;
 	}
-	public int getTb_click_id() {
+	public long getTb_click_id() {
 		return tb_click_id;
 	}
-	public void setTb_click_id(int tb_click_id) {
+	public void setTb_click_id(long tb_click_id) {
 		this.tb_click_id = tb_click_id;
 	}
 	public int getLink_seq() {
