@@ -50,7 +50,7 @@
 	</select>
 
 	<select id="selectSmsListByCamp" parameterType="map" resultType="map">
-		SELECT b.tg_mobile, DATE_FORMAT(b.reg_date, '%Y-%m-%d %H:%m:%s'), b.error_code
+		SELECT b.tg_mobile, DATE_FORMAT(b.reg_date, '%Y-%m-%d %H:%m:%s') reg_date, b.error_code
 		FROM push_campaign_detail a JOIN sms_detail b
 		ON a.cd_id = b.cd_id
 		WHERE a.camp_id=${camp_id}
