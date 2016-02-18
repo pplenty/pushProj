@@ -108,7 +108,7 @@ public class PushLogUpdateEngine {
 						// && 캠페인 VO. reTarget == Y 
 						if (	(pushCampaignDetailVo.getRes_cd() == null || 
 								!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) && 
-								pushCampVo.getCheckReTarget() == "Y") {
+								pushCampVo.getCheckReTarget().equals("Y")) {
 
 							// 데이터소스 SET - SMS 중계사 DB
 							MultipleDataSource.setDataSourceKey("iHeartDB");

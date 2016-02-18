@@ -78,7 +78,7 @@
 						<option value="loginToday">로그인 사용자</option>
 					</select>
 					<div>
-						<input type="checkbox" id="checkReTarget" value="Y"> SMS
+						<input type="checkbox" id="checkReTarget" value="N"> SMS
 						리타겟팅 <br>
 						<div id="smsTarget" style="display: none;">
 							<textarea id="smsContent" rows="5" cols="30"

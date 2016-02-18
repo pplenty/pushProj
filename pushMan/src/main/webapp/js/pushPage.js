@@ -31,7 +31,7 @@ $(document).ready(function() {
 			},
 			success : function(result) {
 				console.log(result);
-				window.location.replace("list.do");
+				window.location.replace("pushList.do");
 			},
 			error : function(e) {
 				console.error('ajax 에러: ' + e.status);
@@ -39,7 +39,6 @@ $(document).ready(function() {
 		});
 		
 	}else{
-		alert("푸시 발송이 취소되었습니다.");
 		return;
 	}
 	});
@@ -79,14 +78,13 @@ $(document).ready(function() {
 			},
 			success : function(result) {
 				console.log(result);
-				window.location.replace("list.do");
+				window.location.replace("pushList.do");
 			},
 			error : function(e) {
 				console.error('ajax 에러: ' + e.status);
 			}
 		});
 		}else{
-			alert("푸시 발송이 취소되었습니다.");
 			return;
 		}
 	});
@@ -181,8 +179,10 @@ $(document).ready(function(){
     $("#checkReTarget").change(function(){
         if($("#checkReTarget").is(":checked")){
         	$("#smsTarget").show();
+        	$("#checkReTarget").val('Y');
         }else{
         	$("#smsTarget").hide();
+        	$("#checkReTarget").val('N');
         }
     });
 });

@@ -61,11 +61,10 @@
 		INSERT INTO PUSH_CAMPAIGN
 			(push_camp_title, push_title, push_msg, popup_content, inapp_content,
 			reg_date, push_total, push_succ, push_wait, push_fail, push_open, 
-			push_click, user_no)
+			push_click, user_no, checkReTarget, smsContent, targetType)
 		VALUES (#{push_camp_title}, #{push_title}, #{push_msg}, #{popup_content}, #{inapp_content}, 
-				SYSDATE(), 0, 0, 0, 0, 0, 0, #{user_no})
+				SYSDATE(), 0, 0, 0, 0, 0, 0, #{user_no}, #{checkReTarget}, #{smsContent}, #{targetType})
 	</insert>
-	
 	
 	<update id="updateInit" parameterType="PushCampaignVo" keyColumn="camp_id"
 		keyProperty="camp_id" useGeneratedKeys="true">

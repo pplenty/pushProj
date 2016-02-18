@@ -76,6 +76,7 @@ public class PushController {
 		String pushPopupContent = null;										// 팝업 내용
 		String innerContent 	= null;									 	// 인 앱 내용	
 		
+//		if (checkReTarget == null) checkReTarget = "N";
 		// TEXT / RICH content, 캠페인 reqUid 생성
 		String campReqUid = null;
 		
@@ -162,21 +163,20 @@ public class PushController {
 		} else {
 			pushReqParam.addProperty("bizId", PushSetting.RICH_PUSH_BIZ_KEY); 	// rich biz key
 			pushReqParam.addProperty("msgType", "H"); // HTML
+			pushPopupContent = pushPopupContent + PushSetting.INSERT_SCRIPT;
+			innerContent = innerContent + PushSetting.INSERT_SCRIPT;// (푸시피아 click 버그 스크립트 삽입)
 		}
 		
 		pushReqParam.addProperty("pushTime", PushSetting.PUSH_VALID_TIME);		// 고정 값(발송 유효 시간)
 		pushReqParam.addProperty("pushTitle", pushPopupTitle);					// 팝업, 상태창 제목
 		pushReqParam.addProperty("pushMsg", pushMsg);							// 상태창 메시지
-		pushReqParam.addProperty("popupContent", pushPopupContent  				// 팝업 내용
-											  + PushSetting.INSERT_SCRIPT);	 	// (푸시피아 버그 스크립트 삽입)
-		pushReqParam.addProperty("inappContent", innerContent  					// 인앱 메시지
-				  							  + PushSetting.INSERT_SCRIPT); 	// (푸시피아 버그 스크립트 삽입)
+		pushReqParam.addProperty("popupContent", pushPopupContent);  			// 팝업 내용
+		pushReqParam.addProperty("inappContent", innerContent);  				// 인앱 메시지
 		pushReqParam.addProperty("pushKey", PushSetting.PUSH_KEY);				// 고정 값 (소문자 L로 고정되어야 하며 변경 시 발송 불가)
 		pushReqParam.addProperty("pushValue", PushSetting.PUSHVALUE_URL);
 		pushReqParam.addProperty("reserveTime", PushSetting.PUSH_RESERVED_TIME);// 고정 값(과거 값)
 		
 		pushReqParam.add("list", targetList);// 동보 메시지 타겟 리스트 추가
-		System.out.println(pushReqParam);
 		
 		try {
 			paramValue = URLEncoder.encode(pushReqParam.toString(), "UTF-8");
