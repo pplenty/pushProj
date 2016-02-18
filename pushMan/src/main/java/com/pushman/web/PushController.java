@@ -177,7 +177,7 @@ public class PushController {
 		pushReqParam.addProperty("reserveTime", PushSetting.PUSH_RESERVED_TIME);// 고정 값(과거 값)
 		
 		pushReqParam.add("list", targetList);// 동보 메시지 타겟 리스트 추가
-		
+		System.out.println(pushReqParam);
 		try {
 			paramValue = URLEncoder.encode(pushReqParam.toString(), "UTF-8");
 
