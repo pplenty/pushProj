@@ -15,6 +15,7 @@ import com.pushman.dao.PushCampaignDetailDao;
 import com.pushman.dao.SmsDetailDao;
 import com.pushman.dao.SmsUserDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
+import com.pushman.domain.CampaignVo;
 import com.pushman.domain.MSG_DATA_Vo;
 import com.pushman.domain.PushCampaignDetailVo;
 import com.pushman.domain.PushCampaignVo;
@@ -105,16 +106,17 @@ public class PushLogUpdateEngine {
 						// 캠페인 SMS 리타게팅 
 						MSG_DATA_Vo msgDataVo = new MSG_DATA_Vo();
 						// && 캠페인 VO. reTarget == Y 
-						if (pushCampaignDetailVo.getRes_cd() == null || 
-								!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) {
+						if (	(pushCampaignDetailVo.getRes_cd() == null || 
+								!((pushCampaignDetailVo.getRes_cd()).equals("1000"))) && 
+								pushCampVo.getCheckReTarget() == "Y") {
 
 							// 데이터소스 SET - SMS 중계사 DB
 							MultipleDataSource.setDataSourceKey("iHeartDB");
 							
 							//실패 한 타겟들 문자로 재발송
 							msgDataVo.setCall_to(targetMobile);
-							msgDataVo.setCall_from(senderMobile);//하드코딩 수정
-							msgDataVo.setSms_txt("PUSH 리타겟팅 TEST");
+							msgDataVo.setCall_from(senderMobile);
+							msgDataVo.setSms_txt(pushCampVo.getSmsContent());
 							msgDataVo.setMsg_etc2(Integer.toString(cd_id));
 							msgDataDao.sendSMS(msgDataVo);
 							

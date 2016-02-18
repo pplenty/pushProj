@@ -71,7 +71,7 @@ public class PushController {
 		String targetType 		= request.getParameter("targetType"); 		// 타겟 타입(전체/로그인한 사람)
 		String pushCampTitle  	= request.getParameter("pushCampTitle");	// 캠페인 관리용 제목
 		String pushPopupTitle 	= request.getParameter("pushPopupTitle");	// 헤드라인, 팝업 제목
-		String smsContent		= null;										// SMS 재발송 내용
+		String smsContent		= request.getParameter("smsContent");		// SMS 재발송 내용
 		String pushMsg 			= null;										// notification 내용
 		String pushPopupContent = null;										// 팝업 내용
 		String innerContent 	= null;									 	// 인 앱 내용	
@@ -87,12 +87,8 @@ public class PushController {
 			innerContent = request.getParameter("innerContent");	
 		}//rich push 인 경우
 		else {
-			// SMS 재발송이 YES인 경우
-//			if (checkReTarget.equals("Y")) {
-//				smsContent = request.getParameter("smsContent");
-//			}
 			campReqUid = create_ReqUid('H');
-			pushMsg = request.getParameter("pushPopupContent");	
+			pushMsg = request.getParameter("richPushNotiContent");	
 			pushPopupContent = request.getParameter("pushPopupContent");	
 			innerContent = request.getParameter("innerContent");	
 		}
