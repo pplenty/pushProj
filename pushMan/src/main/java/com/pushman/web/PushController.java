@@ -88,7 +88,7 @@ public class PushController {
 		}//rich push 인 경우
 		else {
 			campReqUid = create_ReqUid('H');
-			pushMsg = request.getParameter("richPushNotiContent");	
+			pushMsg = request.getParameter("pushMsg");	
 			pushPopupContent = request.getParameter("pushPopupContent");	
 			innerContent = request.getParameter("innerContent");	
 		}
@@ -176,7 +176,7 @@ public class PushController {
 		pushReqParam.addProperty("reserveTime", PushSetting.PUSH_RESERVED_TIME);// 고정 값(과거 값)
 		
 		pushReqParam.add("list", targetList);// 동보 메시지 타겟 리스트 추가
-		
+		System.out.println(pushReqParam);
 		
 		try {
 			paramValue = URLEncoder.encode(pushReqParam.toString(), "UTF-8");
