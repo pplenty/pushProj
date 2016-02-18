@@ -90,8 +90,8 @@
 							<td style="text-align: center;">${pushCamp.push_wait}</td><!-- 대기 -->
 							<td style="text-align: center;">${pushCamp.push_fail}</td><!-- 실패 -->
 							<td style="text-align: center;">${pushCamp.push_open}</td><!-- 오픈 -->
-							<td style="text-align: center; cursor:pointer;">${pushCamp.push_click}</td><!-- 클릭 -->
-							<td style="text-align: center; cursor:pointer;">${pushCamp.checkReTarget}</td><!-- SMS 발신 -->
+							<td style="text-align: center;"><a href="" class="pushClickReport" cno="${pushCamp.camp_id}">${pushCamp.push_click}</a></td><!-- 클릭 -->
+							<td style="text-align: center;"><a href="" class="reTargetReport" cno="${pushCamp.camp_id}">${pushCamp.checkReTarget}</a></td><!-- SMS 발신 -->
 							<td style="text-align: center;">
 								<button class="btn detailBtn" cno="${pushCamp.camp_id}">상세</button></td>
 					</tr>

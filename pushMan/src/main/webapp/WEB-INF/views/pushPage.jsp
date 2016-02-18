@@ -33,8 +33,8 @@
 
 <script src="./js/pushPage.js"></script>
 
-<script src="./editor/ckeditor.js"></script>
-<!-- <link rel="stylesheet" href="./editor/samples/css/samples.css"> -->
+<script src="../editor/ckeditor.js"></script>
+
 </head>
 
 <body>

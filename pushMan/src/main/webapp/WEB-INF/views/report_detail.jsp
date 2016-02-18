@@ -55,16 +55,16 @@
             <table id="table_1" class="table classic">
               <thead>
                 <tr>
-                  <th>이름</th>
-                  <th>전화번호</th>
-                  <th>발송시간</th>
+                  <th style="text-align: center;">이름</th>
+                  <th style="text-align: center;">전화번호</th>
+                  <th style="text-align: center;">발송시간</th>
                   <c:choose>
                   		<c:when test="${param.order == 'error'}">
-			                <th onclick="location.href='listDetail.do?pageNo=${pageNo}&pageSize=${pageSize}&word=${param.word}&cno=${cno}'">
+			                <th style="text-align: center;" onclick="location.href='listDetail.do?pageNo=${pageNo}&pageSize=${pageSize}&word=${param.word}&cno=${cno}'">
 	          				결과  ▲</th>
         				</c:when>
                   		<c:otherwise>
-				            <th onclick="location.href='listDetail.do?pageNo=${pageNo}&pageSize=${pageSize}&word=${param.word}&order=error&cno=${cno}'">
+				            <th style="text-align: center;" onclick="location.href='listDetail.do?pageNo=${pageNo}&pageSize=${pageSize}&word=${param.word}&order=error&cno=${cno}'">
 		          			결과  ▼</th>
           				</c:otherwise>
 				  </c:choose>
@@ -76,104 +76,104 @@
               	</c:if>
 					<c:forEach items="${list}" var="campaignDetail">
 						<tr>
-							<td>${campaignDetail.rcv_name}</td>
-							<td>${campaignDetail.rcv_mob}</td>
-							<td>${campaignDetail.send_time}</td>
+							<td style="text-align: center;">${campaignDetail.rcv_name}</td>
+							<td style="text-align: center;">${campaignDetail.rcv_mob}</td>
+							<td style="text-align: center;">${campaignDetail.send_time}</td>
 							
 							<c:set var="error" value="${campaignDetail.send_error}" />
 							<c:choose>
 								<c:when test="${error == '9'}">
-									<td>발송 중</td>
+									<td style="color: black; text-align: center;">발송 중</td>
 								</c:when>
 								<c:when test="${error == '0'}">
-									<td style="color: blue;">발송 완료</td>
+									<td style="color: blue; text-align: center;">발송 완료</td>
 								</c:when>
 								<c:when test="${error == '2'}">
-									<td style="color: red;">잘못된 전화번호</td>
+									<td style="color: red; text-align: center;">잘못된 전화번호</td>
 								</c:when>
 								<c:when test="${error == 'p'}">
-									<td style="color: red;">번호 형식 오류</td>
+									<td style="color: red; text-align: center;">번호 형식 오류</td>
 								</c:when>
 								<c:when test="${error == '1'}">
-									<td style="color: red;">시간 초과</td>
+									<td style="color: red; text-align: center;">시간 초과</td>
 								</c:when>
 								<c:when test="${error == 'A'}">
-									<td style="color: red;">핸드폰 호 처리중</td>
+									<td style="color: red; text-align: center;">핸드폰 호 처리중</td>
 								</c:when>
 								<c:when test="${error == 'B'}">
-									<td style="color: red;">음영 지역</td>
+									<td style="color: red; text-align: center;">음영 지역</td>
 								</c:when>
 								<c:when test="${error == 'C'}">
-									<td style="color: red;">전원 꺼짐</td>
+									<td style="color: red; text-align: center;">전원 꺼짐</td>
 								</c:when>
 								<c:when test="${error == 'D'}">
-									<td style="color: red;">메시지 저장용량 초과</td>
+									<td style="color: red; text-align: center;">메시지 저장용량 초과</td>
 								</c:when>
 								<c:when test="${error == 'a'}">
-									<td style="color: red;">기타 단말기 문제</td>
+									<td style="color: red; text-align: center;">기타 단말기 문제</td>
 								</c:when>
 								<c:when test="${error == 'b'}">
-									<td style="color: red;">기타 단말기 문제</td>
+									<td style="color: red; text-align: center;">기타 단말기 문제</td>
 								</c:when>
 								<c:when test="${error == 'c'}">
-									<td style="color: red;">착신 거절</td>
+									<td style="color: red; text-align: center;">착신 거절</td>
 								</c:when>
 								<c:when test="${error == 'd'}">
-									<td style="color: red;">기 타</td>
+									<td style="color: red; text-align: center;">기 타</td>
 								</c:when>
 								<c:when test="${error == 'e'}">
-									<td style="color: red;">이통사 형식오류</td>
+									<td style="color: red; text-align: center;">이통사 형식오류</td>
 								</c:when>
 								<c:when test="${error == 's'}">
-									<td style="color: red;">메시지 스팸 차단</td>
+									<td style="color: red; text-align: center;">메시지 스팸 차단</td>
 								</c:when>
 								<c:when test="${error == 'n'}">
-									<td style="color: red;">수신번호 스팸차단</td>
+									<td style="color: red; text-align: center;">수신번호 스팸차단</td>
 								</c:when>
 								<c:when test="${error == 'r'}">
-									<td style="color: red;">회신번호 스팸차단</td>
+									<td style="color: red; text-align: center;">회신번호 스팸차단</td>
 								</c:when>
 								<c:when test="${error == 't'}">
-									<td style="color: red;">스팸 차단</td>
+									<td style="color: red; text-align: center;">스팸 차단</td>
 								</c:when>
 								<c:when test="${error == 'Z'}">
-									<td style="color: red;">기타 오류</td>
+									<td style="color: red; text-align: center;">기타 오류</td>
 								</c:when>
 								<c:when test="${error == 'f'}">
-									<td style="color: red;">자체 형식 오류</td>
+									<td style="color: red; text-align: center;">자체 형식 오류</td>
 								</c:when>
 								<c:when test="${error == 'g'}">
-									<td style="color: red;">메시지 서비스 불가 단말기</td>
+									<td style="color: red; text-align: center;">메시지 서비스 불가 단말기</td>
 								</c:when>
 								<c:when test="${error == 'i'}">
-									<td style="color: red;">운영자가 삭제</td>
+									<td style="color: red; text-align: center;">운영자가 삭제</td>
 								</c:when>
 								<c:when test="${error == 'k'}">
-									<td style="color: red;">이통사 스팸처리</td>
+									<td style="color: red; text-align: center;">이통사 스팸처리</td>
 								</c:when>
 								<c:when test="${error == 'l'}">
-									<td style="color: red;">중계사 스팸처리</td>
+									<td style="color: red; text-align: center;">중계사 스팸처리</td>
 								</c:when>
 								<c:when test="${error == 'm'}">
-									<td style="color: red;">중계사 스팸처리</td>
+									<td style="color: red; text-align: center;">중계사 스팸처리</td>
 								</c:when>
 								<c:when test="${error == 'n'}">
-									<td style="color: red;">건수 제한</td>
+									<td style="color: red; text-align: center;">건수 제한</td>
 								</c:when>
 								<c:when test="${error == 'o'}">
-									<td style="color: red;">메시지 길이 초과</td>
+									<td style="color: red; text-align: center;">메시지 길이 초과</td>
 								</c:when>
 								<c:when test="${error == 'Q'}">
-									<td style="color: red;">필드 형식 오류</td>
+									<td style="color: red; text-align: center;">필드 형식 오류</td>
 								</c:when>
 								<c:when test="${error == 'y'}">
-									<td style="color: red;">하루 메시지 수량 초과</td>
+									<td style="color: red; text-align: center;">하루 메시지 수량 초과</td>
 								</c:when>
 								<c:when test="${error == 'w'}">
-									<td style="color: red;">키워드 스팸처리</td>
+									<td style="color: red; text-align: center;">키워드 스팸처리</td>
 								</c:when>
 								<c:when test="${error == 'l'}">
-									<td style="color: red;">중계사 스팸처리</td>
+									<td style="color: red; text-align: center;">중계사 스팸처리</td>
 								</c:when>
 								<c:otherwise>
 									<td style="color: red;">발송 기타 오류</td>
