@@ -18,8 +18,13 @@ public interface PushCampaignDetailClickDao {
 	List<HashMap<String, String>> getPushpiaClickLog(int maxLocalLogId);
 
 	void insertClickLog(PushCampaignDetailClickVo pushCampaignDetailClickVo);
+
+	HashMap<String, String> selectOneClickLogById(HashMap<String, Object> paramMap);
+
+	int updateClickLog(PushCampaignDetailClickVo pushCampaignDetailClickVo);
 	
 	/*****************************************************************************/
+	
 	
 	int insert(PushCampaignDetailVo pushCampaignDetailVo);
 
@@ -28,9 +33,8 @@ public interface PushCampaignDetailClickDao {
 	List<Map<String, Object>> selectListByCamp(Map<String, Object> paramMap);
 	
 	List<PushCampaignDetailVo> selectListLogIsNull();
-	
-	int updatePushLog(PushCampaignDetailVo pushCampaignDetailVo);
 
 	int insertLog(PushCampaignDetailVo pushCampaignDetailVo);
+
 
 }

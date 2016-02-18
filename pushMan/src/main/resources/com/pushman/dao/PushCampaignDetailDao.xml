@@ -83,10 +83,10 @@
 	<insert id="insertLog" parameterType="PushCampaignDetailVo" keyColumn="cd_id"
 		keyProperty="cd_id" useGeneratedKeys="true">
 		INSERT INTO PUSH_CAMPAIGN_DETAIL
-			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id)
+			(reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id, tb_click_id)
 		VALUES 
 			(SYSDATE(), '${reqUid}', '${rtn_type}', '${res_cd}', ${user_id}, 
-			 ${camp_id}, ${push_log_id})
+			 ${camp_id}, ${push_log_id}, ${tb_click_id})
 	</insert>
 	
 	

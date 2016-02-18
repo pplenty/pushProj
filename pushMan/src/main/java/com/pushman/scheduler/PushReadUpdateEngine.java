@@ -1,5 +1,6 @@
 package com.pushman.scheduler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,10 +12,12 @@ import com.pushman.dao.AppUserDao;
 import com.pushman.dao.MSG_DATA_Dao;
 import com.pushman.dao.MSG_LOG_Dao;
 import com.pushman.dao.PushCampaignDao;
+import com.pushman.dao.PushCampaignDetailClickDao;
 import com.pushman.dao.PushCampaignDetailDao;
 import com.pushman.dao.SmsDetailDao;
 import com.pushman.dao.SmsUserDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
+import com.pushman.domain.PushCampaignDetailClickVo;
 import com.pushman.domain.PushCampaignDetailVo;
 import com.pushman.domain.TB_SEND_QUE_LOG_Vo;
 import com.pushman.util.MultipleDataSource;
@@ -30,6 +33,8 @@ public class PushReadUpdateEngine {
 	PushCampaignDao pushCampaignDao;
 	@Autowired
 	PushCampaignDetailDao pushCampaignDetailDao;
+	@Autowired
+	PushCampaignDetailClickDao pushCampaignDetailClickDao;
 	@Autowired
 	TB_SEND_QUE_LOG_Dao tbSendQueLogDao;
 	@Autowired
@@ -84,8 +89,9 @@ public class PushReadUpdateEngine {
 				pushCampaignDetailVo.setRes_cd(tb_SEND_QUE_LOG_Vo.getRes_cd());
 				pushCampaignDetailVo.setPush_log_id(tb_SEND_QUE_LOG_Vo.getSend_que_id());
 				pushCampaignDetailVo.setCamp_id(SchedulerCommon.getCampIdFromReqUid(pushCampaignDetailVo.getReqUid()));
-				pushCampaignDetailVo.setCd_id(SchedulerCommon.getCdIdFromReqUid(pushCampaignDetailVo.getReqUid())); 
-				pushCampaignDetailVo.setTb_click_id(Integer.parseInt(tb_SEND_QUE_LOG_Vo.getData()));
+//				pushCampaignDetailVo.setCd_id(SchedulerCommon.getCdIdFromReqUid(pushCampaignDetailVo.getReqUid())); 
+				if (pushCampaignDetailVo.getRtn_type() == 'C')
+					pushCampaignDetailVo.setTb_click_id(Integer.parseInt(tb_SEND_QUE_LOG_Vo.getData()));
 				String custId = tb_SEND_QUE_LOG_Vo.getCust_id();
 				// 로그 예외처리
 				if (appUserDao.selectOneByCustId(custId) != null) {
@@ -94,9 +100,27 @@ public class PushReadUpdateEngine {
 				pushCampaignDetailDao.insertLog(pushCampaignDetailVo);
 				
 				//CLICK 인 경우 
-//				if (pushCampaignDetailVo.getRtn_type() == 'C') {
-//					
-//				}
+				PushCampaignDetailClickVo pushCampaignDetailClickVo = new PushCampaignDetailClickVo();
+				if (pushCampaignDetailVo.getRtn_type() == 'C') {
+					// 데이터소스 SET - 푸시피아 DB
+					MultipleDataSource.setDataSourceKey("pushpiaDB");
+					
+					HashMap<String, String> updatedClickLog = new HashMap<String,String>();
+					HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();
+					//sql문 parameter 설정
+					sqlParams2.put("TB_CLICK_ID", tb_SEND_QUE_LOG_Vo.getData());
+					
+					updatedClickLog = pushCampaignDetailClickDao.selectOneClickLogById(sqlParams2);
+					pushCampaignDetailClickVo.setTb_click_id(Long.parseLong(String.valueOf(sqlParams2.get("TB_CLICK_ID"))));
+					pushCampaignDetailClickVo.setClick_cnt(Integer.parseInt(String.valueOf(updatedClickLog.get("CLICK_CNT"))));
+					pushCampaignDetailClickVo.setUpt_date(String.valueOf(updatedClickLog.get("UPT_DATE")));
+					pushCampaignDetailClickVo.setCamp_id(pushCampaignDetailVo.getCamp_id());
+
+					// 데이터소스 SET - 로컬DB
+					MultipleDataSource.setDataSourceKey("localDB");
+					pushCampaignDetailClickDao.updateClickLog(pushCampaignDetailClickVo);
+					
+				}
 				
 				// 캠페인 리드/클릭 업데이트
 				HashMap<String, Object> sqlParams2 = new HashMap<String, Object>();

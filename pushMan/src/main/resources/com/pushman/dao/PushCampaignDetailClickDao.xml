@@ -60,8 +60,24 @@
 		 	</choose>
 	</insert>
 	
-	<!-- ******************************************************************************** -->
 
+	<select id="selectOneClickLogById" parameterType="map" resultType="map">
+		SELECT ID, CLICK_CNT, 
+			   DATE_FORMAT(UPT_DATE, '%Y-%m-%d %H:%m:%s') AS UPT_DATE
+		FROM TB_CLICK
+		WHERE ID = #{TB_CLICK_ID}
+		
+	</select>
+	
+	<update id="updateClickLog" parameterType="PushCampaignDetailClickVo" keyColumn="clk_id"
+		keyProperty="clk_id" useGeneratedKeys="true">
+		UPDATE PUSH_CAMPAIGN_DETAIL_CLICK
+		SET click_cnt=#{click_cnt}, upt_date=#{upt_date}, camp_id=#{camp_id}
+		WHERE tb_click_id=#{tb_click_id}
+	</update>
+	
+	<!-- ******************************************************************************** -->
+	
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailClickVoMap">
 		SELECT click_id, tb_click_id, link_seq, link, msg_push_type, click_cnt, 
 			   reg_date, upt_date, camp_id
