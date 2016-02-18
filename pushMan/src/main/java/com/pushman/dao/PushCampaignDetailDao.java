@@ -15,8 +15,6 @@ public interface PushCampaignDetailDao {
 
 	List<Map<String, Object>> selectListByCamp(Map<String, Object> paramMap);
 	
-//	List<Map<String, Object>> selectListByCamp(Map<String, Object> paramMap);
-	
 	List<PushCampaignDetailVo> selectListLogIsNull();
 
 	int getMaxLogId();
@@ -24,4 +22,6 @@ public interface PushCampaignDetailDao {
 	int updatePushLog(PushCampaignDetailVo pushCampaignDetailVo);
 
 	int insertLog(PushCampaignDetailVo pushCampaignDetailVo);
+	
+	List<Map<String, Object>> selectSmsListByCamp(Map<String, Object> paramMap);
 }

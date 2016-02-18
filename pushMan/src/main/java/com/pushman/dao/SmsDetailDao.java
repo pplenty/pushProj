@@ -31,4 +31,5 @@ public interface SmsDetailDao {
 	List<SmsDetailVo> selectListLogIsNull();
 
 	int updateSMSLog(SmsDetailVo smsDetailVo);
+	
 }
