@@ -24,6 +24,7 @@ import com.pushman.domain.SmsUserVo;
 import com.pushman.dao.AppUserDao;
 import com.pushman.dao.PushCampaignDao;
 import com.pushman.dao.PushCampaignDetailDao;
+import com.pushman.dao.SmsDetailDao;
 import com.pushman.util.CommonMethod;
 
 
@@ -37,6 +38,8 @@ public class TestController {
 	PushCampaignDao pushCampaignDao;
 	@Autowired
 	PushCampaignDetailDao pushCampaignDetailDao;
+	@Autowired
+	SmsDetailDao smsDetailDao;
 	
 	@RequestMapping("/test")
 	@ResponseBody
@@ -114,5 +117,46 @@ public class TestController {
 //		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, pushList.size()));
 
 		return "./pushReport_detail";
+	}
+	
+	//캠페인 레포트 리타겟 디테일
+	@RequestMapping("/pushListDetail_reTarget")
+	public String pushListDetail_reTarget(
+			@RequestParam(required = false, defaultValue = "1") int pageNo,
+			@RequestParam(required = false, defaultValue = "10") int pageSize,
+			@RequestParam(required = false) String word,
+			@RequestParam(required = false) String order, 
+			Model model, int cno, HttpSession session)
+			throws Exception {
+
+		//
+		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
+		if (smsUser == null) return "index";
+		model.addAttribute("name", smsUser.getName());
+		
+		//
+		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
+		sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
+		sqlParams.put("pageSize", pageSize);
+		sqlParams.put("word", word);
+		sqlParams.put("order", order);
+		sqlParams.put("camp_id", cno);
+		
+		List<Map<String, Object>> smsDetailList = pushCampaignDetailDao.selectSmsListByCamp(sqlParams);
+//		List<String> mobileList = new ArrayList<String>();
+				
+//		AppUserVo appUserVo;
+//		for (PushCampaignDetailVo pushCampaignDetailVo : campDetailList) {
+//			appUserVo = appUserDao.selectOneByUserId(pushCampaignDetailVo.getUser_id());
+//			mobileList.add(appUserVo.getMobile());
+//		}
+//		model.addAttribute("countList", pushList.size());
+		model.addAttribute("list", 		smsDetailList);
+//		model.addAttribute("mobileList", mobileList);
+//		model.addAttribute("pageNo", 	pageNo);
+//		model.addAttribute("pageSize",  pageSize);
+//		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, pushList.size()));
+
+		return "./pushReport_detail_sms";
 	}
 }

@@ -44,7 +44,7 @@
 		SET error_code='${error_code}', MSG_SEQ='${MSG_SEQ}'
 		WHERE cd_id=#{cd_id}
 	</update>
-
+	
 </mapper>
 
 

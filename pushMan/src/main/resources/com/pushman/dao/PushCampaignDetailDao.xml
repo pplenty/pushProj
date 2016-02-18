@@ -23,28 +23,38 @@
 			   clk_id, tb_click_id
 		FROM PUSH_CAMPAIGN_DETAIL
 	</select>
-	
+
 	<select id="selectListByCamp" parameterType="map" resultType="map">
-	SELECT d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s') reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click FROM
-	(select camp_id, user_id, reqUid, res_cd, rtn_type, reg_date FROM
-	push_campaign_detail
-	WHERE rtn_type = 'S') AS a
-	
-	LEFT JOIN
-	(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail
-	WHERE rtn_type = 'R') AS b
-	ON a.reqUid = b.reqUid
-	
-	LEFT JOIN
-	(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail
-	where rtn_type = 'C') AS c
-	ON a.reqUid = c.reqUid
-	
-	JOIN app_user as d
-	ON a.user_id=d.user_id
-	
-	WHERE camp_id=${camp_id}
-</select>
+		SELECT d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s')
+		reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click 
+		FROM 
+		(select camp_id, user_id, reqUid, res_cd, rtn_type, reg_date 
+		FROM
+		push_campaign_detail
+		WHERE rtn_type = 'S') AS a
+
+		LEFT JOIN
+		(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail
+		WHERE rtn_type = 'R') AS b
+		ON a.reqUid = b.reqUid
+
+		LEFT JOIN
+		(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail	
+		where rtn_type = 'C') AS c
+		ON a.reqUid = c.reqUid
+
+		JOIN app_user as d
+		ON a.user_id=d.user_id
+
+		WHERE camp_id=${camp_id}
+	</select>
+
+	<select id="selectSmsListByCamp" parameterType="map" resultType="map">
+		SELECT b.tg_mobile, DATE_FORMAT(b.reg_date, '%Y-%m-%d %H:%m:%s'), b.error_code
+		FROM push_campaign_detail a JOIN sms_detail b
+		ON a.cd_id = b.cd_id
+		WHERE a.camp_id=${camp_id}
+	</select>
 	
 	<!-- <select id="selectListByCamp" parameterType="map" resultType="map">
 		SELECT cd_id, b.reg_date, reqUid, rtn_type, res_cd, mobile, camp_id, push_log_id 
@@ -88,6 +98,5 @@
 			(SYSDATE(), '${reqUid}', '${rtn_type}', '${res_cd}', ${user_id}, 
 			 ${camp_id}, ${push_log_id}, ${tb_click_id})
 	</insert>
-	
 	
 </mapper>
