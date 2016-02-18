@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="selectListByCamp" parameterType="map" resultType="map">
-	SELECT d.mobile, a.reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click FROM
+	SELECT d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s') reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click FROM
 	(select camp_id, user_id, reqUid, res_cd, rtn_type, reg_date FROM
 	push_campaign_detail
 	WHERE rtn_type = 'S') AS a
