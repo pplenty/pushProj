@@ -53,6 +53,18 @@ public class PushController {
 		if (smsUser == null) return "index";// 세션 없을 시 메인으로
 		model.addAttribute("name", smsUser.getName());
 
+		// ajax 요청 파라미터 받기
+		String pushType 		= request.getParameter("pushType"); 		// 푸시 타입 구분(Text/Html)
+		String checkReTarget 	= request.getParameter("checkReTarget"); 	// 푸시 실패 시 SMS 전송 여부
+		String targetType 		= request.getParameter("targetType"); 		// 타겟 타입(전체/로그인한 사람)
+		String pushCampTitle  	= request.getParameter("pushCampTitle");	// 캠페인 관리용 제목
+		String pushPopupTitle 	= request.getParameter("pushPopupTitle");	// 헤드라인, 팝업 제목
+		String smsContent		= request.getParameter("smsContent");		// SMS 재발송 내용
+		String pushMsg 			= null;										// notification 내용
+		String pushPopupContent = null;										// 팝업 내용
+		String innerContent 	= null;									 	// 인 앱 내용	
+		
+
 		return "pushPage";
 	}
 

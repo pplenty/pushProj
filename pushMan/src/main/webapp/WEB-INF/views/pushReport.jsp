@@ -63,10 +63,10 @@
               <thead>
                 <tr>
                   <th>제목</th>
-                  <th style="width: 20%; text-align: center;">발송시간</th>
+                  <th style="width: 20%;text-align: center;">발송시간</th>
                   <th style="width: 7%; text-align: center;">전체</th>
-                  <th style="width: 7%; text-align: center;">성공</th>
                   <th style="width: 7%; text-align: center;">대기</th>
+                  <th style="width: 7%; text-align: center;">성공</th>
                   <th style="width: 7%; text-align: center;">실패</th>
                   <th style="width: 7%; text-align: center;">오픈</th>
                   <th style="width: 7%; text-align: center;">클릭</th>
@@ -86,12 +86,20 @@
 								   style="text-decoration:none;">${pushCamp.push_camp_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>
-							<td style="text-align: center;">${pushCamp.push_succ}</td><!-- 성공 -->
 							<td style="text-align: center;">${pushCamp.push_wait}</td><!-- 대기 -->
+							<td style="text-align: center;">${pushCamp.push_succ}</td><!-- 성공 -->
 							<td style="text-align: center;">${pushCamp.push_fail}</td><!-- 실패 -->
 							<td style="text-align: center;">${pushCamp.push_open}</td><!-- 오픈 -->
 							<td style="text-align: center;"><a href="" class="pushClickReport" cno="${pushCamp.camp_id}">${pushCamp.push_click}</a></td><!-- 클릭 -->
-							<td style="text-align: center;"><a href="" class="reTargetReport" cno="${pushCamp.camp_id}">${pushCamp.checkReTarget}</a></td><!-- SMS 발신 -->
+							<td style="text-align: center;">
+								<c:set var="retargetFlag" value="${pushCamp.checkReTarget}" />
+								<c:if test="${retargetFlag == 'Y'}">
+								<a href="" class="reTargetReport" cno="${pushCamp.camp_id}">YES</a>
+								</c:if>
+								<c:if test="${retargetFlag == 'N'}">
+								<p>NO</p>
+								</c:if>
+								</td><!-- SMS 발신 -->
 							<td style="text-align: center;">
 								<button class="btn detailBtn" cno="${pushCamp.camp_id}">상세</button></td>
 					</tr>

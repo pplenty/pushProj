@@ -88,6 +88,16 @@
 		SET click_cnt=#{click_cnt}, upt_date=#{upt_date}, camp_id=#{camp_id}
 		WHERE tb_click_id=#{tb_click_id}
 	</update>
+
+	<select id="selectLinkCntListByCamp" parameterType="map" resultMap="PushCampaignDetailClickVoMap">
+		SELECT link_seq, link, SUM(click_cnt) click_cnt, msg_push_type, reg_date
+		FROM push_campaign_detail_click
+		WHERE camp_id = #{camp_id}
+		<if test="msg_push_type != null">
+			AND msg_push_type=#{msg_push_type}
+		</if>
+		GROUP BY link_seq;
+	</select>
 	
 	<!-- ******************************************************************************** -->
 	

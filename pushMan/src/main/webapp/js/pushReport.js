@@ -7,10 +7,10 @@ $(document).ready(function() {
 	});
 	
 	// 클릭보기 버튼 클릭 이벤트
-	/*$('#pushClickReport').click(function(e) {
+	$('.pushClickReport').click(function(e) {
 		targetCnoForCilick = $(e.target).attr('cno');
-		showDetail_click(targetCnoForCilick);
-	});*/
+		showDetail_click(targetCnoForCilick, './pushListDetail_click.do?cno=');
+	});
 	
 	// SMS발송 버튼 클릭 이벤트
 	$('.reTargetReport').click(function(e){
@@ -29,6 +29,11 @@ $(document).ready(function() {
 function showDetail(cno) {
 	var url = './pushListDetail.do?cno=' + cno;
 	launchCenter(url,'상세', 700, 500,'menubar=no, status=no, toolbar=no');
+}
+
+function showDetail_click(cno, url) {
+	var reqUrl = url + cno;
+	launchCenter(reqUrl,'클릭 상세', 700, 500,'menubar=no, status=no, toolbar=no');
 }
 
 /*function showDetail_click(cno) {

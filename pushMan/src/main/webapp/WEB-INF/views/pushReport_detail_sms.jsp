@@ -62,7 +62,7 @@
 						<tbody>
 							<c:if test="${list == '[]'}">
 								<tr>
-									<td colspan=4 style="text-align: center;">데이터가 없습니다.</td>
+									<td colspan=4 style="text-align: center;">실패  건수가 없어 SMS이 발송되지 않았습니다.</td>
 								</tr>
 							</c:if>
 							

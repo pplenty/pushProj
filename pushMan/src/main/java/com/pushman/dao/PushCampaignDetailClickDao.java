@@ -22,6 +22,9 @@ public interface PushCampaignDetailClickDao {
 	HashMap<String, String> selectOneClickLogById(HashMap<String, Object> paramMap);
 
 	int updateClickLog(PushCampaignDetailClickVo pushCampaignDetailClickVo);
+
+	List<PushCampaignDetailClickVo> selectLinkCntListByCamp(HashMap<String, Object> sqlParams);
+	
 	
 	/*****************************************************************************/
 	
@@ -35,6 +38,5 @@ public interface PushCampaignDetailClickDao {
 	List<PushCampaignDetailVo> selectListLogIsNull();
 
 	int insertLog(PushCampaignDetailVo pushCampaignDetailVo);
-
 
 }
