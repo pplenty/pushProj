@@ -25,6 +25,7 @@
 	<select id="getPushpiaMaxLogId" resultType="int">
 		SELECT MAX(ID)
 		FROM TB_CLICK
+		WHERE APP_ID = 343
 	</select>
 	
 	<select id="getPushpiaClickLog" parameterType="int" resultType="map">
@@ -32,7 +33,7 @@
 			   DATE_FORMAT(REG_DATE, '%Y-%m-%d %H:%m:%s') AS REG_DATE, 
 			   DATE_FORMAT(UPT_DATE, '%Y-%m-%d %H:%m:%s') AS UPT_DATE
 		FROM TB_CLICK
-		WHERE ID > #{value}
+		WHERE APP_ID = 343 AND ID > #{value} 
 		ORDER BY ID ASC
 	</select>
 	
