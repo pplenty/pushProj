@@ -48,7 +48,7 @@ public class PushClickUpdateEngine {
 			clickLogList = pushCampaignDetailClickDao.getPushpiaClickLog(maxLocalLogId);
 			PushCampaignDetailClickVo pushCampaignDetailClickVo = null;
 			
-			
+			int camp_id=0;
 			// 데이터소스 SET - 로컬DB
 			MultipleDataSource.setDataSourceKey("localDB");
 			for (HashMap<String, String> clickLog : clickLogList) {
@@ -58,10 +58,14 @@ public class PushClickUpdateEngine {
 				pushCampaignDetailClickVo.setTb_click_id(Long.parseLong(String.valueOf(clickLog.get("ID"))));
 				pushCampaignDetailClickVo.setLink_seq(Integer.parseInt(String.valueOf(clickLog.get("LINK_SEQ"))));
 				pushCampaignDetailClickVo.setLink(clickLog.get("LINK"));
-				pushCampaignDetailClickVo.setMsg_push_type(clickLog.get("MSG_PUSH_TYPE"));
+				pushCampaignDetailClickVo.setMsg_push_type(clickLog.get("MSG_PUSHTYPE"));
 				pushCampaignDetailClickVo.setClick_cnt(Integer.parseInt(String.valueOf(clickLog.get("CLICK_CNT"))));
 				pushCampaignDetailClickVo.setReg_date(String.valueOf(clickLog.get("REG_DATE")));
 				pushCampaignDetailClickVo.setUpt_date(String.valueOf(clickLog.get("UPT_DATE")));
+				
+				// REQ_UID에서 camp_id 추출
+				camp_id = SchedulerCommon.getCampIdFromReqUid(clickLog.get("REQ_UID"));
+				pushCampaignDetailClickVo.setCamp_id(camp_id);
 				
 				// 로컬 DB에 클릭 로그 데이터 가공 후 INSERT
 				pushCampaignDetailClickDao.insertClickLog(pushCampaignDetailClickVo);

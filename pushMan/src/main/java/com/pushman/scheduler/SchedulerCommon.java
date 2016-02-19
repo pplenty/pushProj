@@ -2,7 +2,7 @@ package com.pushman.scheduler;
 
 public class SchedulerCommon {
 	
-	public static final long FIXED_DELAY = 1000; // 스케줄러 반복 시간(ms)
+	public static final long FIXED_DELAY = 2000; // 스케줄러 반복 시간(ms)
 	 
 	// ReqUid에서 cd_id 추출
 	public static int getCdIdFromReqUid(String ReqUid) {
