@@ -1,5 +1,21 @@
 //list
 $(document).ready(function() {
+	$('#myModal').on('shown.bs.modal', function () {
+	  $('#myInput').focus();
+	})
+	
+	// 캠페인 불러오기
+	$('.pushCampLoad').click(function (e) {
+		
+		console.log($(e.target));
+		$('.modal-title').text($(e.target).parent().siblings('.push_title').html());
+//		$('.modal-body').text($(e.target).parent().siblings('.inapp_content').html());
+		$('#richPreviewInAppMessageText').html($(e.target).parent().siblings('.inapp_content').html());
+		
+		$('#modalBtn').trigger('click');
+	});
+	
+	
 	// 상세보기 버튼 클릭 이벤트
 	$('.detailBtn').click(function (e) {
 		targetCno = $(e.target).attr('cno');

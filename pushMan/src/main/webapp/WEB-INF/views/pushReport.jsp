@@ -57,6 +57,7 @@
 				   value='${param.word}' placeholder="제목 or 내용">
 			<button class="btn btn-default btn-sm">검색</button>
 		</form>
+		
           <h2 class="sub-header">발송 결과  [ ${countList}건 ] </h2>
           <div class="table-responsive">
             <table class="table table-striped">
@@ -82,7 +83,7 @@
 					<tr cno="${pushCamp.camp_id}">
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
 								   title="${pushCamp.push_title}" 
-								   data-content="내용"
+								   data-content="${pushCamp.camp_reqUid}" class="pushCampLoad"
 								   style="text-decoration:none;">${pushCamp.push_camp_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>
@@ -105,6 +106,9 @@
 								</td><!-- SMS 발신 -->
 							<td style="text-align: center;">
 								<button class="btn detailBtn" cno="${pushCamp.camp_id}">상세</button></td>
+							<td class="push_title" style="display: none;">${pushCamp.push_title}</td><!-- 제목 -->
+							<td class="popup_content" style="display: none;">${pushCamp.popup_content}</td><!-- 내용 -->
+							<td class="inapp_content" style="display: none;">${pushCamp.inapp_content}</td><!-- 내용 -->
 					</tr>
 				</c:forEach>
 
@@ -133,6 +137,34 @@
 
 				</div>
         </div>
+        
+        <!-- Button trigger modal -->
+		<button id="modalBtn" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display: none;">
+		</button>
+        
+        <!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		      </div>
+		      <div class="modal-body">
+					<div id="richPreviewInAppMessageImg" style="position: relative; width: 65%; display: block;">
+						<img src="../images/preview_inapp.PNG" width="340px" height="500px">
+						<div id="richPreviewInAppMessageText" class="richPreviewInAppMessageText" style="position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white; word-break: break-all; overflow: auto; height: 450px;">
+						</div>
+					</div>
+			  </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		
       </div>
     </div>
     
