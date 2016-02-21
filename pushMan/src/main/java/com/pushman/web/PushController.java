@@ -64,6 +64,15 @@ public class PushController {
 		String pushPopupContent = null;										// 팝업 내용
 		String innerContent 	= null;									 	// 인 앱 내용	
 		
+		model.addAttribute("pushType", pushType);
+		model.addAttribute("checkReTarget", checkReTarget);
+		model.addAttribute("targetType", targetType);
+		model.addAttribute("pushCampTitle", pushCampTitle);
+		model.addAttribute("pushPopupTitle", pushPopupTitle);
+		model.addAttribute("smsContent", smsContent);
+		model.addAttribute("pushMsg", pushMsg);
+		model.addAttribute("pushPopupContent", pushPopupContent);
+		model.addAttribute("innerContent", innerContent);
 
 		return "pushPage";
 	}
