@@ -94,7 +94,10 @@
 							<td style="text-align: center;">
 								<c:set var="retargetFlag" value="${pushCamp.checkReTarget}" />
 								<c:if test="${retargetFlag == 'Y'}">
-								<a href="" class="reTargetReport" cno="${pushCamp.camp_id}">YES</a>
+								<a tabindex="0" data-toggle="popover" data-trigger="hover" 
+								   data-content="재발송 : ${pushCamp.push_fail}건"
+								   style="text-decoration:none;"
+								   class="reTargetReport" cno="${pushCamp.camp_id}">YES</a>
 								</c:if>
 								<c:if test="${retargetFlag == 'N'}">
 								<p>NO</p>

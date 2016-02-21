@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,15 +183,11 @@ public class PushReportController {
 		sqlParams.put("msg_push_type", "P");
 		List<PushCampaignDetailClickVo> popupLinkList = pushCampaignDetailClickDao.selectLinkCntListByCamp(sqlParams);
 				
-//		AppUserVo appUserVo;
-//		for (PushCampaignDetailVo pushCampaignDetailVo : campDetailList) {
-//			appUserVo = appUserDao.selectOneByUserId(pushCampaignDetailVo.getUser_id());
-//			mobileList.add(appUserVo.getMobile());
-//		}
 		model.addAttribute("cntMsgLink", 	msgLinkList.size());
 		model.addAttribute("cntpopupLink", 	popupLinkList.size());
 		model.addAttribute("msgLinkList",	msgLinkList);
 		model.addAttribute("popupLinkList",	popupLinkList);
+		model.addAttribute("campId", cno);
 //		model.addAttribute("pageNo", 		pageNo);
 //		model.addAttribute("pageSize",  	pageSize);
 //		model.addAttribute("maxPage", 		CommonMethod.countTotalPage(pageSize, pushList.size()));

@@ -33,7 +33,7 @@ function showDetail(cno) {
 
 function showDetail_click(cno, url) {
 	var reqUrl = url + cno;
-	launchCenter(reqUrl,'클릭 상세', 700, 500,'menubar=no, status=no, toolbar=no');
+	launchCenter(reqUrl,'클릭 상세', 700, 600,'menubar=no, status=no, toolbar=no');
 }
 
 /*function showDetail_click(cno) {
