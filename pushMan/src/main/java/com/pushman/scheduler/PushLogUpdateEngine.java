@@ -45,7 +45,7 @@ public class PushLogUpdateEngine {
 	SmsDetailDao smsDetailDao;
 	
 	// 푸시 로그 스케줄러('SEND') / 실패 시 SMS 재전송
-//	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
+	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
 	public void updatePushLogSchedular() throws RuntimeException {
 
 		// 데이터소스 SET - 로컬DB

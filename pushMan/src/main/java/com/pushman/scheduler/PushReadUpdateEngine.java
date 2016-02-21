@@ -1,6 +1,5 @@
 package com.pushman.scheduler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class PushReadUpdateEngine {
 	SmsDetailDao smsDetailDao;
 	
 	// 푸시 로그 스케줄러('READ')
-//	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
+	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
 	public void updatePushReadLogSchedular() throws RuntimeException {
 
 		// 데이터소스 SET - 로컬DB

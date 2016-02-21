@@ -22,7 +22,7 @@ public class PushReSmsLogUpdateEngine {
 	MSG_LOG_Dao msgLodDao;
 	
 	// SMS 발송 Detail 로그 스케줄러
-//	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
+	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
 	public void updateSMSLog() throws RuntimeException {
 		// 데이터소스 SET - 로컬DB
 		MultipleDataSource.setDataSourceKey("localDB");
