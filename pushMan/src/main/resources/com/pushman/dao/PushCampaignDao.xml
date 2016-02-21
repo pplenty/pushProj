@@ -33,6 +33,18 @@
 			push_total, push_succ, push_wait, push_fail, push_open, push_click,
 			camp_reqUid, user_no, checkReTarget, smsContent, targetType
 		FROM PUSH_CAMPAIGN
+		<if test="word != null and word != ''">
+			WHERE push_camp_title like CONCAT('%', #{word}, '%') 
+				  OR push_title like CONCAT('%', #{word}, '%')
+				  OR push_msg like CONCAT('%', #{word}, '%')
+				  OR inapp_content like CONCAT('%', #{word}, '%')
+		</if>
+		<choose>
+			<when test="order == 'succ'">ORDER BY push_succ DESC</when>
+			<when test="order == 'fail'">ORDER BY push_fail DESC</when>
+			<otherwise>ORDER BY reg_date DESC</otherwise>
+		</choose>
+		LIMIT #{startIndex}, #{pageSize}
 	</select>
 	
 	<select id="selectListByPusher" parameterType="map" resultMap="PushCampaignVoMap">
@@ -43,7 +55,31 @@
 			camp_reqUid, user_no, checkReTarget, smsContent, targetType
 		FROM PUSH_CAMPAIGN
 		WHERE user_no=${user_no}
-		ORDER BY reg_date DESC
+		<if test="word != null and word != ''">
+			AND (push_camp_title like CONCAT('%', #{word}, '%') 
+			 	 OR push_title like CONCAT('%', #{word}, '%')
+			 	 OR push_msg like CONCAT('%', #{word}, '%')
+				 OR inapp_content like CONCAT('%', #{word}, '%'))
+		</if>
+		<choose>
+			<when test="order == 'succ'">ORDER BY push_succ DESC</when>
+			<when test="order == 'fail'">ORDER BY push_fail DESC</when>
+			<otherwise>ORDER BY reg_date DESC</otherwise>
+		</choose>
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+	
+	<select id="countListByPusher" parameterType="map" resultType="int">
+		SELECT 
+			count(camp_id)
+		FROM PUSH_CAMPAIGN
+		WHERE user_no=${user_no}
+		<if test="word != null and word != ''">
+			AND (push_camp_title like CONCAT('%', #{word}, '%') 
+			 	 OR push_title like CONCAT('%', #{word}, '%')
+			 	 OR push_msg like CONCAT('%', #{word}, '%')
+				 OR inapp_content like CONCAT('%', #{word}, '%'))
+		</if>
 	</select>
 	
 	<select id="selectOneByCampId" parameterType="int" resultMap="PushCampaignVoMap">

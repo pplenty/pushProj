@@ -15,6 +15,8 @@ public interface PushCampaignDao {
 	
 	List<PushCampaignVo> selectListByPusher(Map<String, Object> paramMap);
 
+	int countListByPusher(Map<String, Object> paramMap);
+	
 	int updateInit(PushCampaignVo pushCampaignVo);
 
 	int updateResult(Map<String, Object> paramMap);

@@ -50,6 +50,36 @@
 		GROUP BY a.user_id
 	</select>
 
+	<select id="countListByCamp" parameterType="map" resultType="int">
+		SELECT count(user_id)
+		FROM 
+		(
+		SELECT a.user_id, d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s')
+				reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click 
+				FROM 
+				(select camp_id, user_id, reqUid, res_cd, rtn_type, reg_date 
+				FROM
+				push_campaign_detail
+				WHERE rtn_type = 'S') AS a
+		
+				LEFT JOIN
+				(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail
+				WHERE rtn_type = 'R') AS b
+				ON a.reqUid = b.reqUid
+		
+				LEFT JOIN
+				(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail	
+				where rtn_type = 'C') AS c
+				ON a.reqUid = c.reqUid
+		
+				JOIN app_user as d
+				ON a.user_id=d.user_id
+		
+				WHERE camp_id=38
+				GROUP BY a.user_id
+		) AS tb
+	</select>
+
 	<select id="selectSmsListByCamp" parameterType="map" resultType="map">
 		SELECT b.tg_mobile, DATE_FORMAT(b.reg_date, '%Y-%m-%d %H:%m:%s') reg_date, b.error_code
 		FROM push_campaign_detail a JOIN sms_detail b

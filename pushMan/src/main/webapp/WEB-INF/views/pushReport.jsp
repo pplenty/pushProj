@@ -52,7 +52,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 		<!-- 검색창 -->
-		<form action='list.do' method='get' class="navbar-form navbar-right">
+		<form action='pushList.do' method='get' class="navbar-form navbar-right">
 			<input class="form-control" type='text' name='word' 
 				   value='${param.word}' placeholder="제목 or 내용">
 			<button class="btn btn-default btn-sm">검색</button>
@@ -112,7 +112,7 @@
 							<c:choose>
 								<c:when test="${pageNo > 1}">
 									<li><a
-										href='list.do?pageNo=${pageNo-1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}'>Previous</a></li>
+										href='pushList.do?pageNo=${pageNo-1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}'>Previous</a></li>
 								</c:when>
 								<c:otherwise><li><a>Previous</a></li></c:otherwise>
 							</c:choose>
@@ -120,7 +120,7 @@
 							<c:choose>
 								<c:when test="${pageNo < maxPage}">
 									<li><a
-										href='list.do?pageNo=${pageNo+1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}'>Next</a></li>
+										href='pushList.do?pageNo=${pageNo+1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}'>Next</a></li>
 								</c:when>
 								<c:otherwise><li><a>Next</a></li></c:otherwise>
 							</c:choose>

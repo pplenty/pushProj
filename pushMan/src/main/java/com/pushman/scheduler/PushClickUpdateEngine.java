@@ -19,7 +19,7 @@ public class PushClickUpdateEngine {
 	
 	
 	// CLICK TABLE 바라보는 엔진
-	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
+//	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
 	public void updateClickLog() throws RuntimeException {
 		// 데이터소스 SET - 로컬DB
 		MultipleDataSource.setDataSourceKey("localDB");

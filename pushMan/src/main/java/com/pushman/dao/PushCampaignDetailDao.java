@@ -1,5 +1,6 @@
 package com.pushman.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,4 +25,6 @@ public interface PushCampaignDetailDao {
 	int insertLog(PushCampaignDetailVo pushCampaignDetailVo);
 	
 	List<Map<String, Object>> selectSmsListByCamp(Map<String, Object> paramMap);
+
+	int countListByCamp(HashMap<String, Object> sqlParams);
 }

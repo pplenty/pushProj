@@ -35,13 +35,22 @@
 <script src="./js/report/jui-grid/dist/grid.min.js"></script>
 
 
+<!-- 파이 차트 -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+<script type="text/javascript">
+	var msgLinkList = ${msgLinkList};		
+</script>
+<script src="./js/chart.js"></script>
+
+
 </head>
 
 <body class="jui">
 	<div class="container-fluid">
 		<div class="row">
-
-
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<div class="table-responsive">
 					<h4 class="sub-header">메시지 링크 수 [ ${cntMsgLink}개 ]</h4>
@@ -62,13 +71,13 @@
 							</c:if>
 							<c:forEach items="${msgLinkList}" var="msgLink">
 								<tr>
-									<!-- 유저 핸드폰 번호 -->
+									<!-- 링크 번호 -->
 									<td style="text-align: center;">${msgLink.link_seq}</td>
-									<!-- 발송 시간 -->
+									<!-- 링크 주소 -->
 									<td style="text-align: left;">${msgLink.link}</td>
-									<!-- 발송 시간 -->
+									<!-- 링크 클릭 횟수 -->
 									<td style="text-align: center;">${msgLink.click_cnt}</td>
-									<!-- 발송 시간 -->
+									<!-- 링크 타입 -->
 									<td style="text-align: center;">${msgLink.msg_push_type}</td>
 								</tr>
 							</c:forEach>
@@ -76,7 +85,7 @@
 						</tbody>
 					</table>
 					
-					<h4 class="sub-header">팝업 링크 수 [ ${cntpopupLink}개 ]</h4>
+					<%-- <h4 class="sub-header">팝업 링크 수 [ ${cntpopupLink}개 ]</h4>
 					<table id="table_1" class="table classic">
 						<thead>
 							<tr>
@@ -106,38 +115,11 @@
 							</c:forEach>
 
 						</tbody>
-					</table>
-
-					<div>
-						<div class="row" align="right"
-							style="text-align: center; margin-top: 3px;">
-							<div class="group">
-								<c:choose>
-									<c:when test="${pageNo > 1}">
-										<button
-											onclick="location.href='listDetail.do?pageNo=${pageNo-1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}&cno=${cno}'"
-											class="btn mini">Prev</button>
-									</c:when>
-									<c:otherwise>
-										<button class="btn mini" disabled="disabled">Prev</button>
-									</c:otherwise>
-								</c:choose>
-								${pageNo} &nbsp
-								<c:choose>
-									<c:when test="${pageNo < maxPage}">
-										<button
-											onclick="location.href='listDetail.do?pageNo=${pageNo+1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}&cno=${cno}'"
-											class="btn mini">Next</button>
-									</c:when>
-									<c:otherwise>
-										<button class="btn mini" disabled="disabled">Next</button>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</div>
+					</table> --%>
 
 
-					</div>
+					<br>
+					<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
 				</div>
 			</div>

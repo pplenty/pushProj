@@ -60,15 +60,14 @@ public class PushReportController {
 		sqlParams.put("user_no", smsUser.getNo());
 		
 		List<PushCampaignVo> pushList = pushCampaignDao.selectListByPusher(sqlParams);
-
+		int countList = pushCampaignDao.countListByPusher(sqlParams);
 		
 		//View로 값 전달
-		model.addAttribute("countList", pushList.size());
+		model.addAttribute("countList", countList);
 		model.addAttribute("list", 		pushList);
-		
 		model.addAttribute("pageNo", 	pageNo);
 		model.addAttribute("pageSize",  pageSize);
-		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, pushList.size()));
+		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, countList));
 
 		return "pushReport";
 	}
@@ -98,6 +97,7 @@ public class PushReportController {
 		sqlParams.put("camp_id", cno);
 		
 		List<Map<String, Object>> campDetailList = pushCampaignDetailDao.selectListByCamp(sqlParams);
+		int countList = pushCampaignDetailDao.countListByCamp(sqlParams);
 //		List<String> mobileList = new ArrayList<String>();
 				
 //		AppUserVo appUserVo;
@@ -105,7 +105,7 @@ public class PushReportController {
 //			appUserVo = appUserDao.selectOneByUserId(pushCampaignDetailVo.getUser_id());
 //			mobileList.add(appUserVo.getMobile());
 //		}
-		model.addAttribute("countList", campDetailList.size());
+		model.addAttribute("countList", countList);
 		model.addAttribute("list", 		campDetailList);
 //		model.addAttribute("mobileList", mobileList);
 //		model.addAttribute("pageNo", 	pageNo);
@@ -200,6 +200,4 @@ public class PushReportController {
 
 		return "./pushReport_detail_click";
 	}
-	
-	
 }
