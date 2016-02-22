@@ -82,9 +82,9 @@
 				<c:forEach items="${list}" var="pushCamp">
 					<tr cno="${pushCamp.camp_id}">
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
-								   title="${pushCamp.push_title}" 
+								   title="${pushCamp.push_title}"
 								   data-content="${pushCamp.camp_reqUid}" class="pushCampLoad"
-								   style="text-decoration:none;">${pushCamp.push_camp_title}</a></td>
+								   style="text-decoration:none; cursor:pointer;">${pushCamp.push_camp_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>
 							<td style="text-align: center;">${pushCamp.push_wait}</td><!-- 대기 -->
@@ -97,7 +97,7 @@
 								<c:if test="${retargetFlag == 'Y'}">
 								<a tabindex="0" data-toggle="popover" data-trigger="hover" 
 								   data-content="재발송 : ${pushCamp.push_fail}건"
-								   style="text-decoration:none;"
+								   style="text-decoration:none; cursor:pointer;"
 								   class="reTargetReport" cno="${pushCamp.camp_id}">YES</a>
 								</c:if>
 								<c:if test="${retargetFlag == 'N'}">
