@@ -51,7 +51,7 @@
        		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           		<h2 class="sub-header"> 통계 보기 </h2>
 	          	<br>
-				<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+				<div id="container" style="min-width: 310px; height: 600px; max-width: 900px; margin: 0 auto"></div>
 			</div>
 		</div>
 	</div>

@@ -130,4 +130,14 @@
 			 ${camp_id}, ${push_log_id}, ${tb_click_id})
 	</insert>
 	
+	<!-- 오픈율 차트 셀렉문 -->
+	<select id="selectReadCntByPusher" parameterType="map" resultType="map">
+		SELECT date_format(a.reg_date, '%H') reg_time, count(cd_id) count_read
+		FROM push_campaign_detail a JOIN push_campaign b
+		ON (a.camp_id=b.camp_id)
+		WHERE rtn_type='R'
+			  AND b.user_no=#{user_id}
+		GROUP BY reg_time
+		ORDER BY reg_time ASC
+	</select>
 </mapper>

@@ -25,8 +25,6 @@ public interface PushCampaignDetailClickDao {
 
 	List<PushCampaignDetailClickVo> selectLinkCntListByCamp(HashMap<String, Object> sqlParams);
 	
-	// 전체 발송 수
-	List<PushCampaignDetailClickVo> selectSendPushByPusher(HashMap<String, Object> sqlParams);
 	
 	/*****************************************************************************/
 	

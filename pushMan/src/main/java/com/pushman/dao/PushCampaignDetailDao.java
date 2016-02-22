@@ -27,4 +27,9 @@ public interface PushCampaignDetailDao {
 	List<Map<String, Object>> selectSmsListByCamp(Map<String, Object> paramMap);
 
 	int countListByCamp(HashMap<String, Object> sqlParams);
+
+	// 전체 발송 수
+	List<HashMap<String, Integer>> selectReadCntByPusher(HashMap<String, Object> sqlParams);
+	
+//	List<PushCampaignDetailClickVo> selectSendPushByPusher(HashMap<String, Object> sqlParams);
 }
