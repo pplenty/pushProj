@@ -97,15 +97,15 @@
 					<div class="col-md-7" style="float: left">
 						<label for="pushPopupContent">팝업 내용</label><br>
 						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoPopup'), keyUpFunction(this, 'preview')"
+							onKeyUp="javascript:fnChkByte(this,'3500', 'byteInfoPopup'), keyUpFunction(this, 'preview')"
 							style="resize: none;" placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
-						<span id="byteInfoPopup">0</span>/90Byte <br> <br> <label
+						<span id="byteInfoPopup">0</span>/3500Byte <br> <br> <label
 							for="innerContent">앱 내 메시지 내용</label><br>
 
 						<textarea id="innerContent" rows="15" cols="30" maxlength="90"
-							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoInner'), keyUpFunction(this, 'previewInAppMessageText')"
+							onKeyUp="javascript:fnChkByte(this,'3500', 'byteInfoInner'), keyUpFunction(this, 'previewInAppMessageText')"
 							style="resize: none;" placeholder="앱 내 내용을 입력해 주세요"></textarea>
-						<span id="byteInfoInner">0</span>/90Byte <br> <input
+						<span id="byteInfoInner">0</span>/3500Byte <br> <input
 							type="button" id="textPushBtn" class="btn btn-success btn-lg"
 							value="PUSH!!" />
 					</div>

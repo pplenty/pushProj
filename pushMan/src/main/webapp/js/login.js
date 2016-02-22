@@ -187,7 +187,7 @@ $(document).ready(function() {
 			alert("모바일 인증이 필요합니다.");
 		} else {
 			alert('가입이 완료되었습니다.');
-			$('#signInForm').attr('action', '../smsSender/signup.do');
+			$('#signInForm').attr('action', './signup.do');
 			$('#signInForm').submit();
 		}
 

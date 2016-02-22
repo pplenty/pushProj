@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -83,7 +84,7 @@
 					<tr cno="${pushCamp.camp_id}">
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
 								   title="${pushCamp.push_title}"
-								   data-content="${pushCamp.camp_reqUid}" class="pushCampLoad"
+								   data-content="${fn:substring(pushCamp.camp_reqUid, 23, 24)}" class="pushCampLoad"
 								   style="text-decoration:none; cursor:pointer;">${pushCamp.push_camp_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>

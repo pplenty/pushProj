@@ -74,7 +74,7 @@
 						<tbody>
 							<c:if test="${msgLinkList == '[]'}">
 								<tr>
-									<td colspan=4 style="text-align: center;">데이터가 없습니다.</td>
+									<td colspan=3 style="text-align: center;">데이터가 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:forEach items="${msgLinkList}" var="msgLink">
@@ -106,25 +106,25 @@
 								<th style="width: 10%; text-align: center;">번호</th>
 								<th style="width: 70%; text-align: center;">링크</th>
 								<th style="width: 10%; text-align: center;">횟수</th>
-								<th style="width: 10%; text-align: center;">타입</th>
+								<!-- <th style="width: 10%; text-align: center;">타입</th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<c:if test="${popupLinkList == '[]'}">
 								<tr>
-									<td colspan=4 style="text-align: center;">데이터가 없습니다.</td>
+									<td colspan=3 style="text-align: center;">데이터가 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:forEach items="${popupLinkList}" var="popupLink">
 								<tr>
-									<!-- 유저 핸드폰 번호 -->
+									<!-- 링크 시퀀스 -->
 									<td style="text-align: center;">${popupLink.link_seq}</td>
-									<!-- 발송 시간 -->
+									<!-- 푸시 링크 주소 -->
 									<td style="text-align: left;">${popupLink.link}</td>
-									<!-- 발송 시간 -->
+									<!-- 푸시 클릭 카운트 -->
 									<td style="text-align: center;">${popupLink.click_cnt}</td>
-									<!-- 발송 시간 -->
-									<td style="text-align: center;">${popupLink.msg_push_type}</td>
+									<!-- 푸시 타입 -->
+									<%-- <td style="text-align: center;">${popupLink.msg_push_type}</td> --%>
 								</tr>
 							</c:forEach>
 
