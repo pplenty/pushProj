@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SEND MAN</title>
+    <title>PUSH MAN</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/report/bootstrap.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@
 			<button class="btn btn-default btn-sm">검색</button>
 		</form>
 		
-          <h2 class="sub-header">발송 결과  [ ${countList}건 ] </h2>
+          <h2 class="sub-header"> PUSH 발송 결과  [ ${countList}건 ] </h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>

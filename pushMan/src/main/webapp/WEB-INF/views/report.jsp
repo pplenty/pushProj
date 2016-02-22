@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>SEND MAN</title>
+    <title>PUSH MAN</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/report/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +57,7 @@
 				   value='${param.word}' placeholder="제목 or 내용">
 			<button class="btn btn-default btn-sm">검색</button>
 		</form>
-          <h2 class="sub-header">발송 결과  [ ${countList}건 ] </h2>
+          <h2 class="sub-header">SMS 발송 결과  [ ${countList}건 ] </h2>
           <div class="table-responsive">
           <div class="hiddenMap" hm='${num_error}' style="display:none;"></div>
             <table class="table table-striped">
