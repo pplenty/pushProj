@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pushman.dao.MSG_LOG_Dao;
 import com.pushman.dao.SmsUserDao;
 import com.pushman.dao.TB_SEND_QUE_LOG_Dao;
-import com.pushman.domain.MSG_LOG_Vo;
 import com.pushman.domain.SmsUserVo;
 import com.pushman.domain.TB_SEND_QUE_LOG_Vo;
 import com.pushman.util.MultipleDataSource;
@@ -64,7 +63,7 @@ public class LoginController {
 			HttpSession session) {
 //		MultipleDataSource.setDataSourceKey("localDB");
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
-		if (smsUser != null) return "redirect:list.do";// 이미 로그인 되있을 때
+		if (smsUser != null) return "redirect:pushList.do";// 이미 로그인 되있을 때
 		
 		return "index";
 	}
@@ -78,7 +77,7 @@ public class LoginController {
 
 
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
-		if (smsUser != null) return "redirect:list.do";// 이미 로그인 되어있을 때
+		if (smsUser != null) return "redirect:pushList.do";// 이미 로그인 되어있을 때
 		
 		// loginkeeping 체크상자
 		if (loginkeeping != null) { // 체크 상자를 체크 했으면,

@@ -40,7 +40,7 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script src="./js/plugin/viewTinted.js"></script>
-<script src="./js/chart.js"></script>
+<script src="./js/clickChart.js"></script>
 
 
 </head>
@@ -82,7 +82,7 @@
 									<!-- 링크 번호 -->
 									<td style="text-align: center;">${msgLink.link_seq}</td>
 									<!-- 링크 주소 -->
-									<td style="text-align: left;">${msgLink.link}</a></td>
+									<td style="text-align: left;">${msgLink.link}</td>
 <%-- 									<td style="text-align: left;"><a href="${msgLink.link}" target="_blank" viewtinted>${msgLink.link}</a></td> --%>
 									<!-- 링크 클릭 횟수 -->
 									<td style="text-align: center;">${msgLink.click_cnt}</td>

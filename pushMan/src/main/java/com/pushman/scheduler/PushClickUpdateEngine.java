@@ -18,7 +18,7 @@ public class PushClickUpdateEngine {
 	PushCampaignDetailClickDao pushCampaignDetailClickDao;
 	
 	
-	// CLICK TABLE 바라보는 엔진
+	// CLICK TABLE 바라보는 엔진(push 발송 직후 링크 로그가 등록됨)
 	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
 	public void updateClickLog() throws RuntimeException {
 		// 데이터소스 SET - 로컬DB

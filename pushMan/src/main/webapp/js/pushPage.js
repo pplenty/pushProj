@@ -1,5 +1,15 @@
 
 $(document).ready(function() {
+//	pushCampTitle	 : $('#pushCampTitle').val(),	//푸시 캠페인 이름
+//	pushPopupTitle 	 : $('#pushPopupTitle').val(),	//푸시  팝업 제목
+//	targetType		 : $('#targetType').val(),		//푸시 대상자
+//	checkReTarget	 : $('#checkReTarget').val(),	//SMS 리타켓 여부
+//	smsContent		 : $('#smsContent').val(),		//SMS 내용
+//	pushPopupContent : $('#pushPopupContent').val(),//푸시 팝업 내용
+//	innerContent 	 : $('#innerContent').val(),	//푸시 인앱 내용
+//	pushType		 : 'text'
+	
+	
 
 	//텍스트 푸시 전송 버튼
 	$('#textPushBtn').click(function(e) {
