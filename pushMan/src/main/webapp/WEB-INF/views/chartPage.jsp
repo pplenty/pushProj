@@ -47,7 +47,7 @@
 
 </head>
 
-<body class="jui">
+<body>
 	<!-- 헤더 -->
 	<jsp:include page="./reportMenu.jsp"></jsp:include>
 
