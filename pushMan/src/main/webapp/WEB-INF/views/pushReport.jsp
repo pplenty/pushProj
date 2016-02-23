@@ -163,7 +163,7 @@
 		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
 		      </div>
 		      <div class="modal-body">
-					<div id="richPreviewInAppMessageImg" style="position: relative; width: 65%; display: block;">
+					<div id="richPreviewInAppMessageImg" style="position: relative; width: 58%; display: block;">
 						<img src="../images/preview_inapp.PNG" width="340px" height="500px">
 						<div id="richPreviewInAppMessageText" class="richPreviewInAppMessageText" style="position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white; word-break: break-all; overflow: auto; height: 450px;">
 						</div>
