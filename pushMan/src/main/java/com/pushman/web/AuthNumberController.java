@@ -61,7 +61,7 @@ public class AuthNumberController {
 	              "testpasswd0072");/* 암호 */
 	      
 	      stmt = con.createStatement();
-	      String sendMSG = "[SEND MAN]\n인증번호는 ["
+	      String sendMSG = "[PUSH MAN]\n인증번호는 ["
 	    		  			+ authNumberVo.getAuthNumber() +"] 입니다. 정확히 입력해주세요.";
 
 	      int count = stmt.executeUpdate(

@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SEND MAN</title>
+<title>PUSH MAN</title>
 
 <!-- Bootstrap core CSS -->
 <link href="./css/report/bootstrap.min.css" rel="stylesheet">
