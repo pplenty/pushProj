@@ -61,6 +61,12 @@ public class PushReportController {
 		List<PushCampaignVo> pushList = pushCampaignDao.selectListByPusher(sqlParams);
 		int countList = pushCampaignDao.countListByPusher(sqlParams);
 		
+		String tempReqUid = null;
+		for (PushCampaignVo pushCampaignVo : pushList) {
+			tempReqUid = CommonMethod.getPushTypeFromReqUid(pushCampaignVo.getCamp_reqUid());
+			pushCampaignVo.setCamp_reqUid(tempReqUid);
+		}
+		
 		//View로 값 전달
 		model.addAttribute("countList", countList);
 		model.addAttribute("list", 		pushList);

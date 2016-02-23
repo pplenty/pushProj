@@ -22,6 +22,9 @@ public class PushSetting {
 	
 	// SMS(iHeart DB) 식별 키 - MSG_ETC_1
 	public static final String SMS_SENDER_KEY = "koh";
+	
+	// SMS 인증번호 발신자 번호(도메인)
+	public static final String TEL_PUSHMAN = "01063757314";
 
 	// 고정 값(과거 값)
 	public static final String PUSH_RESERVED_TIME = "20160201120000";

@@ -18,7 +18,7 @@ import com.pushman.util.MultipleDataSource;
 import com.pushman.util.PushSetting;
 
 @Service
-public class UpdateEngine {
+public class SmsUpdateEngine {
 	@Autowired
 	CampaignDetailDao campaignDetailDao;
 	@Autowired
@@ -29,8 +29,10 @@ public class UpdateEngine {
 	Date currentDate = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 	String iHeartDBLogTableName;
+	
+	
 	// SMS 로그 스케줄러('SEND')
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = SchedulerCommon.FIXED_DELAY)
 	public void updatePushLogSchedular() throws RuntimeException {
 		
 		currentDate = new Date();
@@ -44,17 +46,22 @@ public class UpdateEngine {
 		// 업데이트 된 로그가 있을 때 (시퀀스가 빈 로그가 있을 때)
 		if (!isNullList.isEmpty()) {
 			
+			// LOG_MSG_SEQ 컬럼이 NULL 인 CampaignDetail 로우만 반복
 			for (CampaignDetailVo campaignDetailVo : isNullList) {
 				
 				// 데이터소스 SET - iHeart
 				MultipleDataSource.setDataSourceKey("iHeartDB");
 				Map<String, String> sqlParams = new HashMap<String, String>();
 				
-				// 로그테이블에서 'etc1 = koh' 로그만 가져오기
+				// iHeart 로그테이블에서 'etc1 = koh' 로그만 가져오기
 				sqlParams.put("MSG_ETC1", PushSetting.SMS_SENDER_KEY);
+				
+				// month에 따라 동적으로 변하는 TABLE
 				sqlParams.put("MSG_LOG_TABLE", iHeartDBLogTableName);
 				List<MSG_LOG_Vo> smsLogList = MsgLogDao.selectListSmsLog(sqlParams);
 				
+				// 가져온 로그에서 ETC5와 키값(cd_no)과 일치하는 로우 업데이트 시키기
+				// (NULL 시퀀스 값 채워넣고 에러코드 업데이트)
 				for (MSG_LOG_Vo msg_LOG_Vo : smsLogList) {
 					if (Integer.toString(campaignDetailVo.getCd_no()).equals(msg_LOG_Vo.getMsg_etc5())) {
 						campaignDetailVo.setLog_msg_seq(msg_LOG_Vo.getMsg_seq());

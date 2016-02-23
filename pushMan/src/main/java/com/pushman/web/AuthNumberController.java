@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pushman.dao.AuthNumberDao;
 import com.pushman.domain.AuthNumberVo;
+import com.pushman.util.PushSetting;
 
 @Controller
 public class AuthNumberController {
@@ -67,7 +68,8 @@ public class AuthNumberController {
 	              "INSERT INTO MSG_DATA"
 	              + " (CUR_STATE, CALL_TO, CALL_FROM, SMS_TXT, MSG_TYPE, REQ_DATE, MSG_ETC1)"
 	              + " VALUES"
-	              + " (0, '" + mobile + "','01063757314', '" + sendMSG + "', 4, SYSDATE(), 'koh');");
+	              + " (0, '" + mobile + "','" + PushSetting.TEL_PUSHMAN + "', '" 
+	              + sendMSG + "', 4, SYSDATE(), '" + PushSetting.SMS_SENDER_KEY + "');");
 	      
 	      
 	      if (count == 1) {

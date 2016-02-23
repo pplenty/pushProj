@@ -35,4 +35,30 @@ public class CommonMethod {
 	}
 	
 	
+	// ReqUid에서 push type 추출(project_pushType_campId /*_cdId*/ )
+	public static String getPushTypeFromReqUid(String ReqUid) {
+		String[] resultSet = ReqUid.split("_");
+		String result = null;
+		
+		// CampReqUid가 형식에 맞지 않을 경우 null 리턴
+		if (resultSet.length < 3)
+			return null;
+		
+		// result에 T/H 둘 중 하나 넣기 
+		try {
+			result = resultSet[resultSet.length - 2];
+		} catch (Exception e) {
+			return null;
+		}
+		
+		if ("T".equals(result)) {
+			result = "TEXT";
+		} else if ("H".equals(result)) {
+			result = "RICH";
+		}
+		
+		return result;
+	}
+	
+	
 }
