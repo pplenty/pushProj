@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>클릭 통계</title>
+<title>통계 보기</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="./css/report/bootstrap.min.css" rel="stylesheet">
@@ -50,8 +50,12 @@
 	      	<jsp:include page="./reportSideBar.jsp"></jsp:include>
        		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           		<h2 class="sub-header"> 통계 보기 </h2>
+          		<!-- <select>
+          			<option value="1">전체</option>
+         		</select>
+          		<input type="date"/><input type="date"/> -->
 	          	<br>
-				<div id="container" style="min-width: 310px; height: 600px; max-width: 900px; margin: 0 auto"></div>
+				<div id="container" style="min-width: 310px; height: 600px; max-width: 1150px; margin: 0 auto"></div>
 			</div>
 		</div>
 	</div>

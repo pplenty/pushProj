@@ -61,6 +61,9 @@
 				</div> -->
 				
 				<div class="table-responsive" id="msgSection">
+					<!-- 파이차트 (앱 내 메시지 링크) -->
+					<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto" campId="${campId}"></div>
+					<br>
 					<h4 class="sub-header">메시지 링크 수 [ ${cntMsgLink}개 ]</h4>
 					<table id="table_1" class="table classic">
 						<thead>
@@ -93,12 +96,12 @@
 
 						</tbody>
 					</table>
-
-					<br>
-					<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto" campId="${campId}"></div>
 				</div>
 				
 				<div class="table-responsive" id="popupSection" style="display: none;">
+				<!-- 파이차트 (팝업 링크) -->
+					<div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto" campId="${campId}"></div>
+					<br>
 					<h4 class="sub-header">팝업 링크 수 [ ${cntpopupLink}개 ]</h4>
 					<table id="table_1" class="table classic">
 						<thead>
@@ -130,9 +133,6 @@
 
 						</tbody>
 					</table>
-					<br>
-					<div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto" campId="${campId}"></div>
-
 				</div>
 			</div>
 		</div>
