@@ -37,6 +37,7 @@ public class PushReSmsLogUpdateEngine {
 				HashMap<String, String> sqlParams = new HashMap<String, String>();
 				// 로그테이블에서 로그 가져오기
 				sqlParams.put("MSG_ETC1", PushSetting.RE_SMS_KEY);
+				sqlParams.put("MSG_LOG_TABLE", "MSG_LOG_201602");
 				List<MSG_LOG_Vo> msgLogList = msgLodDao.selectListSmsLog(sqlParams);
 				for (MSG_LOG_Vo msg_LOG_Vo : msgLogList) {
 

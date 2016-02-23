@@ -25,4 +25,8 @@ public interface CampaignDetailDao {
 
 	CampaignDetailVo selectOneforEmail(Map<String, String> paramMap);
 
+	List<CampaignDetailVo> selectListLogIsNull();
+
+	int updateSMSLog(CampaignDetailVo campaignDetailVo);
+
 }

@@ -95,6 +95,23 @@
 		FROM CAMPAIGN_DETAIL
 		WHERE CAMP_NO=#{camp_no} AND SEND_ERROR=#{error_type}
 	</select>
+	
+	
+	
+	<!-- 로그 업데이트 스케쥴러에서 사용하는 SQL문 -->
+
+	<select id="selectListLogIsNull" resultMap="CampaignDetailVoMap">
+		SELECT cd_no, log_msg_seq, rcv_name, rcv_mob, send_error, send_time, camp_no
+		FROM CAMPAIGN_DETAIL
+		WHERE log_msg_seq IS NULL
+	</select>
+	
+	<update id="updateSMSLog" parameterType="CampaignDetailVo" keyColumn="cd_no"
+		keyProperty="cd_no" useGeneratedKeys="true">
+		UPDATE CAMPAIGN_DETAIL
+		SET send_error=#{send_error}, log_msg_seq=#{log_msg_seq}
+		WHERE cd_no=#{cd_no}
+	</update>
 
 
 </mapper>

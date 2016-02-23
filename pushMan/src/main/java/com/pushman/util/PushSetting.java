@@ -17,8 +17,11 @@ public class PushSetting {
 	// html push biz key (고정 값)
 	public static final String RICH_PUSH_BIZ_KEY = "f91e805198204094b753262839e3e551";
 
-	// SMS(iHeart DB) 식별 키 - MSG_ETC_1
+	// PUSH - SMS(iHeart DB) 재발송 식별 키 - MSG_ETC_1
 	public static final String RE_SMS_KEY = "kohPush";
+	
+	// SMS(iHeart DB) 식별 키 - MSG_ETC_1
+	public static final String SMS_SENDER_KEY = "koh";
 
 	// 고정 값(과거 값)
 	public static final String PUSH_RESERVED_TIME = "20160201120000";
