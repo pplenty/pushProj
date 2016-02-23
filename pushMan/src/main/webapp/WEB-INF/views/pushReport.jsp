@@ -78,7 +78,7 @@
               </thead>
               <tbody class="campaign">
               	<c:if test="${list == '[]'}">
-              		<tr><td colspan=9 style="text-align: center;">데이터가 없습니다.</td></tr>
+              		<tr><td colspan=10 style="text-align: center;">데이터가 없습니다.</td></tr>
               	</c:if>
 				<c:forEach items="${list}" var="pushCamp">
 					<tr cno="${pushCamp.camp_id}">
