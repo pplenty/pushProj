@@ -91,13 +91,21 @@ public class ChartController {
 			HttpSession session) {
 		
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
+		
+		String fromDate = "";
+		String toDate = "";
+    if (request.getParameter("fromDate") != null && request.getParameter("toDate") != null) {
+      fromDate = request.getParameter("fromDate");
+      toDate = request.getParameter("toDate");
+    }
 
 		// 링크에 따른 클릭 갯수 DB에서 가져오기
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		sqlParams.put("user_id", smsUser.getNo());
 		sqlParams.put("rtn_type", "R");
 		// 추가로 날짜 에 따른 WHERE절 추가 
-//		sqlParams.put("date", ???);
+		sqlParams.put("fromDate", fromDate);
+		sqlParams.put("toDate", toDate);
 		
 		// 시간대에 따른 "READ" 카운트 리스트
 		List<HashMap<String, Integer>> readCntList = pushCampaignDetailDao.selectReadCntByPusher(sqlParams);
