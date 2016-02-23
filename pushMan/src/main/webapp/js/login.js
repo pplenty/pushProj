@@ -51,7 +51,7 @@ $(document).ready(function() {
 						$('#loginStatus').css('color', 'red');
 						$('#password').select();
 					} else {
-						location.href = 'pushList.do'
+						location.href = 'chartPage.do'
 					}
 				},
 				error : function(e) {
