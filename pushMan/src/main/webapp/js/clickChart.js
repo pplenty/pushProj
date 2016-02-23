@@ -57,7 +57,13 @@ $(function () {
 				chartList = [];
 				for (var i = 0; i < list.length; i++) {
 			    	var chartItem = {};
-			    	chartItem.name = list[i].linkAddr;
+			    	
+			    	// 링크 갯수가 10개 이상이면 링크 주소 대신 시퀀스로 표현
+			    	if (list.length > 10) {
+			    		chartItem.name = list[i].linkSeq;
+			    	} else {
+			    		chartItem.name = list[i].linkAddr;
+			    	}
 			    	chartItem.y = list[i].clickCnt;
 			    	chartList.push(chartItem);
 				}
