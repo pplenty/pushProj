@@ -20,18 +20,6 @@ $(function () {
 		$('#msgSection').hide();
 		showChart('container2', popupChartList);
 	})
-//	jui.ready([ "ui.tab" ], function(tab) {
-//	    tab_1 = tab("#tab_1", {
-//	        event: {
-//	            change: function(data) {
-//	                alert(data.text);
-//	            }
-//	        },
-//	        target: "#tab_contents_1",
-//	        index: 2
-//	    });
-//	});
-	
 	
     $(document).ready(function () {
     	var list;

@@ -17,6 +17,7 @@
 		<result column="clk_id"  	  property="clk_id" />
 		<result column="tb_click_id"  property="tb_click_id" />
 	</resultMap>
+	
 
 	<select id="selectList" parameterType="map" resultMap="PushCampaignDetailVoMap">
 		SELECT cd_id, reg_date, reqUid, rtn_type, res_cd, user_id, camp_id, push_log_id,
@@ -132,12 +133,16 @@
 	
 	<!-- 오픈율 차트 셀렉문 -->
 	<select id="selectReadCntByPusher" parameterType="map" resultType="map">
-		SELECT date_format(a.reg_date, '%H') reg_time, count(cd_id) count_read
+		SELECT date_format(a.reg_date, '%H') reg_time, count(cd_id) count_sum
 		FROM push_campaign_detail a JOIN push_campaign b
 		ON (a.camp_id=b.camp_id)
-		WHERE rtn_type='R'
+		WHERE rtn_type=#{rtn_type}
 			  AND b.user_no=#{user_id}
 		GROUP BY reg_time
 		ORDER BY reg_time ASC
 	</select>
+	
+	
+	
+	
 </mapper>

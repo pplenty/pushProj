@@ -6,10 +6,15 @@ $(function () {
     $(document).ready(function () {
     	var timeList = ['00', '01', '02', '03', '04', '05', '06', '07', '08', 
     	                '09', '10', '11', '12', '13', '14', '15', '16', '17', 
-    	                '18', '19', '20', '21', '22', '23']
-    	var list;
-    	var chartList;
-//    	showChart('container', chartList);
+    	                '18', '19', '20', '21', '22', '23'];
+    	
+    	// ajax 응답을 담을 변수
+    	var readList;
+    	var clickList;
+    	
+    	// 응답으로 받은데이터를 시간대(총 24개) 나누어 담는 변수
+    	var readChartList;
+//    	showChart('container', readChartList);
     	
     	// chart에 들어갈 값 ajax로 받아오기
     	$.ajax({
@@ -21,31 +26,71 @@ $(function () {
 //			},
 			success : function(result) {
 				// 통계 '읽음' 차트 데이터 준비
-				list = JSON.parse(result.readCntList);
-				console.log(list);
-				chartList = [];
+				readList = JSON.parse(result.readCntList);
+				// 통계 '클릭' 차트 데이터 준비
+				clickList = JSON.parse(result.clickCntList);
+				console.log(readList);
+				console.log(clickList);
+				
+				// 00 ~ 23까지 카운트 담는 배열
+				readChartList = [];
 				for (var i = 0; i < timeList.length; i++) {
 					// 시간대별 카운트가 없는 경우 0 대입
-					if (typeof list[timeList[i]] == "undefined") {
-						chartList.push(0);
+					if (typeof readList[timeList[i]] == "undefined") {
+						readChartList.push(0);
 					} else {
-						chartList.push(list[timeList[i]]);
+						readChartList.push(readList[timeList[i]]);
 					}
 				}
+				// 00 ~ 23까지 카운트 담는 배열 - 클릭
+				clickChartList = [];
+				for (var i = 0; i < timeList.length; i++) {
+					// 시간대별 카운트가 없는 경우 0 대입
+					if (typeof clickList[timeList[i]] == "undefined") {
+						clickChartList.push(0);
+					} else {
+						clickChartList.push(clickList[timeList[i]]);
+					}
+				}
+				
+				
+				
 				// 적은 시간대(00-06시) 합침
-				var efficChartList = [];
-				efficChartList[0] = 0; 
-				for (var i = 0; i < chartList.length; i++) {
+				var efficReadChartList = [];
+				efficReadChartList[0] = 0; 
+				for (var i = 0; i < readChartList.length; i++) {
 					if (i < 7) {
-						efficChartList[0] += chartList[i];
+						efficReadChartList[0] += readChartList[i];
 					} else {
-						efficChartList[i - 6] = chartList[i];
+						efficReadChartList[i - 6] = readChartList[i];
 					}
 				}
-				console.log(chartList);
-				chartDataOne.data = efficChartList;
+				// 적은 시간대(00-06시) 합침- 클릭
+				var efficClickChartList = [];
+				efficClickChartList[0] = 0; 
+				for (var i = 0; i < clickChartList.length; i++) {
+					if (i < 7) {
+						efficClickChartList[0] += clickChartList[i];
+					} else {
+						efficClickChartList[i - 6] = clickChartList[i];
+					}
+				}
+				
+				console.log(readChartList);
+				console.log(clickChartList);
+				
+				// 차트 그리기 위한 Highchart Setting
+				chartDataOne = {};
+				chartDataOne.data = efficReadChartList;
 				chartDataOne.name = '오픈';
 				chartDataOne.marker = {symbol: 'square'};
+				series.push(chartDataOne);
+				
+				// 클릭 추가 세팅
+				chartDataOne = {};
+				chartDataOne.data = efficClickChartList;
+				chartDataOne.name = '클릭';
+				chartDataOne.marker = {symbol: 'diamond'};
 				series.push(chartDataOne);
 				
 				showChart('container', series);
