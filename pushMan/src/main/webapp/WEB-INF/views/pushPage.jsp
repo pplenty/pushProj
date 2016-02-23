@@ -96,12 +96,12 @@
 				<div id="textPushContent">
 					<div class="col-md-7" style="float: left">
 						<label for="pushPopupContent">팝업 내용</label><br>
-						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="3500"
-							onKeyUp="javascript:fnChkByte(this,'3500', 'byteInfoPopup'), keyUpFunction(this, 'preview')"
+						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="80"
+							onKeyUp="javascript:fnChkByte(this,'80', 'byteInfoPopup'), keyUpFunction(this, 'preview')"
 							style="resize: none;" placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
-						<span id="byteInfoPopup">0</span>/3500Byte <br> <br> <label
-							for="innerContent">앱 내 메시지 내용</label><br>
-
+						<span id="byteInfoPopup">0</span>/80Byte <br> <br> 
+						
+						<label for="innerContent">앱 내 메시지 내용</label><br>
 						<textarea id="innerContent" rows="15" cols="30" maxlength="3500"
 							onKeyUp="javascript:fnChkByte(this,'3500', 'byteInfoInner'), keyUpFunction(this, 'previewInAppMessageText')"
 							style="resize: none;" placeholder="앱 내 내용을 입력해 주세요"></textarea>
@@ -173,16 +173,13 @@
 							onKeyUp="javascript:fnChkByteEditor(this,'3400', 'byteInfoRichPopup')"
 							onkeydown="richKeydownFunction(this, 'richPreview')">
 							</textarea>
-						<span id="byteInfoRichPopup">0</span>/3400Byte <br> <label
-							for="innerContent">앱 내 메시지 내용</label><br>
+						<label for="innerContent">앱 내 메시지 내용</label><br>
 						<textarea class="ckeditor" cols="1" id="richInnerContentEditor"
 							name="richInnerContentEditor" rows="15"
 							onKeyUp="javascript:fnChkByteEditor(this,'3400', 'byteInfoRichInner')"
 							onkeydown="richKeydownFunction(this, 'richPreviewInAppMessageText')">
 							</textarea>
-						<span id="byteInfoRichInner">0</span>/3400Byte <br> <input
-							type="button" id="richPushBtn" class="btn btn-success btn-lg"
-							value="PUSH!!" />
+						 <input type="button" id="richPushBtn" class="btn btn-success btn-lg" value="PUSH!!" />
 					</div>
 
 					<!-- 리치푸시 미리보기 -->
