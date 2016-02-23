@@ -84,7 +84,7 @@
 					<tr cno="${pushCamp.camp_id}">
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
 								   title="${pushCamp.push_title}"
-								   data-content="${fn:substring(pushCamp.camp_reqUid, 23, 24)}" class="pushCampLoad"
+								   data-content="${pushCamp.camp_reqUid} 푸시" class="pushCampLoad"
 								   style="text-decoration:none; cursor:pointer;">${pushCamp.push_camp_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>
@@ -92,7 +92,18 @@
 							<td style="text-align: center;">${pushCamp.push_succ}</td><!-- 성공 -->
 							<td style="text-align: center;">${pushCamp.push_fail}</td><!-- 실패 -->
 							<td style="text-align: center;">${pushCamp.push_open}</td><!-- 오픈 -->
-							<td style="text-align: center;"><a href="" class="pushClickReport" cno="${pushCamp.camp_id}">${pushCamp.push_click}</a></td><!-- 클릭 -->
+							<!-- 클릭 BEGIN-->
+							<td style="text-align: center;">
+							<c:set var="pushType" value="${pushCamp.camp_reqUid}" />
+							<c:if test="${pushType == 'RICH'}">
+								<a href="" class="pushClickReport" cno="${pushCamp.camp_id}">${pushCamp.push_click}</a>
+							</c:if>
+							<c:if test="${pushType == 'TEXT'}">
+								${pushCamp.push_click}
+							</c:if>
+							</td><!-- 클릭 END-->
+							
+							<!-- SMS 발신 BEGIN-->
 							<td style="text-align: center;">
 								<c:set var="retargetFlag" value="${pushCamp.checkReTarget}" />
 								<c:if test="${retargetFlag == 'Y'}">
@@ -104,7 +115,7 @@
 								<c:if test="${retargetFlag == 'N'}">
 								<p>NO</p>
 								</c:if>
-								</td><!-- SMS 발신 -->
+								</td><!-- SMS 발신 END-->
 							<td style="text-align: center;">
 								<button class="btn detailBtn" cno="${pushCamp.camp_id}">상세</button></td>
 							<td class="push_title" style="display: none;">${pushCamp.push_title}</td><!-- 제목 -->
