@@ -26,7 +26,7 @@
 	</select>
 
 	<select id="selectListByCamp" parameterType="map" resultType="map">
-		SELECT user_id, mobile, reg_date, res_cd, send, 'read', click
+		SELECT user_id, mobile, reg_date, res_cd, send, `read`, click
 		FROM
 		(
 			SELECT a.user_id, d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s')
