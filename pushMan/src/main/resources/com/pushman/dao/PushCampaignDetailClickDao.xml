@@ -45,6 +45,7 @@
 		WHERE t1.APP_ID=343
 				AND t2.REQ_UID LIKE 'pushman%'
 				AND t1.ID > #{value}
+		GROUP BY ID				
 		ORDER BY ID ASC
 	</select>
 	

@@ -70,7 +70,6 @@ public class PushClickUpdateEngine {
 				// 로컬 DB에 클릭 로그 데이터 가공 후 INSERT
 				pushCampaignDetailClickDao.insertClickLog(pushCampaignDetailClickVo);
 				
-				
 			}
 		}
 	}

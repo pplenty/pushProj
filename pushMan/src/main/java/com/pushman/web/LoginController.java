@@ -77,7 +77,7 @@ public class LoginController {
 
 
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
-		if (smsUser != null) return "redirect:pushList.do";// 이미 로그인 되어있을 때
+		if (smsUser != null) return "redirect:chartPage.do";// 이미 로그인 되어있을 때
 		
 		// loginkeeping 체크상자
 		if (loginkeeping != null) { // 체크 상자를 체크 했으면,
