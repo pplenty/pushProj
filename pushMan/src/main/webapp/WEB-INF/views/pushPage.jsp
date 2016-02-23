@@ -148,7 +148,7 @@
 							<img src="../images/preview_inapp.PNG" width="340px"
 								height="500px">
 							<textarea id="previewInAppMessageText"
-								class="previewInAppMessageText" cols="40" rows="6"
+								class="previewInAppMessageText" cols="40" rows="22"
 								readonly="readonly"
 								style='position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white;'>
 								</textarea>
@@ -195,7 +195,7 @@
 
 
 						<div id="richPreviewPopupPushImg"
-							style="position: relative; width: 60%">
+							style="position: relative; width: 75%">
 							<img src="../images/preview_push.PNG" width="340px"
 								height="500px">
 							<div id="richPreviewPushPopupText" class="richPreview"
@@ -220,7 +220,7 @@
 
 
 						<div id="richPreviewInAppMessageImg"
-							style="position: relative; display: none; width: 65%">
+							style="position: relative; display: none; width: 85%">
 							<img src="../images/preview_inapp.PNG" width="340px"
 								height="500px">
 							<div id="richPreviewInAppMessageText"
