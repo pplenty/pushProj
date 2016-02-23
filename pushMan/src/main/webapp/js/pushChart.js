@@ -59,20 +59,20 @@ $(function () {
 				var efficReadChartList = [];
 				efficReadChartList[0] = 0; 
 				for (var i = 0; i < readChartList.length; i++) {
-					if (i < 7) {
+					if (i <= 5) {
 						efficReadChartList[0] += readChartList[i];
 					} else {
-						efficReadChartList[i - 6] = readChartList[i];
+						efficReadChartList[i - 5] = readChartList[i];
 					}
 				}
 				// 적은 시간대(00-06시) 합침- 클릭
 				var efficClickChartList = [];
 				efficClickChartList[0] = 0; 
 				for (var i = 0; i < clickChartList.length; i++) {
-					if (i < 7) {
+					if (i <= 5) {
 						efficClickChartList[0] += clickChartList[i];
 					} else {
-						efficClickChartList[i - 6] = clickChartList[i];
+						efficClickChartList[i - 5] = clickChartList[i];
 					}
 				}
 				

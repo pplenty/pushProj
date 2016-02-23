@@ -26,29 +26,43 @@
 	</select>
 
 	<select id="selectListByCamp" parameterType="map" resultType="map">
-		SELECT a.user_id, d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s')
-		reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click 
-		FROM 
-		(select camp_id, user_id, reqUid, res_cd, rtn_type, reg_date 
+		SELECT user_id, mobile, reg_date, res_cd, send, 'read', click
 		FROM
-		push_campaign_detail
-		WHERE rtn_type = 'S') AS a
-
-		LEFT JOIN
-		(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail
-		WHERE rtn_type = 'R') AS b
-		ON a.reqUid = b.reqUid
-
-		LEFT JOIN
-		(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail	
-		where rtn_type = 'C') AS c
-		ON a.reqUid = c.reqUid
-
-		JOIN app_user as d
-		ON a.user_id=d.user_id
-
-		WHERE camp_id=${camp_id}
-		GROUP BY a.user_id
+		(
+			SELECT a.user_id, d.mobile, DATE_FORMAT(a.reg_date, '%Y-%m-%d %H:%m:%s')
+			reg_date, a.res_cd, a.rtn_type send, b.rtn_type `read`, c.rtn_type click 
+			FROM 
+			(select camp_id, user_id, reqUid, res_cd, rtn_type, reg_date 
+			FROM
+			push_campaign_detail
+			WHERE rtn_type = 'S') AS a
+			
+			LEFT JOIN
+			(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail
+			WHERE rtn_type = 'R') AS b
+			ON a.reqUid = b.reqUid
+			
+			LEFT JOIN
+			(select user_id, reqUid, rtn_type, reg_date from push_campaign_detail	
+			where rtn_type = 'C') AS c
+			ON a.reqUid = c.reqUid
+			
+			JOIN app_user as d
+			ON a.user_id=d.user_id
+			
+			WHERE camp_id=#{camp_id}
+			GROUP BY a.user_id
+		) AS tb
+		<if test="word != null and word != ''">
+			WHERE mobile like CONCAT('%', #{word}, '%') 
+		</if>
+		<choose>
+			<when test="order == 'res_cd'">ORDER BY res_cd ASC</when>
+			<otherwise>ORDER BY click DESC</otherwise>
+		</choose>
+		LIMIT #{startIndex}, #{pageSize}
+		
+		
 	</select>
 
 	<select id="countListByCamp" parameterType="map" resultType="int">
@@ -76,9 +90,12 @@
 				JOIN app_user as d
 				ON a.user_id=d.user_id
 		
-				WHERE camp_id=38
+				WHERE camp_id=#{camp_id}
 				GROUP BY a.user_id
 		) AS tb
+		<if test="word != null and word != ''">
+			WHERE mobile like CONCAT('%', #{word}, '%') 
+		</if>
 	</select>
 
 	<select id="selectSmsListByCamp" parameterType="map" resultType="map">
@@ -131,7 +148,7 @@
 			 ${camp_id}, ${push_log_id}, ${tb_click_id})
 	</insert>
 	
-	<!-- 오픈율 차트 셀렉문 -->
+	<!-- 오픈/클릭 건수 차트 셀렉문 -->
 	<select id="selectReadCntByPusher" parameterType="map" resultType="map">
 		SELECT date_format(a.reg_date, '%H') reg_time, count(cd_id) count_sum
 		FROM push_campaign_detail a JOIN push_campaign b

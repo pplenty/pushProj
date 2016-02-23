@@ -45,18 +45,18 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h2 class="sub-header">상세 결과 [ ${countList}건 ]</h2>
 				<!-- 검색창 -->
-				<%-- <form action='pushListDetail.do' method='get' class="navbar-form navbar-right">
-			<input class="form-control" type='text' name='word' value='${param.word}' placeholder="이름 or 번호">
-			<input type='text' name='cno' value='${cno}' hidden="hidden">
-			<button class="btn btn-default btn-sm">검색</button>
-		</form><br> --%>
+				<form action='pushListDetail.do' method='get' class="navbar-form navbar-right">
+					<input class="form-control" type='text' name='word' value='${param.word}' placeholder="번호로 검색..">
+					<input type='text' name='cno' value='${param.cno}' hidden="hidden">
+					<button class="btn btn-default btn-sm">검색</button>
+				</form><br>
 				<div class="table-responsive">
 					<table id="table_1" class="table classic">
 						<thead>
 							<tr>
 								<th style="width: 20%; text-align: center;">받는 사람</th>
 								<th style="width: 20%; text-align: center;">발송 시간</th>
-								<th style="width: 30%; text-align: center;">발송 성공/실패/오류</th>
+								<th style="width: 30%; text-align: center;">성공 여부</th>
 								<th style="width: 15%; text-align: center;">오픈</th>
 								<th style="width: 15%; text-align: center;">클릭</th>
 							</tr>
@@ -64,7 +64,7 @@
 						<tbody>
 							<c:if test="${list == '[]'}">
 								<tr>
-									<td colspan=4 style="text-align: center;">데이터가 없습니다.</td>
+									<td colspan=5 style="text-align: center;">데이터가 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:forEach items="${list}" var="pushCampaignDetail">
@@ -203,7 +203,7 @@
 								<c:choose>
 									<c:when test="${pageNo > 1}">
 										<button
-											onclick="location.href='listDetail.do?pageNo=${pageNo-1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}&cno=${cno}'"
+											onclick="location.href='pushListDetail.do?pageNo=${pageNo-1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}&cno=${param.cno}'"
 											class="btn mini">Prev</button>
 									</c:when>
 									<c:otherwise>
@@ -214,7 +214,7 @@
 								<c:choose>
 									<c:when test="${pageNo < maxPage}">
 										<button
-											onclick="location.href='listDetail.do?pageNo=${pageNo+1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}&cno=${cno}'"
+											onclick="location.href='pushListDetail.do?pageNo=${pageNo+1}&pageSize=${pageSize}&word=${param.word}&order=${param.order}&cno=${param.cno}'"
 											class="btn mini">Next</button>
 									</c:when>
 									<c:otherwise>
