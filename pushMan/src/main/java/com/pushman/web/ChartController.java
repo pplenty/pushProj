@@ -91,6 +91,7 @@ public class ChartController {
 			HttpSession session) {
 		
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
+		if (smsUser == null) return "index";// 세션 없을 시 메인으로
 		
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
