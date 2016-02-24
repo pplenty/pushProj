@@ -75,7 +75,7 @@
 						onkeyUp="keyUpFunction(this, 'previewNotiTitle')" value="${pushPopupTitle}"><br>
 					<select id="targetType">
 						<option value="all">전체 사용자</option>
-						<option value="loginToday">로그인 사용자</option>
+						<option value="loginToday">오늘 로그인 사용자</option>
 					</select>
 					<div>
 						<input type="checkbox" id="checkReTarget" value="N"> SMS

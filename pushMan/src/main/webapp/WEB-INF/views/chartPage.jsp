@@ -81,7 +81,7 @@
 				<br><br>
 						
 						
-				<div id="container" style="min-width: 620px; height: 500px; max-width: 1150px; margin: 0 auto"></div>
+				<div id="container" style="min-width: 620px; height: 400px; max-width: 1150px; margin: 0 auto"></div>
 			</div>
 		</div>
 	</div>

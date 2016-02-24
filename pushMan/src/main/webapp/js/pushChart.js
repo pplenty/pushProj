@@ -271,6 +271,7 @@ function ajaxRequestChartData() {
 			seriesObject.data = clickChartList;// '클릭' 데이터
 			seriesObject.name = '클릭';
 			seriesObject.marker = {symbol: 'circle'};
+//			seriesObject.color = 'red';
 			seriesArray.push(seriesObject);
 			
 			// 클릭 추가 세팅

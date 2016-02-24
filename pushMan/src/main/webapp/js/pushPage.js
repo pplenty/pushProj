@@ -82,8 +82,8 @@ $(document).ready(function() {
 				checkReTarget	 : $('#checkReTarget').val(),		//SMS 리타켓 여부
 				smsContent		 : $('#smsContent').val(),			//SMS 내용
 				pushMsg		     : $('#richPushNotiContent').val(), //푸시 상태창 내용
-				pushPopupContent : CKEDITOR.instances.richPushPopupContentEditor.getData(),	//푸시 팝업 내용
-				innerContent 	 : CKEDITOR.instances.richInnerContentEditor.getData(),		//푸시 인앱 내용
+				pushPopupContent : XSSfilter(CKEDITOR.instances.richPushPopupContentEditor.getData()),	//푸시 팝업 내용
+				innerContent 	 : XSSfilter(CKEDITOR.instances.richInnerContentEditor.getData()),		//푸시 인앱 내용
 				pushType		 : 'html'
 			},
 			success : function(result) {
@@ -206,10 +206,10 @@ function keyUpFunction(obj, previewName){
 
 // CKEDITOR HTML 파싱 함수
 function richKeydownFunction(){
-	$('.richPreview').html($.parseHTML(CKEDITOR.instances.richPushPopupContentEditor.getData()));
+	$('.richPreview').html(CKEDITOR.instances.richPushPopupContentEditor.getData());
 }
 function richKeydownFunction_inapp(){
-	$('.richPreviewInAppMessageText').html($.parseHTML(CKEDITOR.instances.richInnerContentEditor.getData()));
+	$('.richPreviewInAppMessageText').html(CKEDITOR.instances.richInnerContentEditor.getData());
 }
 
 // 텍스트 푸시의 Textarea 내용 바이트 제한
@@ -246,3 +246,10 @@ function fnChkByte(obj, maxByte, byteInfo) {
 		document.getElementById(byteInfo).innerText = rbyte;
 	} 
 }
+
+
+// XSS 방지 필터
+var XSSfilter = function(content) {
+
+    return content.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+};
