@@ -60,7 +60,7 @@
 						<select>
 						    <option value="1">전체</option>
 						</select> 
-          	<!-- 날짜선택 -->
+          				<!-- 날짜선택 -->
 						<!-- <input type="date" id="fromDate"/><input type="date" id="toDate"/><br> -->
 						<label for="from">From</label>
 						<input type="text" id="from" name="from">
@@ -70,7 +70,7 @@
 						<br> 
 						
 						
-				<div id="container" style="min-width: 310px; height: 600px; max-width: 1150px; margin: 0 auto"></div>
+				<div id="container" style="min-width: 620px; height: 600px; max-width: 1150px; margin: 0 auto"></div>
 			</div>
 		</div>
 	</div>
@@ -169,4 +169,14 @@
 	
 	
 </body>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+    <script src="./js/report/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./js/report/holder.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./js/report/ie10-viewport-bug-workaround.js"></script>
 </html>
