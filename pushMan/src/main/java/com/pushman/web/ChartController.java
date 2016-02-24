@@ -92,12 +92,20 @@ public class ChartController {
 		
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
 		
-		String fromDate = "";
-		String toDate = "";
-    if (request.getParameter("fromDate") != null && request.getParameter("toDate") != null) {
-      fromDate = request.getParameter("fromDate");
-      toDate = request.getParameter("toDate");
-    }
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+		
+		// from, to 둘다 NULL인 경우
+		if (fromDate == null && toDate == null) {
+			fromDate = "";
+			toDate = "";
+			
+		// 날짜를 하나만 입력한 경우
+		} else if (fromDate == "") {
+			fromDate = toDate;
+		} else if (toDate == "") {
+			toDate = fromDate;
+		}
 
 		// 링크에 따른 클릭 갯수 DB에서 가져오기
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
