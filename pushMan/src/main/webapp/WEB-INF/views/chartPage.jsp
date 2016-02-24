@@ -42,6 +42,7 @@
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	
 	<!-- 차트 데이터 요청 JS -->
+	<script src="./js/pushChartTheme.js"></script>
 	<script src="./js/pushChart.js"></script>
 
 

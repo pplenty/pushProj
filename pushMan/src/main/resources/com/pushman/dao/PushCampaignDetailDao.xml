@@ -54,7 +54,7 @@
 			GROUP BY a.user_id
 		) AS tb
 		<if test="word != null and word != ''">
-			WHERE mobile like CONCAT('%', #{word}, '%') 
+			WHERE mobile like CONCAT('%', #{word}, '%')
 		</if>
 		<choose>
 			<when test="order == 'res_cd'">ORDER BY res_cd ASC</when>
@@ -153,10 +153,15 @@
 		SELECT date_format(a.reg_date, '%H') reg_time, count(cd_id) count_sum
 		FROM push_campaign_detail a JOIN push_campaign b
 		ON (a.camp_id=b.camp_id)
-		WHERE rtn_type=#{rtn_type}
-			  AND b.user_no=#{user_id}
+		WHERE rtn_type = #{rtn_type} 
+	    <if test='rtn_type == "S" '>
+	    	  AND res_cd = '1000'
+	    </if>
+	    <if test="user != 'all' ">
+	    	  AND b.user_no=#{user_id}
+	    </if>
 	    <if test="fromDate != '' and toDate != '' ">
-	      AND DATE(a.reg_date) BETWEEN #{fromDate} AND #{toDate} 
+	      	  AND DATE(a.reg_date) BETWEEN #{fromDate} AND #{toDate} 
 	    </if>
 		GROUP BY reg_time
 		ORDER BY reg_time ASC

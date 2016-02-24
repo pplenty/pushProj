@@ -89,107 +89,20 @@ $(function () {// document.ready
 		}
 	});
 	
-	// chart에 들어갈 값 ajax로 받아오기
-	$.ajax({
-		url : './pushChart.do',
-		method : 'POST',
-		dataType : 'json',
-		success : function(result) {
-			// ajax 응답을 JSON 파싱해서 담을 변수
-			// 통계 '읽음' 차트 데이터 준비
-			var readList = JSON.parse(result.readCntList);
-			var clickList = JSON.parse(result.clickCntList);
-//				console.log(readList);
-//				console.log(clickList);
-			
-			// 가공된 데이터를 담을 변수
-			// ajax로 받아온 데이터 차트에 맞춰서 가공
-			var readChartList = dataFormatToByTime(readList);
-			var clickChartList = dataFormatToByTime(clickList);
-			
-			
-			// 차트 그리기 위한 Highchart Setting
-			// 실제 차트 그릴 때 필요한 배열과 데이터 객체
-			var seriesArray = [];
-			var seriesObject = {};
-			
-			// read 세팅
-			seriesObject = {};// 객체 초기화
-			seriesObject.data = readChartList;// '오픈' 데이터
-			seriesObject.name = '오픈';
-			seriesObject.marker = {symbol: 'square'};
-			seriesArray.push(seriesObject);
-			
-			// 클릭 추가 세팅
-			seriesObject = {};// 객체 초기화
-			seriesObject.data = clickChartList;// '클릭' 데이터
-			seriesObject.name = '클릭';
-			seriesObject.marker = {symbol: 'circle'};
-			seriesArray.push(seriesObject);
-			
-			// 시간대별 차트 그리기
-			drawByTimeChart('container', seriesArray, xAxisForTime);
-		},
-		error : function(e) {
-			console.error('ajax 에러: ' + e.status);
-		}
-	});
+	// chart에 들어갈 data ajax 요청 후 차트 그리기
+	ajaxRequestChartData();
 	
 
 	// 날짜 선택 후 차트 보기 버튼 클릭 이벤트 등록
 	$('#datePickBtn').click(function() {
-		$.ajax({
-			url : './pushChart.do',
-			method : 'POST',
-			dataType : 'json', 
-	        data : {
-		        fromDate : $('#fromDate').val(),
-		        toDate : $("#toDate").val()
-		    },
-			success : function(result) {
-				// ajax 응답을 JSON 파싱해서 담을 변수
-				// 통계 '읽음' 차트 데이터 준비
-				var readList = JSON.parse(result.readCntList);
-				var clickList = JSON.parse(result.clickCntList);
-				
-				// 가공된 데이터를 담을 변수
-				// ajax로 받아온 데이터 차트에 맞춰서 가공
-				var readChartList = dataFormatToByTime(readList);
-				var clickChartList = dataFormatToByTime(clickList);
-				
-				
-				// 차트 그리기 위한 Highchart Setting
-				// 실제 차트 그릴 때 필요한 배열과 데이터 객체
-				var seriesArray = [];
-				var seriesObject = {};
-				
-				// read 세팅
-				seriesObject = {};// 객체 초기화
-				seriesObject.data = readChartList;// '오픈' 데이터
-				seriesObject.name = '오픈';
-				seriesObject.marker = {symbol: 'square'};
-				seriesArray.push(seriesObject);
-				
-				// 클릭 추가 세팅
-				seriesObject = {};// 객체 초기화
-				seriesObject.data = clickChartList;// '클릭' 데이터
-				seriesObject.name = '클릭';
-				seriesObject.marker = {symbol: 'circle'};
-				seriesArray.push(seriesObject);
-				
-				// 시간대별 차트 그리기
-				drawByTimeChart('container', seriesArray, xAxisForTime);
-			},
-			error : function(e) {
-				console.error('ajax 에러: ' + e.status);
-			}
-		});
+		// chart에 들어갈 data ajax 요청 후 차트 그리기
+		ajaxRequestChartData();
 	});
 });
 
 
 
-// 차트 보여주기(인자: 객체배열)
+// 차트 그리기(인자: 타겟차트, 객체배열, x축 도메인)
 function drawByTimeChart(target, chartData, xAxisForDomain) {
 	var targetContainer = '#' + target;
     $(targetContainer).highcharts({
@@ -197,10 +110,10 @@ function drawByTimeChart(target, chartData, xAxisForDomain) {
             type: 'spline'
         },
         title: {
-            text: '시간대별 오픈/클릭 수'
+            text: '시간대별 통계'
         },
         subtitle: {
-            text: 'Open/Click'
+            text: 'Open/Click/Send'
         },
         xAxis: {
             categories: xAxisForDomain
@@ -218,6 +131,9 @@ function drawByTimeChart(target, chartData, xAxisForDomain) {
         tooltip: {
             crosshairs: true,
             shared: true
+        },
+        credits : {
+        	enabled: false
         },
         plotOptions: {
             spline: {
@@ -309,6 +225,73 @@ function toEfficArrayByTime(extendedArray) {
 	return efficArray;
 }
 
+// Ajax 요청 함수
+function ajaxRequestChartData() {
+	
+	// chart에 들어갈 값 ajax로 받아오기
+	$.ajax({
+		url : './pushChart.do',
+		method : 'POST',
+		dataType : 'json',
+        data : {
+	        fromDate : $('#fromDate').val(),
+	        toDate : $("#toDate").val()
+	    },
+		success : function(result) {
+			// ajax 응답을 JSON 파싱해서 담을 변수
+			// 통계 '읽음' 차트 데이터 준비
+			var readList = JSON.parse(result.readCntList);
+			var clickList = JSON.parse(result.clickCntList);
+			var sendList = JSON.parse(result.sendCntList);
+//				console.log(readList);
+//				console.log(clickList);
+//				console.log(sendList);
+			
+			// 가공된 데이터를 담을 변수
+			// ajax로 받아온 데이터 차트에 맞춰서 가공
+			var readChartList = dataFormatToByTime(readList);
+			var clickChartList = dataFormatToByTime(clickList);
+			var sendChartList = dataFormatToByTime(sendList);
+			
+			
+			// 차트 그리기 위한 Highchart Setting
+			// 실제 차트 그릴 때 필요한 배열과 데이터 객체
+			var seriesArray = [];
+			var seriesObject = {};
+			
+			// read 세팅
+			seriesObject = {};// 객체 초기화
+			seriesObject.data = readChartList;// '오픈' 데이터
+			seriesObject.name = '오픈';
+			seriesObject.marker = {symbol: 'square'};
+			seriesArray.push(seriesObject);
+			
+			// 클릭 추가 세팅
+			seriesObject = {};// 객체 초기화
+			seriesObject.data = clickChartList;// '클릭' 데이터
+			seriesObject.name = '클릭';
+			seriesObject.marker = {symbol: 'circle'};
+			seriesArray.push(seriesObject);
+			
+			// 클릭 추가 세팅
+			seriesObject = {};// 객체 초기화
+			seriesObject.data = sendChartList;// '발송' 데이터
+			seriesObject.name = '발송';
+			seriesObject.marker = {symbol: 'triangle'};
+			seriesArray.push(seriesObject);
+			
+			// 시간대별 차트 그리기
+			drawByTimeChart('container', seriesArray, xAxisForTime);
+		},
+		error : function(e) {
+			console.error('ajax 에러: ' + e.status);
+		}
+	});
+	
+}
+
+
+
 // 날짜 프로토타입 함수 정의 - format 
 Date.prototype.format = function(f) {
     if (!this.valueOf()) return " ";
@@ -332,6 +315,18 @@ Date.prototype.format = function(f) {
         }
     });
 };
-String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
-String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+// Date.format에서 사용할 함수 정의
+String.prototype.string = function(len) {
+	var s = '', i = 0;
+	while (i++ < len) {
+		s += this;
+	}
+	return s;
+};
+String.prototype.zf = function(len) {
+	return "0".string(len - this.length) + this;
+};
+Number.prototype.zf = function(len) {
+	return this.toString().zf(len);
+};

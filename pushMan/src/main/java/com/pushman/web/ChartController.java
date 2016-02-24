@@ -111,12 +111,13 @@ public class ChartController {
 		// 링크에 따른 클릭 갯수 DB에서 가져오기
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		sqlParams.put("user_id", smsUser.getNo());
-		sqlParams.put("rtn_type", "R");
+		
 		// 추가로 날짜 에 따른 WHERE절 추가 
 		sqlParams.put("fromDate", fromDate);
 		sqlParams.put("toDate", toDate);
 		
 		// 시간대에 따른 "READ" 카운트 리스트
+		sqlParams.put("rtn_type", "R");
 		List<HashMap<String, Integer>> readCntList = pushCampaignDetailDao.selectReadCntByPusher(sqlParams);
 		
 		JsonObject jsonReadData = new JsonObject();
@@ -138,6 +139,18 @@ public class ChartController {
 			jsonClickData.addProperty(String.valueOf(map.get("reg_time")), map.get("count_sum"));
 		}
 		
+		
+		// 시간대에 따른 "SEND" 카운트 리스트
+		sqlParams.put("rtn_type", "S");
+		List<HashMap<String, Integer>> sendCntList = pushCampaignDetailDao.selectReadCntByPusher(sqlParams);
+		
+		JsonObject jsonSendData = new JsonObject();
+		
+		// 발송 갯수 JSON 배열에 담기(메시지)
+		for (HashMap<String, Integer> map : sendCntList) {
+			jsonSendData.addProperty(String.valueOf(map.get("reg_time")), map.get("count_sum"));
+		}
+		
 
 		
 		
@@ -146,6 +159,7 @@ public class ChartController {
 		HashMap<String, Object> responseData = new HashMap<String, Object>();
 		responseData.put("readCntList", jsonReadData.toString());
 		responseData.put("clickCntList", jsonClickData.toString());
+		responseData.put("sendCntList", jsonSendData.toString());
 	    return responseData;
 	    
 	}
