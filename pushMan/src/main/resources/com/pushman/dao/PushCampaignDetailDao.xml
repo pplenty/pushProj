@@ -103,6 +103,20 @@
 		FROM push_campaign_detail a JOIN sms_detail b
 		ON a.cd_id = b.cd_id
 		WHERE a.camp_id=${camp_id}
+		<if test="word != null and word != ''">
+			AND tg_mobile like CONCAT('%', #{word}, '%') 
+		</if>
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+	
+	<select id="countSmsListByCamp" parameterType="map" resultType="int">
+		SELECT count(sms_id)
+		FROM push_campaign_detail a JOIN sms_detail b
+		ON a.cd_id = b.cd_id
+		WHERE a.camp_id=${camp_id}
+		<if test="word != null and word != ''">
+			AND tg_mobile like CONCAT('%', #{word}, '%') 
+		</if>
 	</select>
 	
 	<!-- <select id="selectListByCamp" parameterType="map" resultType="map">

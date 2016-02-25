@@ -137,18 +137,13 @@ public class PushReportController {
 		sqlParams.put("camp_id", cno);
 		
 		List<Map<String, Object>> smsDetailList = pushCampaignDetailDao.selectSmsListByCamp(sqlParams);
-//		List<String> mobileList = new ArrayList<String>();
-				
-//		AppUserVo appUserVo;
-//		for (PushCampaignDetailVo pushCampaignDetailVo : campDetailList) {
-//			appUserVo = appUserDao.selectOneByUserId(pushCampaignDetailVo.getUser_id());
-//			mobileList.add(appUserVo.getMobile());
-//		}
-		model.addAttribute("countList", smsDetailList.size());
+		int countList = pushCampaignDetailDao.countSmsListByCamp(sqlParams);
+		
+		model.addAttribute("countList", countList);
 		model.addAttribute("list", 		smsDetailList);
 		model.addAttribute("pageNo", 	pageNo);
 		model.addAttribute("pageSize",  pageSize);
-//		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, pushList.size()));
+		model.addAttribute("maxPage", 	CommonMethod.countTotalPage(pageSize, countList));
 
 		return "./pushReport_detail_sms";
 	}

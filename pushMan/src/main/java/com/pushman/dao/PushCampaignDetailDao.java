@@ -30,6 +30,8 @@ public interface PushCampaignDetailDao {
 
 	// 전체 발송 수
 	List<HashMap<String, Integer>> selectReadCntByPusher(HashMap<String, Object> sqlParams);
+
+	int countSmsListByCamp(HashMap<String, Object> sqlParams);
 	
 //	List<PushCampaignDetailClickVo> selectSendPushByPusher(HashMap<String, Object> sqlParams);
 }
