@@ -51,8 +51,8 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h2>클릭 상세 보기</h2>
 				<ul id="tab_1" class="tab top">
-				    <li class="active"><a href="#msgSection">메시지</a></li>
-				    <li><a href="#popupSection">팝업</a></li>
+				    <li class="active"><a href="#msgSection">인 앱 메시지</a></li>
+				    <li><a href="#popupSection">푸시 팝업</a></li>
 				</ul>
 <!-- 				<div id="tab_contents_1" style="background: #dcdcdc;">
 				    <div id="home">home</div>

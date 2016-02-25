@@ -58,28 +58,29 @@
 	      	<jsp:include page="./reportSideBar.jsp"></jsp:include>
        		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             	<h2 class="sub-header"> 통계 보기 </h2>
-            	
+            	<div>
             	<!-- 조건 선택 -->
-				<select id="selectCond">
+            	<select id="selectCond">
 				    <option value="all" selected="selected">전 체</option>
 				    <option value="today">오 늘</option>
 				    <option value="week">최근 1주일</option>
 				    <option value="month">최근 한 달</option>
 				    <option value="custom">직접 입력</option>
 				</select>
+				
 				 
 				<!-- 날짜선택 -->
 				<br><br>
 				<label for="fromDate"> From</label>
 				<input type="text" id="fromDate" name="fromDate"
-					   style="width: 100px; text-align: center;">
+					   style="width: 100px; text-align: center;" readonly>
 				<label for="toDate"> To</label>
 				<input type="text" id="toDate" name="toDate"
-					   style="width: 100px; text-align: center;">
+					   style="width: 100px; text-align: center;" readonly>
 				<input id="datePickBtn" type="button" value="차트 보기"
 				       class="btn btn-default btn-sm"/>
 				<br><br>
-						
+				</div>	
 						
 				<div id="container" style="min-width: 620px; height: 400px; max-width: 1150px; margin: 0 auto"></div>
 			</div>

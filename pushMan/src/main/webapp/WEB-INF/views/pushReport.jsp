@@ -85,7 +85,7 @@
 							<td><a tabindex="0" data-toggle="popover" data-trigger="hover" 
 								   title="${pushCamp.camp_reqUid} 푸시"
 								   data-content="타겟 : ${pushCamp.targetType}" class="pushCampLoad"
-								   style="text-decoration:none; cursor:pointer;">${pushCamp.push_camp_title}</a></td>
+								   style="text-decoration: none; cursor: pointer;">${pushCamp.push_camp_title}</a></td>
 							<td style="text-align: center;">${pushCamp.reg_date}</td>
 							<td style="text-align: center;">${pushCamp.push_total}</td>
 							<td style="text-align: center;">${pushCamp.push_wait}</td><!-- 대기 -->
@@ -93,15 +93,15 @@
 							<td style="text-align: center;">${pushCamp.push_fail}</td><!-- 실패 -->
 							<td style="text-align: center;">${pushCamp.push_open}</td><!-- 오픈 -->
 							<!-- 클릭 BEGIN-->
-							<td style="text-align: center;">
 							<c:set var="pushType" value="${pushCamp.camp_reqUid}" />
 							<c:if test="${pushType == 'RICH'}">
-								<a href="" class="pushClickReport" cno="${pushCamp.camp_id}">${pushCamp.push_click}</a>
+								<td style="text-align: center; cursor: pointer;" class="pushClickReport" cno="${pushCamp.camp_id}">
+									<a href="" class="pushClickReport" cno="${pushCamp.camp_id}">${pushCamp.push_click}</a></td>
 							</c:if>
 							<c:if test="${pushType == 'TEXT'}">
-								${pushCamp.push_click}
+								<td style="text-align: center;">${pushCamp.push_click}</td>
 							</c:if>
-							</td><!-- 클릭 END-->
+							<!-- 클릭 END-->
 							
 							<!-- SMS 발신 BEGIN-->
 							<td style="text-align: center;">
@@ -109,7 +109,7 @@
 								<c:if test="${retargetFlag == 'Y'}">
 								<a tabindex="0" data-toggle="popover" data-trigger="hover" 
 								   data-content="재발송 : ${pushCamp.push_fail}건"
-								   style="text-decoration:none; cursor:pointer;"
+								   style="text-decoration: none; cursor: pointer;"
 								   class="reTargetReport" cno="${pushCamp.camp_id}">YES</a>
 								</c:if>
 								<c:if test="${retargetFlag == 'N'}">
@@ -163,9 +163,9 @@
 		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
 		      </div>
 		      <div class="modal-body">
-					<div id="richPreviewInAppMessageImg" style="position: relative; width: 58%; display: block;">
+					<div id="richPreviewInAppMessageImg" style="position: relative; width: 58%; display: block; margin: 0 auto;">
 						<img src="../images/preview_inapp.PNG" width="340px" height="500px">
-						<div id="richPreviewInAppMessageText" class="richPreviewInAppMessageText" style="position: absolute; top: 30px; left: 20px; z-index: 1; border: none; resize: none; background-color: transparent; color: white; word-break: break-all; overflow: auto; height: 450px;">
+						<div id="richPreviewInAppMessageText" class="richPreviewInAppMessageText" style="position: absolute; top: 30px; left: 15px; z-index: 1; border: none; resize: none; background-color: transparent; color: white; word-break: break-all; overflow: auto; height: 450px;">
 						</div>
 					</div>
 			  </div>

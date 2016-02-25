@@ -61,17 +61,17 @@
 					<li role="presentation" id="richPush"><a href="#">리치 푸시</a></li>
 				</ul>
 				<br>
-				<div class="col-md-12">
+				<div class="col-md-6">
 				<div class="form-group">
 					<label for="pushCampTitle">관리용 제목</label> <input type="text"
 						class="form-control" id="pushCampTitle" maxlength="30"
-						placeholder="관리용 제목" style="width: 60%" value="${pushCampTitle}">
+						placeholder="관리용 제목" style="width: 100%" value="${pushCampTitle}">
 				</div>
 				<div class="form-group">
 					<!-- 푸시 작성 공통 내용 -->
 					<label for="pushPopupTitle">상태창 제목</label> <input type="text"
 						class="form-control" id="pushPopupTitle" maxlength="20"
-						placeholder="팝업 제목" style="width: 60%"
+						placeholder="팝업 제목" style="width: 100%"
 						onkeyUp="keyUpFunction(this, 'previewNotiTitle')" value="${pushPopupTitle}"><br>
 					<select id="targetType">
 						<option value="all">전체 사용자</option>
@@ -96,13 +96,13 @@
 				<div id="textPushContent">
 					<div class="col-md-7" style="float: left">
 						<label for="pushPopupContent">팝업 내용</label><br>
-						<textarea id="pushPopupContent" rows="15" cols="30" maxlength="80"
+						<textarea id="pushPopupContent" rows="8" cols="42" maxlength="80"
 							onKeyUp="javascript:fnChkByte(this,'80', 'byteInfoPopup'), keyUpFunction(this, 'preview')"
 							style="resize: none;" placeholder="푸시 팝업 내용을 입력해 주세요"></textarea>
 						<span id="byteInfoPopup">0</span>/80Byte <br> <br> 
 						
 						<label for="innerContent">앱 내 메시지 내용</label><br>
-						<textarea id="innerContent" rows="15" cols="30" maxlength="3500"
+						<textarea id="innerContent" rows="12" cols="42" maxlength="3500"
 							onKeyUp="javascript:fnChkByte(this,'3500', 'byteInfoInner'), keyUpFunction(this, 'previewInAppMessageText')"
 							style="resize: none;" placeholder="앱 내 내용을 입력해 주세요"></textarea>
 						<span id="byteInfoInner">0</span>/3500Byte <br> <input
@@ -114,7 +114,7 @@
 					<div id="previewScreen" class="col-md-5" style="float: left">
 						<div>
 							<button id="previewPopupPush" type="button"
-								class="btn btn-default btn-lg">팝업 푸시</button>
+								class="btn btn-default btn-lg active">팝업 푸시</button>
 							<button id="previewNoti" type="button"
 								class="btn btn-default btn-lg">상태창</button>
 							<button id="previewInAppMessage" type="button"
@@ -161,7 +161,7 @@
 				<div id="richPushContent" style="display: none">
 					<div class="col-md-7" style="float: left">
 						<label for="pushPopupContent">상태창 내용</label><br>
-						<textarea id="richPushNotiContent" rows="3" cols="65"
+						<textarea id="richPushNotiContent" rows="3" cols="62"
 							maxlength="90"
 							onKeyUp="javascript:fnChkByte(this,'90', 'byteInfoRichNoti'), keyUpFunction(this, 'richPreviewNoti')"
 							style="resize: none;" placeholder="상태창 내용을 입력해 주세요"></textarea>
@@ -186,13 +186,12 @@
 					<div id="previewScreen" class="col-md-5" style="float: left">
 						<div>
 							<button id="richPreviewPopupPush" type="button"
-								class="btn btn-default btn-lg">팝업 푸시</button>
+								class="btn btn-default btn-lg active">팝업 푸시</button>
 							<button id="richPreviewNoti" type="button"
 								class="btn btn-default btn-lg">상태창</button>
 							<button id="richPreviewInAppMessage" type="button"
 								class="btn btn-default btn-lg">앱 내 메시지</button>
 						</div>
-
 
 						<div id="richPreviewPopupPushImg"
 							style="position: relative; width: 75%">
