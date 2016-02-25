@@ -36,6 +36,12 @@
 	
 	<!-- myJS -->
     <script src="./js/pushReport.js"></script>
+    
+    <style type="text/css">
+		.pagination {
+			 position: absolute; left: 50%; transform: translateX(-50%);
+		}
+	</style>
 </head>
 
   <body>
@@ -126,7 +132,7 @@
 
               </tbody>
             </table>
-					<div>
+<%-- 					<div>
 						<ul class="pager">
 							<c:choose>
 								<c:when test="${pageNo > 1}">
@@ -144,12 +150,49 @@
 								<c:otherwise><li><a>Next</a></li></c:otherwise>
 							</c:choose>
 						</ul>
-						
-					</div>
+					</div> --%>
+					
+					<nav class="pageNavi">
+						<ul class="pagination">
+					<!-- 		<li class="disabled"><a href="#">«</a></li>
+							<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+							<li><a href="#">»</a></li> -->
+						</ul>
+					</nav>
 
 				</div>
         </div>
+        <!-- 페이징 처리 스크립트 -->
+        <script type="text/javascript">
+        	$(document).ready(function() {
+            	var pageNo = ${pageNo};
+            	var maxPage = ${maxPage};
+            	
+            	console.log(maxPage);
+            	//$('.pagination').append('<li><a href="#">«</a></li>');
+            	for (var i = 1; i <= maxPage; i++ ) {
+            		if (i == pageNo) {
+            			$('.pagination').append('<li class="active"><a class="pageNo" href="pushList.do?pageNo=' + i + '&pageSize=${pageSize}&word=${param.word}&order=${param.order}">' + i + '</a></li>');
+            		} else {
+		            	$('.pagination').append('<li><a class="pageNo" href="pushList.do?pageNo=' + i + '&pageSize=${pageSize}&word=${param.word}&order=${param.order}">' + i + '</a></li>');
+            		}
+            	}
+            	//$('.pagination').append('<li><a href="#">»</a></li>');
+
+            	// 페이지 이벤트
+//            	$('.pageNo').click(function(e) {
+//            		console.log(e.target);
+//            	});
+            	
+            	
+            	
+            	
+            	
+            	
+        	});
         
+        
+        </script>
         <!-- Button trigger modal -->
 		<button id="modalBtn" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="display: none;">
 		</button>
