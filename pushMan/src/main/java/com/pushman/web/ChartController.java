@@ -95,6 +95,10 @@ public class ChartController {
 		
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
+		int camp_id = -1;
+		if (request.getParameter("camp_id") != null) {
+			camp_id = Integer.valueOf(request.getParameter("camp_id")); 
+		}
 		
 		// from, to 둘다 NULL인 경우
 		if (fromDate == null && toDate == null) {
@@ -115,6 +119,8 @@ public class ChartController {
 		// 추가로 날짜 에 따른 WHERE절 추가 
 		sqlParams.put("fromDate", fromDate);
 		sqlParams.put("toDate", toDate);
+		sqlParams.put("camp_id", camp_id);
+		
 		
 		// 시간대에 따른 "READ" 카운트 리스트
 		sqlParams.put("rtn_type", "R");

@@ -10,94 +10,8 @@ var timeList = ['00', '01', '02', '03', '04', '05', '06', '07', '08',
 
 $(function () {// document.ready
 	
-	// 조건 선택 할 때 change 이벤트 등록 
-	$('#selectCond').change(function() {
-		var today = new Date();
-		var toDate = today.format('yyyy-MM-dd');
-		$('#toDate').datepicker('setDate', toDate);
-		
-		switch ($('#selectCond').val()) {
-			
-			case 'all':
-				$('#toDate').datepicker('setDate', '');
-				$('#fromDate').datepicker('setDate', '');
-				break;
-				
-			case 'week':
-				today.setDate(today.getDate() - 6);// 한 주 간의 데이터
-				var fromDate = today.format('yyyy-MM-dd');
-				$('#toDate').datepicker('setDate', toDate);
-				$('#fromDate').datepicker('setDate', fromDate);
-				break;
-				
-			case 'month':
-				today.setMonth(today.getMonth() - 1);// 한 달 간의 데이터
-				today.setDate(today.getDate() + 1);
-				var fromDate = today.format('yyyy-MM-dd');
-				$('#toDate').datepicker('setDate', toDate);
-				$('#fromDate').datepicker('setDate', fromDate);
-				break;
-				
-			case 'today':
-				var fromDate = today.format('yyyy-MM-dd');
-				$('#toDate').datepicker('setDate', toDate);
-				$('#fromDate').datepicker('setDate', fromDate);
-				break;
-				
-			case 'custom':
-				$('#toDate').datepicker('setDate', '');
-				$('#fromDate').datepicker('setDate', '');
-				break;
-	
-			default:
-				break;
-		}
-
-		$('#datePickBtn').trigger('click');
-	});
-	
-	
-	// 날짜 변경하면 조건이 '사용자 정의'로 변경
-	$('#fromDate').change(function () {
-		$('#selectCond').val('custom');
-	});
-	$('#toDate').change(function () {
-		$('#selectCond').val('custom');
-	});
-	
-	// DatePicker 세팅
-	$("#fromDate").datepicker({
-		defaultDate : "+1d",//1d, 1w, 1m, 1y
-		changeMonth : true,
-		numberOfMonths : 1,
-		dateFormat: "yy-mm-dd",
-		dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-		gotoCurrent: true,
-		onClose : function(selectedDate) {
-			$("#toDate").datepicker("option", "minDate", selectedDate);
-		}
-	});
-	$("#toDate").datepicker({
-		defaultDate : "+2d",
-		changeMonth : true,
-		numberOfMonths : 1,
-		dateFormat: "yy-mm-dd",
-    dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
-    gotoCurrent: true,
-		onClose : function(selectedDate) {
-			$("#fromDate").datepicker("option", "maxDate", selectedDate);
-		}
-	});
-	
 	// chart에 들어갈 data ajax 요청 후 차트 그리기
 	ajaxRequestChartData();
-	
-
-	// 날짜 선택 후 차트 보기 버튼 클릭 이벤트 등록
-	$('#datePickBtn').click(function() {
-		// chart에 들어갈 data ajax 요청 후 차트 그리기
-		ajaxRequestChartData();
-	});
 });
 
 
@@ -113,7 +27,7 @@ function drawByTimeChart(target, chartData, xAxisForDomain) {
             text: '시간대별 통계'
         },
         subtitle: {
-            text: 'Open/Click/Send'
+            text: 'Open/Click'
         },
         xAxis: {
             categories: xAxisForDomain
@@ -145,31 +59,6 @@ function drawByTimeChart(target, chartData, xAxisForDomain) {
             }
         },
         series: chartData
-        	  /** 차트 데이터 예시 **/
-	/*        [{
-	            name: 'Tokyo',
-	            marker: {
-	                symbol: 'square'
-	            },
-	            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
-	                y: 26.5,
-	                marker: {
-	                    symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
-	                }
-	            }, 23.3, 18.3, 13.9, 9.6]
-	
-	        }, {
-	            name: 'London',
-	            marker: {
-	                symbol: 'diamond'
-	            },
-	            data: [{
-	                y: 3.9,
-	                marker: {
-	                    symbol: 'url(https://www.highcharts.com/samples/graphics/snow.png)'
-	                }
-	            }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-	        }]*/
     });
 }
 
@@ -235,7 +124,8 @@ function ajaxRequestChartData() {
 		dataType : 'json',
         data : {
 	        fromDate : $('#fromDate').val(),
-	        toDate : $("#toDate").val()
+	        toDate : $("#toDate").val(),
+	        camp_id : $('#container').attr('cno')
 	    },
 		success : function(result) {
 			// ajax 응답을 JSON 파싱해서 담을 변수
@@ -275,11 +165,11 @@ function ajaxRequestChartData() {
 			seriesArray.push(seriesObject);
 			
 			// 발송 추가 세팅
-			seriesObject = {};// 객체 초기화
-			seriesObject.data = sendChartList;// '발송' 데이터
-			seriesObject.name = '발송';
-			seriesObject.marker = {symbol: 'triangle'};
-			seriesArray.push(seriesObject);
+//			seriesObject = {};// 객체 초기화
+//			seriesObject.data = sendChartList;// '발송' 데이터
+//			seriesObject.name = '발송';
+//			seriesObject.marker = {symbol: 'triangle'};
+//			seriesArray.push(seriesObject);
 			
 			// 시간대별 차트 그리기
 			drawByTimeChart('container', seriesArray, xAxisForTime);

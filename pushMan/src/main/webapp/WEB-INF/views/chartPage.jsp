@@ -37,7 +37,7 @@
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
 	
 	
-	<!-- 파이 차트 -->
+	<!-- 하이 차트 -->
 	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	

@@ -34,6 +34,12 @@
 <!-- Grid script components -->
 <script src="./js/report/jui-grid/dist/grid.min.js"></script>
 
+<!-- 하이 차트 -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<!-- 차트 데이터 요청 JS -->
+<script src="./js/campChart.js"></script>
 
 </head>
 
@@ -226,7 +232,8 @@
 
 
 					</div>
-
+					<br><br>
+					<div id="container" style="min-width: 400px; height: 350px; max-width: 850px; margin: 0 auto" cno="${param.cno}"></div>
 				</div>
 			</div>
 		</div>
