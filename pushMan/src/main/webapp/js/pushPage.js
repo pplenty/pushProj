@@ -199,11 +199,11 @@ $(document).ready(function(){
  // CKEDITOR
     editor = CKEDITOR.replace('richPushPopupContentEditor');
     CKEDITOR.instances["richPushPopupContentEditor"].on("instanceReady", function(){
-        this.document.on("keyup", richKeydownFunction);
+    	CKEDITOR.instances["richPushPopupContentEditor"].on("change", richKeydownFunction);
    });
     editor = CKEDITOR.replace('richInnerContentEditor');
     CKEDITOR.instances["richInnerContentEditor"].on("instanceReady", function(){
-        this.document.on("keyup", richKeydownFunction_inapp);
+    	CKEDITOR.instances["richInnerContentEditor"].on("change", richKeydownFunction_inapp);
    });
 });
 

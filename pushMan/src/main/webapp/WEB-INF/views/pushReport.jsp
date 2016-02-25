@@ -75,13 +75,13 @@
 							<tr>
 								<th>제목</th>
 								<th style="width: 20%; text-align: center;">발송시간</th>
-								<th style="width: 7%; text-align: center;">전체</th>
-								<th style="width: 7%; text-align: center;">대기</th>
-								<th style="width: 7%; text-align: center;">성공</th>
-								<th style="width: 7%; text-align: center;">실패</th>
-								<th style="width: 7%; text-align: center;">오픈</th>
-								<th style="width: 7%; text-align: center;">클릭</th>
-								<th style="width: 10%; text-align: center;">SMS발송</th>
+								<th style="width: 6%; text-align: center;">전체</th>
+								<th style="width: 6%; text-align: center;">대기</th>
+								<th style="width: 6%; text-align: center;">성공</th>
+								<th style="width: 6%; text-align: center;">실패</th>
+								<th style="width: 6%; text-align: center;">오픈</th>
+								<th style="width: 6%; text-align: center;">클릭</th>
+								<th style="width: 8%; text-align: center;">SMS발송</th>
 								<th style="width: 10%; text-align: center;">발송결과</th>
 							</tr>
 						</thead>
@@ -94,10 +94,10 @@
 							<c:forEach items="${list}" var="pushCamp">
 								<tr cno="${pushCamp.camp_id}">
 
-									<td><a tabindex="0" data-toggle="popover"
+									<td>(${pushCamp.camp_reqUid}) <a tabindex="0" data-toggle="popover"
 										data-trigger="hover" title="푸시 타켓"
 										data-content="${pushCamp.targetType}" class="pushCampLoad"
-										style="text-decoration: none; cursor: pointer;">(${pushCamp.camp_reqUid})${pushCamp.push_camp_title}</a></td>
+										style="text-decoration: none; cursor: pointer;">${pushCamp.push_camp_title}</a></td>
 
 									<td style="text-align: center;">${pushCamp.reg_date}</td>
 									<td style="text-align: center;">${pushCamp.push_total}</td>
@@ -230,6 +230,8 @@
 								style="position: relative; width: 58%; display: block; margin: 0 auto;">
 								<img src="../images/preview_inapp.PNG" width="340px"
 									height="500px">
+								
+								<%-- <c:if test="${pushType == 'RICH'}"> --%>
 								<div id="richPreviewInAppMessageText"
 									class="richPreviewInAppMessageText"
 									style="position: absolute; top: 30px; left: 15px; z-index: 1; border: none; resize: none; background-color: transparent; color: white; word-break: break-all; overflow: auto; height: 450px;">

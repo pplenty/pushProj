@@ -13,7 +13,7 @@ $(function () {// document.ready
 	// 조건 선택 할 때 change 이벤트 등록 
 	$('#selectCond').change(function() {
 		var today = new Date();
-		var toDate = today.format('yyyy-MM-dd');
+		var toDate = new Date().format('yyyy-MM-dd');
 		$('#toDate').datepicker('setDate', toDate);
 		
 		switch ($('#selectCond').val()) {
@@ -39,9 +39,8 @@ $(function () {// document.ready
 				break;
 				
 			case 'today':
-				var fromDate = today.format('yyyy-MM-dd');
 				$('#toDate').datepicker('setDate', toDate);
-				$('#fromDate').datepicker('setDate', fromDate);
+				$('#fromDate').datepicker('setDate', toDate);
 				break;
 				
 			case 'custom':
