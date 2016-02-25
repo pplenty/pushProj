@@ -13,88 +13,110 @@ $(document).ready(function() {
 
 	//텍스트 푸시 전송 버튼
 	$('#textPushBtn').click(function(e) {
-	if($('#pushCampTitle').val()==''){
-		alert('관리용 제목을 입력하세요');
-		$('#pushCampTitle').focus();
-	}else if ($('#pushPopupTitle').val() == '') {
-		alert('상태창 제목을 입력하세요');
-		$('#pushPopupTitle').focus();
-	}else if ($('#pushPopupContent').val() == '') {
-		alert('팝업 내용을 입력하세요');
-		$('#pushPopupContent').focus();
-	}else if ($('#innerContent').val() == '') {
-		alert('인앱 메시지 내용을 입력하세요');
-		$('#innerContent').focus();
-	}else if(confirm("푸시를 발송하시겠습니까?")==true){
-		$.ajax({
-			url : './push.do',
-			method : 'POST',
-			data : {
-				pushCampTitle	 : $('#pushCampTitle').val(),	//푸시 캠페인 이름
-				pushPopupTitle 	 : $('#pushPopupTitle').val(),	//푸시  팝업 제목
-				targetType		 : $('#targetType').val(),		//푸시 대상자
-				checkReTarget	 : $('#checkReTarget').val(),	//SMS 리타켓 여부
-				smsContent		 : $('#smsContent').val(),		//SMS 내용
-				pushPopupContent : $('#pushPopupContent').val(),//푸시 팝업 내용
-				innerContent 	 : $('#innerContent').val(),	//푸시 인앱 내용
-				pushType		 : 'text'
-			},
-			success : function(result) {
-				console.log(result);
-				window.location.replace("pushList.do");
-			},
-			error : function(e) {
-				console.error('ajax 에러: ' + e.status);
-			}
-		});
-		
-	}else{
-		return;
-	}
-	});
-	
-	//리치 푸시 전송 버튼
-	$('#richPushBtn').click(function(e) {
 		if($('#pushCampTitle').val()==''){
 			alert('관리용 제목을 입력하세요');
 			$('#pushCampTitle').focus();
 		}else if ($('#pushPopupTitle').val() == '') {
 			alert('상태창 제목을 입력하세요');
 			$('#pushPopupTitle').focus();
-		}else if ($('#richPushNotiContent').val() == '') {
+		}else if ($('#pushPopupContent').val() == '') {
+			alert('팝업 내용을 입력하세요');
+			$('#pushPopupContent').focus();
+		}else if ($('#innerContent').val() == '') {
+			alert('인앱 메시지 내용을 입력하세요');
+			$('#innerContent').focus();
+		} else if ( ($('#pushPopupContent').val().search("<script") != -1) 
+					|| ($('#innerContent').val().search("<script") != -1)
+					|| ($('#pushCampTitle').val().search("<script") != -1)
+					|| ($('#pushPopupTitle').val().search("<script") != -1)
+					|| ($('#smsContent').val().search("<script") != -1)) {
+			alert("<script> 태그는 사용하실 수 없습니다.");
+			return;
+		} else if(confirm("푸시를 발송하시겠습니까?") == true){
+			$.ajax({
+				url : './push.do',
+				method : 'POST',
+				data : {
+					pushCampTitle	 : $('#pushCampTitle').val(),	//푸시 캠페인 이름
+					pushPopupTitle 	 : $('#pushPopupTitle').val(),	//푸시  팝업 제목
+					targetType		 : $('#targetType').val(),		//푸시 대상자
+					checkReTarget	 : $('#checkReTarget').val(),	//SMS 리타켓 여부
+					smsContent		 : $('#smsContent').val(),		//SMS 내용
+					pushPopupContent : $('#pushPopupContent').val(),//푸시 팝업 내용
+					innerContent 	 : $('#innerContent').val(),	//푸시 인앱 내용
+					pushType		 : 'text'
+				},
+				success : function(result) {
+					console.log(result);
+					window.location.replace("pushList.do");
+				},
+				error : function(e) {
+					console.error('ajax 에러: ' + e.status);
+				}
+			});
+			
+		}else{
+			return;
+		}
+	});
+	
+	//리치 푸시 전송 버튼
+	$('#richPushBtn').click( function(e) {
+
+		var pupupContent = CKEDITOR.instances.richPushPopupContentEditor.getData();
+		var innerContent = CKEDITOR.instances.richInnerContentEditor.getData();
+		
+		if ($('#pushCampTitle').val()=='') {
+			alert('관리용 제목을 입력하세요');
+			$('#pushCampTitle').focus();
+		} else if ($('#pushPopupTitle').val() == '') {
+			alert('상태창 제목을 입력하세요');
+			$('#pushPopupTitle').focus();
+		} else if ($('#richPushNotiContent').val() == '') {
 			alert('상태창 내용을 입력하세요');
 			$('#richPushNotiContent').focus();
-		}else if (CKEDITOR.instances.richPushPopupContentEditor.getData() == '') {
+		} else if (pupupContent == '') {
 			alert('팝업 내용을 입력하세요');
 			CKEDITOR.instances.richPushPopupContentEditor.focus();
-		}else if (CKEDITOR.instances.richInnerContentEditor.getData() == '') {
+		} else if (innerContent == '') {
 			alert('인앱 메시지 내용을 입력하세요');
 			CKEDITOR.instances.richInnerContentEditor.focus();
-		}else if(confirm("푸시를 발송하시겠습니까?")==true){
-		$.ajax({
-			url : './push.do',
-			method : 'POST',
-            dataType: 'html',
-			data : {
-				pushCampTitle	 : $('#pushCampTitle').val(),		//푸시 캠페인 이름
-				pushPopupTitle 	 : $('#pushPopupTitle').val(),		//푸시  팝업 제목
-				targetType		 : $('#targetType').val(),			//푸시 대상자
-				checkReTarget	 : $('#checkReTarget').val(),		//SMS 리타켓 여부
-				smsContent		 : $('#smsContent').val(),			//SMS 내용
-				pushMsg		     : $('#richPushNotiContent').val(), //푸시 상태창 내용
-				pushPopupContent : XSSfilter(CKEDITOR.instances.richPushPopupContentEditor.getData()),	//푸시 팝업 내용
-				innerContent 	 : XSSfilter(CKEDITOR.instances.richInnerContentEditor.getData()),		//푸시 인앱 내용
-				pushType		 : 'html'
-			},
-			success : function(result) {
-				console.log(result);
-				window.location.replace("pushList.do");
-			},
-			error : function(e) {
-				console.error('ajax 에러: ' + e.status);
-			}
-		});
-		}else{
+		} else if ( (pupupContent.search("<script") != -1) 
+					|| (innerContent.search("<script") != -1)
+					|| ($('#pushCampTitle').val().search("<script") != -1)
+					|| ($('#pushPopupTitle').val().search("<script") != -1)
+					|| ($('#smsContent').val().search("<script") != -1)
+					|| ($('#richPushNotiContent').val().search("<script") != -1)
+				  ) {
+			alert("<script> 태그는 사용하실 수 없습니다.");
+			return;
+		} else if( confirm("푸시를 발송하시겠습니까?") == true){
+			
+			$.ajax({
+				url : './push.do',
+				method : 'POST',
+	            dataType: 'html',
+				data : {
+					pushCampTitle	 : $('#pushCampTitle').val(),		//푸시 캠페인 이름
+					pushPopupTitle 	 : $('#pushPopupTitle').val(),		//푸시  팝업 제목
+					targetType		 : $('#targetType').val(),			//푸시 대상자
+					checkReTarget	 : $('#checkReTarget').val(),		//SMS 리타켓 여부
+					smsContent		 : $('#smsContent').val(),			//SMS 내용
+					pushMsg		     : $('#richPushNotiContent').val(), //푸시 상태창 내용
+					pushPopupContent : pupupContent,					//푸시 팝업 내용
+					innerContent 	 : innerContent,					//푸시 인앱 내용
+					pushType		 : 'html'
+				},
+				success : function(result) {
+					console.log(result);
+					window.location.replace("pushList.do");
+				},
+				error : function(e) {
+					console.error('ajax 에러: ' + e.status);
+				}
+			});
+			
+		} else {
 			return;
 		}
 	});
