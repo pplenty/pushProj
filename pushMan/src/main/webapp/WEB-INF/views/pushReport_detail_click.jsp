@@ -39,7 +39,6 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-<script src="./js/plugin/viewTinted.js"></script>
 <script src="./js/clickChart.js"></script>
 
 

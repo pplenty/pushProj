@@ -2,8 +2,6 @@ var msgChartList;
 var popupChartList;
 
 $(function () {
-	//링크 미리보기
-	$(document).viewTinted();
 
 	//TAB 이벤트 등록
 	$('a[href="#msgSection"]').click(function(e) {
