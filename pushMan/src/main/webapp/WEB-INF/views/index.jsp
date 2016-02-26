@@ -38,7 +38,7 @@
 		<!--/ Codrops top bar -->
 		<header>
 			<h1>
-				SEND <span>MAN</span>
+				PUSH <span>MAN</span>
 			</h1>
 		</header>
 		<section>

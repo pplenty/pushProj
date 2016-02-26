@@ -44,7 +44,15 @@ $(function () {
 			    	if (list.length > 10) {
 			    		chartItem.name = list[i].linkSeq;
 			    	} else {
-			    		chartItem.name = list[i].linkAddr;
+
+			    		// 링크 주소가 30자 이상이면 잘라서 '...' 으로 표현
+			    		if (list[i].linkAddr.length > 30) {
+			    			chartItem.name = list[i].linkSeq + '. '
+			    				+ list[i].linkAddr.substring(0, 30) + '...';
+			    		} else {
+			    			chartItem.name = list[i].linkSeq + '. ' + list[i].linkAddr;
+			    		}
+			    		
 			    	}
 			    	chartItem.y = list[i].clickCnt;
 			    	chartList.push(chartItem);
@@ -62,7 +70,15 @@ $(function () {
 			    	if (list.length > 10) {
 			    		chartItem.name = list[i].linkSeq;
 			    	} else {
-			    		chartItem.name = list[i].linkAddr;
+			    		
+			    		// 링크 주소가 30자 이상이면 잘라서 '...' 으로 표현
+			    		if (list[i].linkAddr.length > 30) {
+			    			chartItem.name = list[i].linkSeq + '. '
+			    				+ list[i].linkAddr.substring(0, 30) + '...';
+			    		} else {
+			    			chartItem.name = list[i].linkSeq + '. ' + list[i].linkAddr;
+			    		}
+			    		
 			    	}
 			    	chartItem.y = list[i].clickCnt;
 			    	chartList.push(chartItem);
@@ -93,7 +109,7 @@ function showChart(target, chartData) {
             text: '클릭 횟수 비교'
         },
         tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            pointFormat: '{series.name}: <b>{point.y} 건</b> (<b>{point.percentage:.1f}%</b>)'
         },
         credits : {
         	enabled: false

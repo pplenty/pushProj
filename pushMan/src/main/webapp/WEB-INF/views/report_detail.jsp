@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SMS Sender</title>
+    <title>PUSH MAN</title>
 	
 	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 	

@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SMS Sender</title>
+<title>푸시 상세보기</title>
 
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 
