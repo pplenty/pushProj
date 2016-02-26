@@ -81,7 +81,7 @@
 								<th style="width: 6%; text-align: center;">실패</th>
 								<th style="width: 6%; text-align: center;">오픈</th>
 								<th style="width: 6%; text-align: center;">클릭</th>
-								<th style="width: 8%; text-align: center;">SMS발송</th>
+								<th style="width: 8%; text-align: center;">재발송</th>
 								<th style="width: 10%; text-align: center;">발송결과</th>
 							</tr>
 						</thead>
