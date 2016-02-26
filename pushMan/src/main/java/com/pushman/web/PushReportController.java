@@ -88,12 +88,12 @@ public class PushReportController {
 			Model model, int cno, HttpSession session)
 			throws Exception {
 
-		//
+		// session에 사용자 정보 없을 시 메인페이지로 이동
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
 		if (smsUser == null) return "index";
 		model.addAttribute("name", smsUser.getName());
 		
-		//
+		// 캠페인 리스트를 불러오기 위해 들어갈 SQL 조건 세팅
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
 		sqlParams.put("pageSize", pageSize);
@@ -123,12 +123,12 @@ public class PushReportController {
 			Model model, int cno, HttpSession session)
 			throws Exception {
 
-		//
+		// 세션없을 시 메인으로 이동
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
 		if (smsUser == null) return "index";
 		model.addAttribute("name", smsUser.getName());
 		
-		//
+		// SQL 조건 해시맵에 담아서 넘김
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		sqlParams.put("startIndex", CommonMethod.getStartIndexOfPage(pageNo, pageSize));
 		sqlParams.put("pageSize", pageSize);
@@ -139,6 +139,7 @@ public class PushReportController {
 		List<Map<String, Object>> smsDetailList = pushCampaignDetailDao.selectSmsListByCamp(sqlParams);
 		int countList = pushCampaignDetailDao.countSmsListByCamp(sqlParams);
 		
+		// view단에 뿌려줄 데이터 세팅
 		model.addAttribute("countList", countList);
 		model.addAttribute("list", 		smsDetailList);
 		model.addAttribute("pageNo", 	pageNo);
@@ -177,15 +178,13 @@ public class PushReportController {
 		
 		sqlParams.put("msg_push_type", "P");
 		List<PushCampaignDetailClickVo> popupLinkList = pushCampaignDetailClickDao.selectLinkCntListByCamp(sqlParams);
-				
+
+		// view단에 뿌려줄 데이터 세팅
 		model.addAttribute("cntMsgLink", 	msgLinkList.size());
 		model.addAttribute("cntpopupLink", 	popupLinkList.size());
 		model.addAttribute("msgLinkList",	msgLinkList);
 		model.addAttribute("popupLinkList",	popupLinkList);
 		model.addAttribute("campId", cno);
-//		model.addAttribute("pageNo", 		pageNo);
-//		model.addAttribute("pageSize",  	pageSize);
-//		model.addAttribute("maxPage", 		CommonMethod.countTotalPage(pageSize, pushList.size()));
 
 		return "./pushReport_detail_click";
 	}

@@ -3,6 +3,7 @@ package com.pushman.util;
 public class CommonMethod {
 	
 	// 오직 한 번에 한 스레드 만이 카운트 값을 얻을 수 있다. 중복 불가(random 생성)!
+	// reqUid 생성할 때 사용
 	static private int count = 0;
 	synchronized public static int count() {
 		if (count == 100) {

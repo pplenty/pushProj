@@ -1,5 +1,6 @@
 package com.pushman.util;
 
+// 푸시 / SMS 발송할 때 필요한 상수 값들
 public class PushSetting {
 
 	// 요청 URL 주소(고정 값)

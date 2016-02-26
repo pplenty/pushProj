@@ -26,6 +26,7 @@ public class AuthNumberController {
 	@Autowired
 	AuthNumberDao authNumberDao;
 
+	// 회원 가입 시 인증번호 생성 후 발송 URL
 	@RequestMapping("/authNo")
 	@ResponseBody
 	public Object authNo(
@@ -91,6 +92,7 @@ public class AuthNumberController {
 		return responseData;
 	}
 	
+	// 임시로 생성된 인증번호 삭제하는 URL
 	@RequestMapping("/authNoDelete")
 	@ResponseBody
 	public Object authNoDelete(

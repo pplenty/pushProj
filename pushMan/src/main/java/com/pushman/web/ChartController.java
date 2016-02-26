@@ -41,7 +41,7 @@ public class ChartController {
 	}
 
 
-	// 클릭 차트
+	// 클릭 차트 요청하는 URL
 	@RequestMapping("/clickChart")
 	@ResponseBody
 	public Object clickChart(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -82,7 +82,7 @@ public class ChartController {
 
 	}
 
-	// 푸시 전체 차트 
+	// 푸시 전체 차트 (캠페인별 차트 포함) 
 	@RequestMapping("/pushChart")
 	@ResponseBody
 	public Object pushChart(

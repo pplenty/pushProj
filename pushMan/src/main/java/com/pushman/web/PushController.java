@@ -43,7 +43,7 @@ public class PushController {
 	PushCampaignDetailDao pushCampaignDetailDao;
 
 	
-	//PUSH PAGE LOAD
+	//PUSH PAGE (푸시 발송하는 페이지 요청)
 	@RequestMapping("/pushPage")
 	public String pushPage(
 			HttpServletRequest request, HttpServletResponse response,
@@ -77,7 +77,7 @@ public class PushController {
 		return "pushPage";
 	}
 
-	//PUSH 요청 URL
+	//PUSH 요청 URL(푸시 발송)
 	@RequestMapping("/push")
 	@ResponseBody
 	public Object push(HttpServletRequest request,
@@ -97,7 +97,6 @@ public class PushController {
 		String pushPopupContent = null;										// 팝업 내용
 		String innerContent 	= null;									 	// 인 앱 내용	
 		
-//		if (checkReTarget == null) checkReTarget = "N";
 		// TEXT / RICH content, 캠페인 reqUid 생성
 		String campReqUid = null;
 		
@@ -177,6 +176,7 @@ public class PushController {
 		String responseJSON = null;									// 응답 JSON
 
 		JsonObject pushReqParam = new JsonObject();
+		
 		// text/rich push biz key구분
 		if ("text".equals(pushType)) {
 			pushReqParam.addProperty("bizId", PushSetting.TEXT_PUSH_BIZ_KEY);	// text biz key
@@ -198,7 +198,6 @@ public class PushController {
 		pushReqParam.addProperty("reserveTime", PushSetting.PUSH_RESERVED_TIME);// 고정 값(과거 값)
 		
 		pushReqParam.add("list", targetList);// 동보 메시지 타겟 리스트 추가
-//		System.out.println(pushReqParam);
 		try {
 			paramValue = URLEncoder.encode(pushReqParam.toString(), "UTF-8");
 

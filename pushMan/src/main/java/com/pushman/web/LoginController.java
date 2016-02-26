@@ -31,37 +31,12 @@ public class LoginController {
 	@Autowired
 	TB_SEND_QUE_LOG_Dao tb_send_que_log_dao;
 	
-	@RequestMapping("/ma")
-	public String ma(
-			HttpServletRequest request, HttpServletResponse response, 
-			HttpSession session) {
-		
-		MultipleDataSource.setDataSourceKey("iHeartDB");
-		
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-//		List<MSG_LOG_Vo> list = msg_log_dao.selectListAll(hm);
-//		System.out.println(list.get(0));
-		
-		MultipleDataSource.setDataSourceKey("pushpiaDB");
-		
-		List<TB_SEND_QUE_LOG_Vo> list2 = tb_send_que_log_dao.selectListAll(null);
-		for (TB_SEND_QUE_LOG_Vo tb_SEND_QUE_LOG_Vo : list2) {
-			System.out.println(tb_SEND_QUE_LOG_Vo.getReg_date());
-		}
-		
-		
-		
-		
-		return null;
-	}
 	
-	
-
+	// main page 요청하는 URL
 	@RequestMapping("/main")
 	public String smsMain(
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session) {
-//		MultipleDataSource.setDataSourceKey("localDB");
 		SmsUserVo smsUser = (SmsUserVo)session.getAttribute("user");
 		if (smsUser != null) return "redirect:chartPage.do";// 이미 로그인 되있을 때
 		

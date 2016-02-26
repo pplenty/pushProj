@@ -15,14 +15,15 @@ import com.pushman.dao.AppUserDao;
 import com.pushman.domain.AppUserVo;
 
 
-
+// 모바일 앱 구동 시 사용자 정보 받는 컨트롤러
 @Controller
-public class TestController {
+public class MobileAppController {
 
 	@Autowired
 	AppUserDao appUserDao;
 	
-	@RequestMapping("/test")
+	// cust id와 모바일 번호 앱으로부터 요청 받아 로컬 디비에 저장
+	@RequestMapping("/userLogin")
 	@ResponseBody
 	//최초 앱 실행시 모바일 사용자의 정보를 로컬 DB에 저장
 	protected void doGet(HttpServletRequest request,
@@ -41,9 +42,10 @@ public class TestController {
 		appUserDao.insert(appUserVo);
 	}
 	
-	@RequestMapping("/test2")
+	@RequestMapping("/userUpdate")
 	@ResponseBody
-	// 앱을 실행할 때마다 모바일 번호를 저장함
+	
+	// 앱을 실행할 때마다 최근 로그인 일시를 업데이트
 	protected void doGetConnect(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
