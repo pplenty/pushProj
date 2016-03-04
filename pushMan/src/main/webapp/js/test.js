@@ -1,3 +1,11 @@
+$(window).load(function(e) {
+	alert(e + ': 11');
+});
+$(document).ready(function(e) {
+	alert(e + ': 22');
+});
+
+
 $(function () {// document.ready
 	
 	
