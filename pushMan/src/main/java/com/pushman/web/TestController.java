@@ -28,7 +28,9 @@ public class TestController {
 		
 		Map<String, String> responseData = new HashMap<String, String>();
 		responseData.put("fromDate", request.getParameter("fromDate"));
-		
+		String str1 = "AbCdefGHizZ";
+		str1.toLowerCase();
+		System.out.println();
 		
 		return responseData;
 	}

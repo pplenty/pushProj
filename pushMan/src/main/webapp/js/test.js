@@ -8,10 +8,6 @@ $(document).ready(function(e) {
 
 $(function () {// document.ready
 	
-	
-	
-	
-	
 	$('#btn01').click(function (e) {
 		
 		$.ajax({
